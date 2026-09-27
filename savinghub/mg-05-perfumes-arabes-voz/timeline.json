@@ -1,0 +1,32 @@
+{
+ "duration": 15.0,
+ "bounds": [
+  3.0,
+  6.0,
+  9.0,
+  11.0,
+  15.0
+ ],
+ "vo": [
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Lujo__sin_pagar_de_m\u00e1s_.wav",
+   0.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Yin_Lou_Inmortel__de_Mes\u00f3n_Alhambra_.wav",
+   3.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Bajar\u00e1ra_King_.wav",
+   6.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Frascos__y_dec\u00e1nts_.wav",
+   9.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Perfumes_\u00e1rabes_en_S\u00e9iving_Jab__Pedilo_por_mensaje_.wav",
+   11.45
+  ]
+ ]
+}

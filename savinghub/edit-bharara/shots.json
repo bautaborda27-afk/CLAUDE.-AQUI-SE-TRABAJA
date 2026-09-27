@@ -1,0 +1,65 @@
+{
+  "duration": 22.5,
+  "shots": [
+    {
+      "start": 0.0,
+      "duration": 1.8,
+      "src": 3.5
+    },
+    {
+      "start": 1.8,
+      "duration": 1.6,
+      "src": 7.0
+    },
+    {
+      "start": 3.4,
+      "duration": 1.6,
+      "src": 15.0
+    },
+    {
+      "start": 5.0,
+      "duration": 1.5,
+      "src": 21.0
+    },
+    {
+      "start": 6.5,
+      "duration": 1.6,
+      "src": 40.0
+    },
+    {
+      "start": 8.1,
+      "duration": 1.8,
+      "src": 50.0
+    },
+    {
+      "start": 9.9,
+      "duration": 2.4,
+      "src": 57.0
+    },
+    {
+      "start": 12.3,
+      "duration": 2.0,
+      "src": 64.0
+    },
+    {
+      "start": 14.3,
+      "duration": 2.0,
+      "src": 76.0
+    },
+    {
+      "start": 16.3,
+      "duration": 1.8,
+      "src": 86.0
+    },
+    {
+      "start": 18.1,
+      "duration": 1.8,
+      "src": 100.0
+    },
+    {
+      "start": 19.9,
+      "duration": 2.6,
+      "src": 106.0
+    }
+  ]
+}

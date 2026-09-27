@@ -1,0 +1,32 @@
+{
+ "duration": 17.5,
+ "bounds": [
+  2.5,
+  8.0,
+  12.0,
+  14.5,
+  17.5
+ ],
+ "vo": [
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Ficha_t\u00e9cnica__Yin_Lou_Inmortel_.wav",
+   0.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_De_Mes\u00f3n_Alhambra__Perfume_de_cien_mililitros__fresco_y_c\u00edtrico__hecho_en_Emirat.wav",
+   2.65
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Fijate_el_holograma_y_el_sello__as\u00ed_sab\u00e9s_que_es_original_.wav",
+   8.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Frasco_completo__cien_mililitros_.wav",
+   12.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_S\u00e9iving_Jab__Lujo_sin_pagar_de_m\u00e1s_.wav",
+   14.95
+  ]
+ ]
+}

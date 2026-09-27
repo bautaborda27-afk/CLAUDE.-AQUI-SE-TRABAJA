@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "JBM"; src: url("fonts/JetBrainsMono-Bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+:root { --red: #E0201B; --white: #FFFFFF; --ink: #0b0b0b; --ink2: #171717; --amber: #F5A623; --mute: #8c8c8c; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; container-type: size;
+  font-family: "Anton"; color: var(--white); background: var(--ink); }
+.scene { position: absolute; inset: 0; overflow: hidden; }
+.inner { position: absolute; inset: 0; }
+.grid { position: absolute; inset: 0;
+  background: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0 / 6cqw 6cqw,
+              linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px) 0 0 / 6cqw 6cqw, var(--ink); }
+.grid.red { background: linear-gradient(rgba(0,0,0,.10) 1px, transparent 1px) 0 0 / 6cqw 6cqw,
+              linear-gradient(90deg, rgba(0,0,0,.10) 1px, transparent 1px) 0 0 / 6cqw 6cqw, var(--red); }
+.mono { font-family: "JBM"; font-weight: 700; text-transform: uppercase; letter-spacing: .35cqw; }
+.chip { display: inline-block; padding: 1.2cqw 2.4cqw; font-size: 3.1cqw; background: var(--red); color: var(--white); }
+.chip.w { background: var(--white); color: var(--ink); }
+.mask { display: block; overflow: hidden; padding: 5cqw 1cqw 0; margin-top: -5cqw; }
+.ln { display: block; will-change: transform; }
+.red { color: var(--red); }
+.title { position: absolute; left: 6cqw; right: 6cqw; top: 34cqh; text-align: left; text-transform: uppercase; }
+.title .ln { font-size: 19cqw; line-height: .92; }
+.title .bar { height: 1.6cqw; width: 42cqw; background: var(--red); margin: 3cqh 0 0 1cqw; transform-origin: left center; }
+.title .sub { margin: 3cqh 0 0 1cqw; font-size: 3.6cqw; color: var(--white); }
+.tagpos { position: absolute; left: 7cqw; top: 26cqh; }
+/* card with footage */
+.card { position: absolute; left: 10cqw; width: 80cqw; top: 14cqh; height: 56cqh; border-radius: 3cqw;
+  overflow: hidden; border: .7cqw solid var(--white); box-shadow: 0 3cqw 8cqw rgba(0,0,0,.6); background: #222; }
+.card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card .push { position: absolute; inset: 0; will-change: transform; }
+.card-label { position: absolute; left: 7cqw; top: 11cqh; z-index: 3; }
+.caption { position: absolute; left: 6cqw; right: 6cqw; top: 73cqh; text-transform: uppercase; }
+.caption .ln { font-size: 15.5cqw; line-height: .92; }
+.callout { position: absolute; z-index: 2; }
+.callout .br { position: absolute; width: 5cqw; height: 5cqw; border-color: var(--red); border-style: solid; border-width: 0; }
+.callout .tl { left: 0; top: 0; border-left-width: .8cqw; border-top-width: .8cqw; }
+.callout .tr { right: 0; top: 0; border-right-width: .8cqw; border-top-width: .8cqw; }
+.callout .bl { left: 0; bottom: 0; border-left-width: .8cqw; border-bottom-width: .8cqw; }
+.callout .brr { right: 0; bottom: 0; border-right-width: .8cqw; border-bottom-width: .8cqw; }
+.callout .lab { position: absolute; left: 0; top: 100%; margin-top: 1cqw; white-space: nowrap; font-size: 2.8cqw; }
+/* compare */
+.cmp-head { position: absolute; top: 12cqh; left: 6cqw; right: 6cqw; text-align: center; }
+.cmp-head .ln { font-size: 13cqw; line-height: .95; }
+.cols { position: absolute; left: 5cqw; right: 5cqw; top: 29cqh; display: flex; gap: 3cqw; }
+.col { flex: 1; border-radius: 2.4cqw; padding: 4cqw 3.4cqw 5cqw; min-height: 50cqh; }
+.col.a { background: var(--ink2); border: .5cqw solid #333; }
+.col.b { background: var(--red); }
+.col.b .red { color: var(--white); }
+.col h3 { font-weight: 400; font-size: 8.4cqw; line-height: .95; margin-bottom: 4cqh; }
+.row { display: flex; align-items: flex-start; gap: 2.2cqw; margin-bottom: 4cqh; }
+.row .ic { flex: 0 0 7.4cqw; height: 7.4cqw; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.col.a .ic { background: #3a3a3a; }
+.col.b .ic { background: var(--white); }
+.row .ic svg { width: 4.4cqw; height: 4.4cqw; }
+.row .tx { font-size: 3.5cqw; line-height: 1.3; padding-top: .9cqw; }
+.vs { position: absolute; left: 50%; top: 27.2cqh; width: 13cqw; height: 13cqw; margin-left: -6.5cqw; border-radius: 50%;
+  background: var(--white); color: var(--ink); font-size: 6.4cqw; display: flex; align-items: center; justify-content: center; z-index: 3; }
+/* steps */
+.segs { position: absolute; left: 7cqw; right: 7cqw; top: 9cqh; display: flex; gap: 2cqw; }
+.seg { flex: 1; height: 1.1cqw; background: #333; overflow: hidden; }
+.seg i { display: block; height: 100%; background: var(--red); transform-origin: left center; }
+.bignum { position: absolute; left: 5cqw; top: 11cqh; font-size: 44cqw; line-height: 1; color: transparent;
+  -webkit-text-stroke: .6cqw var(--white); }
+.step-title { position: absolute; left: 7cqw; right: 7cqw; top: 36cqh; text-transform: uppercase; }
+.step-title .ln { font-size: 14cqw; line-height: .95; }
+.step-title .mono { font-size: 3.2cqw; color: var(--mute); margin-top: 1.4cqh; }
+.card.step { top: 52cqh; height: 40cqh; left: 7cqw; width: 86cqw; }
+/* spec */
+.card.spec { top: 15cqh; height: 38cqh; left: 7cqw; width: 86cqw; }
+.spec-rows { position: absolute; left: 7cqw; right: 7cqw; top: 56cqh; }
+.spec-row { position: relative; display: flex; justify-content: space-between; align-items: baseline; padding: 1.5cqh 0; }
+.spec-row .k { font-size: 3.2cqw; color: var(--mute); }
+.spec-row .v { font-size: 7.4cqw; line-height: 1; }
+.spec-row .rule { position: absolute; left: 0; right: 0; bottom: 0; height: .3cqw; background: #3a3a3a; transform-origin: left center; }
+/* notifications */
+.bgclip { position: absolute; inset: -4cqw; }
+.bgclip video { width: 100%; height: 100%; object-fit: cover; filter: blur(18px) brightness(.45) saturate(.8); }
+.pov { position: absolute; left: 7cqw; right: 7cqw; top: 13cqh; text-transform: uppercase; }
+.pov .ln { font-size: 15cqw; line-height: .92; }
+.notifs { position: absolute; left: 6cqw; right: 6cqw; top: 42cqh; }
+.notif { display: flex; gap: 3cqw; align-items: center; background: rgba(245,245,245,.96); color: var(--ink);
+  border-radius: 4.2cqw; padding: 3.2cqw 3.6cqw; margin-bottom: 2.6cqh; box-shadow: 0 2cqw 6cqw rgba(0,0,0,.45); }
+.notif .app { flex: 0 0 12cqw; height: 12cqw; border-radius: 2.8cqw; background: var(--ink); color: var(--white);
+  font-size: 5.6cqw; display: flex; align-items: center; justify-content: center; }
+.notif .app span { border-bottom: .8cqw solid var(--red); line-height: 1; padding-bottom: .4cqw; }
+.notif .body { flex: 1; }
+.notif .top { display: flex; justify-content: space-between; font-size: 2.6cqw; color: #666; }
+.notif .t { font-family: "Anton"; font-size: 6.2cqw; line-height: 1.05; margin-top: .6cqw; text-transform: uppercase; }
+.notif .d { font-size: 3cqw; color: #333; margin-top: .6cqw; letter-spacing: .1cqw; }
+/* kinetic */
+.marq { position: absolute; left: 0; white-space: nowrap; font-size: 22cqw; line-height: 1; color: transparent;
+  -webkit-text-stroke: .35cqw rgba(0,0,0,.28); will-change: transform; }
+.marq.lite { -webkit-text-stroke-color: rgba(255,255,255,.12); }
+.kword { position: absolute; left: 4cqw; right: 4cqw; top: 50%; text-align: center; text-transform: uppercase;
+  font-size: 30cqw; line-height: .9; transform: translateY(-50%); opacity: 0; }
+/* counter */
+.ring { position: absolute; left: 50%; top: 42%; width: 78cqw; height: 78cqw; margin: -39cqw 0 0 -39cqw; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.count { position: absolute; left: 0; right: 0; top: 42%; transform: translateY(-50%); text-align: center; }
+.count .n { font-size: 36cqw; line-height: 1; }
+.count .u { font-size: 5cqw; margin-top: 1cqh; }
+.count-cap { position: absolute; left: 7cqw; right: 7cqw; top: 70cqh; text-align: center; text-transform: uppercase; }
+.count-cap .ln { font-size: 11cqw; line-height: .95; }
+/* end card */
+.logo { position: absolute; left: 50%; top: 27cqh; width: 34cqw; height: 34cqw; margin-left: -17cqw; background: var(--red);
+  border-radius: 3cqw; display: flex; align-items: center; justify-content: center; font-size: 19cqw; }
+.logo span { border-bottom: 1.4cqw solid var(--white); line-height: .95; padding-bottom: 1cqw; }
+.word { position: absolute; left: 0; right: 0; top: 50cqh; text-align: center; font-size: 17cqw; line-height: 1; }
+.word .L { display: inline-block; }
+.endtag { position: absolute; left: 0; right: 0; top: 63cqh; text-align: center; font-size: 3.8cqw; }
+.cta { position: absolute; left: 0; right: 0; top: 71cqh; text-align: center; }
+.cta span { display: inline-block; background: var(--white); color: var(--ink); font-size: 7.6cqw; padding: 1.8cqw 5cqw 2.2cqw; border-radius: 99cqw; }
+/* HUD + wipe */
+.hud { position: absolute; left: 6cqw; right: 6cqw; top: 3.4cqh; display: flex; justify-content: space-between; font-size: 2.6cqw; z-index: 50; }
+.hud .dot { display: inline-block; width: 1.8cqw; height: 1.8cqw; background: var(--red); margin-right: 1.4cqw; vertical-align: -.1cqw; }
+.prog { position: absolute; left: 0; bottom: 0; height: .9cqw; width: 100%; background: var(--red); transform-origin: left center; z-index: 50; }
+.wipe { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: var(--red); z-index: 60; }
+.wipe2 { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: var(--white); z-index: 59; }
+</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="12.0" data-width="1080" data-height="1920">
+            <div id="s1" class="clip scene" data-start="0.0" data-duration="5.5" data-track-index="2"><div class=""></div><div class="inner"><div class="bgclip"><video id="v1" class="clip" src="clips/bh_final.mp4" muted playsinline data-start="0.0" data-duration="5.5" data-track-index="5"></video></div><div class="pov"><span class="mask"><span class="ln">POV: LLEGÓ</span></span><span class="mask"><span class="ln">TU <span class="red">DECANT</span></span></span></div><div class="notifs"><div class="notif n0"><div class="app"><span>SH</span></div><div class="body"><div class="top mono"><span>SAVING HUB</span><span>AHORA</span></div><div class="t">PEDIDO CONFIRMADO</div><div class="d mono">DECANT · BHARARA KING</div></div></div><div class="notif n1"><div class="app"><span>SH</span></div><div class="body"><div class="top mono"><span>SAVING HUB</span><span>AHORA</span></div><div class="t">TU DECANT ESTÁ LISTO</div><div class="d mono">SACADO DEL FRASCO ORIGINAL</div></div></div><div class="notif n2"><div class="app"><span>SH</span></div><div class="body"><div class="top mono"><span>SAVING HUB</span><span>AHORA</span></div><div class="t">¡LLEGÓ!</div><div class="d mono">ABRILO Y PROBALO EN TU PIEL</div></div></div></div></div></div>
+      <div id="s2" class="clip scene" data-start="5.5" data-duration="3.5" data-track-index="1"><div class="grid"></div><div class="inner"><div class="card" style="top:14cqh;height:56cqh"><div class="push"><video id="v2" class="clip" src="clips/bh_spray.mp4" muted playsinline data-start="5.5" data-duration="3.5" data-track-index="6"></video></div><div class="callout c0" style="left:30%;top:30%;width:40%;height:45%"><i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br brr"></i><span class="lab chip mono">DECANT</span></div></div><div class="card-label" style="top:11cqh"><span class="chip mono">BHARARA KING</span></div><div class="caption"><span class="mask"><span class="ln">LISTO PARA</span></span><span class="mask"><span class="ln"><span class="red">USAR</span></span></span></div></div></div>
+      <div id="s3" class="clip scene" data-start="9.0" data-duration="3.0" data-track-index="2"><div class="grid"></div><div class="inner"><div class="logo"><span>SH</span></div><div class="word"><span class="L">S</span><span class="L">A</span><span class="L">V</span><span class="L">I</span><span class="L">N</span><span class="L">G</span><span class="L">&nbsp;</span><span class="L red">H</span><span class="L red">U</span><span class="L red">B</span></div><div class="endtag mono">PEDILO HOY</div><div class="cta"><span>PEDILO POR DM</span></div></div></div>
+      <div class="hud mono"><span><i class="dot"></i>SAVING HUB</span><span>POV</span></div><div class="prog"></div><div class="wipe2"></div><div class="wipe"></div>
+      <audio id="master" class="clip" src="master.m4a" data-start="0" data-duration="12.0" data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+            tl.set(".wipe, .wipe2", { yPercent: 100 }, 0);
+      tl.fromTo("#s1 .pov .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 0.05);
+      tl.fromTo("#s1 .n0", { y: -700, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)", immediateRender: true }, 0.80);
+      tl.fromTo("#s1 .n1", { y: -700, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)", immediateRender: true }, 1.80);
+      tl.fromTo("#s1 .n2", { y: -700, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)", immediateRender: true }, 2.80);
+      tl.fromTo("#s2 .card", { y: 900, rotation: 7 }, { y: 0, rotation: -1.5, duration: 0.6, ease: "back.out(1.3)", immediateRender: true }, 5.50);
+      tl.fromTo("#s2 .push", { scale: 1.0 }, { scale: 1.1, duration: 3.5, ease: "power1.inOut", immediateRender: true }, 5.5);
+      tl.fromTo("#s2 .card-label", { x: -80, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 5.95);
+      tl.fromTo("#s2 .caption .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 6.05);
+      tl.fromTo("#s2 .c0", { scale: 1.6, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.4, ease: "back.out(2)", immediateRender: true }, 6.50);
+      tl.fromTo("#s3 .logo", { scale: 0, rotation: -120 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(1.6)", immediateRender: true }, 9.05);
+      tl.fromTo("#s3 .word .L", { yPercent: 120, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: "power4.out", stagger: 0.04, immediateRender: true }, 9.40);
+      tl.fromTo("#s3 .endtag", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "steps(22)", immediateRender: true }, 9.90);
+      tl.fromTo("#s3 .cta", { scale: 0, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 10.30);
+      tl.fromTo("#s3 .cta span", { scale: 1 }, { scale: 1.07, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 3, immediateRender: true }, 10.80);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 5.26);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 5.30);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 8.76);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 8.80);
+      tl.fromTo(".prog", { scaleX: 0 }, { scaleX: 1, duration: 12.0, ease: "none", immediateRender: true }, 0);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
