@@ -105,3 +105,10 @@ Audio: beat de 120 BPM sintetizado (libre de derechos, `mg_assets.py`) + SFX (wh
 
 El logo "SH" del cierre es una versión simplificada para el video (cuadro rojo con SH subrayado); se reemplaza por el oficial si lo pasan en PNG/SVG.
 Verificación: lint 0 errores, snapshots revisados (tildes, estados iniciales, overflow), GATE PASS ×5, contact sheet `work/mg_all.png`.
+
+## Ronda 3b — motion graphics con voz IA
+
+`build_mg_vo.py`: las mismas 5 piezas con voz IA (Kokoro `ef_dora`), una frase por escena. Cada escena se alarga
+(sobre la grilla de 0,5 s) para que entre su frase. **Con voz se quita la base musical**: queda voz + SFX de las animaciones.
+Salidas: `output/SavingHub_MG*_VozIA.mp4` (12–17,5 s, -15/-16 LUFS). Las versiones sin voz siguen en `output/SavingHub_MG*.mp4`.
+GATE PASS ×5.

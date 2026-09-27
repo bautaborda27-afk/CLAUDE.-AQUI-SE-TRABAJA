@@ -366,7 +366,17 @@ def build(name, spec):
     c = Comp()
     t = 0.0
     bounds = []
-    for kind, d, kw in spec["scenes"]:
+    vo_lines = spec.get("vo") or [None] * len(spec["scenes"])
+    vo_events = []
+    for (kind, d, kw), line in zip(spec["scenes"], vo_lines):
+        if line:
+            # AI voiceover: the scene stretches (0.5 s grid) to fit its line
+            import build_vo
+            wav = build_vo.tts(line)
+            lead = 0.45 if kind == "end" else 0.15
+            need = lead + build_vo.duration(wav) + 0.35
+            d = max(d, -(-need * 2 // 1) / 2)
+            vo_events.append((wav, t + lead))
         getattr(c, kind)(t, d, **kw)
         t += d
         bounds.append(t)
@@ -412,20 +422,40 @@ def build(name, spec):
 </html>
 """
     (out / "index.html").write_text(doc)
-    mix(out, c.sfx, dur)
+    mix(out, c.sfx, dur, vo_events)
     (out / "timeline.json").write_text(json.dumps({"duration": dur, "bounds": bounds}, indent=1))
     print(f"{name}: {dur}s, {len(spec['scenes'])} scenes, {len(c.sfx)} sfx")
 
 
-def mix(out, sfx, dur):
-    inputs = ["-i", str(MG / "beat.wav")]
-    chains = [f"[0]atrim=0:{dur},volume=0.5,afade=t=in:d=0.05,afade=t=out:st={dur - 0.8}:d=0.8[beat]"]
+def mix(out, sfx, dur, vo_events=()):
+    """Beat + SFX; with a voiceover the beat is dropped (voice + SFX only)."""
+    if vo_events:
+        inputs = ["-f", "lavfi", "-t", str(dur), "-i", "anullsrc=r=48000:cl=stereo"]
+        chains = ["[0]anull[beat]"]
+    else:
+        inputs = ["-i", str(MG / "beat.wav")]
+        chains = [f"[0]atrim=0:{dur},volume=0.5,afade=t=in:d=0.05,afade=t=out:st={dur - 0.8}:d=0.8[beat]"]
     labels = ["[beat]"]
-    for i, (f, t, vol) in enumerate(sfx, start=1):
+    k = 1
+    vo_labels = []
+    for wav, t in vo_events:
+        inputs += ["-i", str(wav)]
+        ms = int(round(t * 1000))
+        chains.append(f"[{k}]aresample=48000,adelay={ms}[v{k}]")
+        vo_labels.append(f"[v{k}]")
+        k += 1
+    if vo_labels:
+        chains.append("".join(vo_labels) + f"amix=inputs={len(vo_labels)}:normalize=0,highpass=f=80,"
+                      "acompressor=threshold=-20dB:ratio=3:attack=5:release=80,loudnorm=I=-15:TP=-2,"
+                      "aformat=channel_layouts=stereo[vo]")
+        labels.append("[vo]")
+    for f, t, vol in sfx:
         inputs += ["-i", str(SFX / f"{f}.wav")]
         ms = max(0, int(round(t * 1000)))
-        chains.append(f"[{i}]aresample=48000,aformat=channel_layouts=stereo,adelay={ms}|{ms},volume={vol * 1.4:.2f}[e{i}]")
-        labels.append(f"[e{i}]")
+        g = vol * (0.8 if vo_events else 1.4)
+        chains.append(f"[{k}]aresample=48000,aformat=channel_layouts=stereo,adelay={ms}|{ms},volume={g:.2f}[e{k}]")
+        labels.append(f"[e{k}]")
+        k += 1
     fc = ";".join(chains) + ";" + "".join(labels) + \
         f"amix=inputs={len(labels)}:duration=first:normalize=0,alimiter=limit=0.95,apad,atrim=0:{dur}[mix]"
     subprocess.run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", fc, "-map", "[mix]",
