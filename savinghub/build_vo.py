@@ -9,7 +9,7 @@ The last line plays over the branded end card.
 
 Pipeline per video: TTS each line -> lay out timeline from VO durations ->
 cut base video (build_base) -> captions/animation (build_comp) -> mix VO +
-ducked ASMR + SFX into master.m4a. Render with `hyperframes render` after.
+SFX into master.m4a (no original sound). Render with `hyperframes render` after.
 """
 import json
 import subprocess
@@ -177,16 +177,14 @@ def mix(name, comp, vo_events, dur):
         events.append(("impact", p, 0.45))
     et = comp["end"]["t"]
     events += [("riser", et - 0.8, 0.22), ("impact", et + 0.1, 0.4)]
-    inputs = ["-i", str(ROOT / "work" / f"{name}_asmr.wav")]
-    chains = ["[0]acompressor=threshold=-30dB:ratio=4:attack=5:release=120:makeup=8,"
-              "loudnorm=I=-24:TP=-6,aresample=48000[asmr]"]
-    vo_labels = []
-    for i, (wav, t) in enumerate(vo_events, start=1):
+    # voice replaces the original (ASMR) sound: master = AI voice + edit SFX only
+    inputs, chains, vo_labels = [], [], []
+    for i, (wav, t) in enumerate(vo_events):
         inputs += ["-i", str(wav)]
         ms = int(round(t * 1000))
         chains.append(f"[{i}]aresample=48000,adelay={ms},volume=1.0[v{i}]")
         vo_labels.append(f"[v{i}]")
-    base = len(vo_events) + 1
+    base = len(vo_events)
     sfx_labels = []
     for j, (f, t, vol) in enumerate(events):
         inputs += ["-i", str(SFX / f"{f}.wav")]
@@ -195,11 +193,9 @@ def mix(name, comp, vo_events, dur):
         sfx_labels.append(f"[e{j}]")
     chains.append("".join(vo_labels) + f"amix=inputs={len(vo_labels)}:normalize=0,"
                   "highpass=f=80,acompressor=threshold=-20dB:ratio=3:attack=5:release=80,"
-                  "loudnorm=I=-15:TP=-2,aformat=channel_layouts=stereo,asplit=2[vo][vokey]")
-    # duck the ASMR bed under the voice
-    chains.append("[asmr][vokey]sidechaincompress=threshold=0.03:ratio=8:attack=15:release=250[bed]")
-    fc = ";".join(chains) + ";[bed][vo]" + "".join(sfx_labels) + \
-        f"amix=inputs={2 + len(sfx_labels)}:duration=first:normalize=0,alimiter=limit=0.95," \
+                  "loudnorm=I=-15:TP=-2,aformat=channel_layouts=stereo[vo]")
+    fc = ";".join(chains) + ";[vo]" + "".join(sfx_labels) + \
+        f"amix=inputs={1 + len(sfx_labels)}:duration=longest:normalize=0,alimiter=limit=0.95," \
         f"apad,atrim=0:{dur},afade=t=out:st={dur - 0.4:.2f}:d=0.4[mix]"
     sh("ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", fc, "-map", "[mix]",
        "-ar", "48000", "-ac", "2", "-c:a", "aac", "-b:a", "192k", str(out / "master.m4a"))

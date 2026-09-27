@@ -68,7 +68,7 @@
 
 **Voz IA:** Kokoro-82M local (`hyperframes tts`, voz `ef_dora`, español, velocidad 1.08). Gratis y offline.
 Los nombres propios se escriben fonéticamente para el TTS ("Séiving Jab", "Yin Lou Inmortel", "Bajarára", "decánt").
-El ASMR queda de fondo, con ducking bajo la voz (sidechain). Subtítulos palabra por palabra, a la velocidad de la voz.
+**En los videos con voz se quita el sonido original (ASMR)**: el audio es solo la voz IA y los SFX de edición (whooshes, impactos, riser). Subtítulos palabra por palabra, a la velocidad de la voz.
 Todo se genera con `build_vo.py` y el pase final con `finalize.sh`.
 
 | Video | Idea | Duración |
