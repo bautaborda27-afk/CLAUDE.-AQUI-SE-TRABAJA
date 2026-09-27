@@ -423,7 +423,8 @@ def build(name, spec):
 """
     (out / "index.html").write_text(doc)
     mix(out, c.sfx, dur, vo_events)
-    (out / "timeline.json").write_text(json.dumps({"duration": dur, "bounds": bounds}, indent=1))
+    (out / "timeline.json").write_text(json.dumps({"duration": dur, "bounds": bounds,
+                                                   "vo": [[str(w), round(t, 3)] for w, t in vo_events]}, indent=1))
     print(f"{name}: {dur}s, {len(spec['scenes'])} scenes, {len(c.sfx)} sfx")
 
 
@@ -447,7 +448,7 @@ def mix(out, sfx, dur, vo_events=()):
     if vo_labels:
         chains.append("".join(vo_labels) + f"amix=inputs={len(vo_labels)}:normalize=0,highpass=f=80,"
                       "acompressor=threshold=-20dB:ratio=3:attack=5:release=80,loudnorm=I=-15:TP=-2,"
-                      "aformat=channel_layouts=stereo[vo]")
+                      "aresample=48000,aformat=channel_layouts=stereo[vo]")
         labels.append("[vo]")
     for f, t, vol in sfx:
         inputs += ["-i", str(SFX / f"{f}.wav")]

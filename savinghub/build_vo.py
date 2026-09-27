@@ -193,7 +193,7 @@ def mix(name, comp, vo_events, dur):
         sfx_labels.append(f"[e{j}]")
     chains.append("".join(vo_labels) + f"amix=inputs={len(vo_labels)}:normalize=0,"
                   "highpass=f=80,acompressor=threshold=-20dB:ratio=3:attack=5:release=80,"
-                  "loudnorm=I=-15:TP=-2,aformat=channel_layouts=stereo[vo]")
+                  "loudnorm=I=-15:TP=-2,aresample=48000,aformat=channel_layouts=stereo[vo]")
     fc = ";".join(chains) + ";[vo]" + "".join(sfx_labels) + \
         f"amix=inputs={1 + len(sfx_labels)}:duration=longest:normalize=0,alimiter=limit=0.95," \
         f"apad,atrim=0:{dur},afade=t=out:st={dur - 0.4:.2f}:d=0.4[mix]"
@@ -212,6 +212,7 @@ def build(name, cfg):
     real = json.loads((out / "shots.json").read_text())["duration"]
     build_comp.build(name, comp)
     mix(name, comp, vo_events, real)
+    (out / "vo.json").write_text(json.dumps([[str(w), round(t, 3)] for w, t in vo_events], indent=1))
     print(f"{name}: {real:.2f}s, {len(comp['phrases'])} caption screens")
 
 

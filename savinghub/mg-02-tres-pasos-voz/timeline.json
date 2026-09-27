@@ -6,5 +6,27 @@
   9.5,
   12.5,
   15.5
+ ],
+ "vo": [
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_As\u00ed_se_arma_un_dec\u00e1nt__en_tres_pasos_.wav",
+   0.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Uno__extraemos_del_frasco_original__con_jeringa_.wav",
+   3.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Dos__lo_pasamos_a_un_atomizador_de_vidrio_.wav",
+   6.65
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Tres__lo_sellamos__y_queda_listo_para_usar_.wav",
+   9.65
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_S\u00e9iving_Jab__Tu_dec\u00e1nt__listo_para_llevar_.wav",
+   12.95
+  ]
  ]
 }

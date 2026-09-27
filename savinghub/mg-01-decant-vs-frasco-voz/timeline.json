@@ -5,5 +5,23 @@
   10.5,
   13.5,
   16.5
+ ],
+ "vo": [
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08__Frasco_entero__o_dec\u00e1nt_.wav",
+   0.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Con_el_frasco_pag\u00e1s_todo_de_una__y_sin_probarlo__Con_un_dec\u00e1nt_pag\u00e1s_una_fracci\u00f3.wav",
+   2.65
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Lo_sacamos_directo_del_frasco_original_.wav",
+   10.65
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_S\u00e9iving_Jab__Prob\u00e1_antes_de_comprar_.wav",
+   13.95
+  ]
  ]
 }

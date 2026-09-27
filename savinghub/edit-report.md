@@ -112,3 +112,14 @@ Verificación: lint 0 errores, snapshots revisados (tildes, estados iniciales, o
 (sobre la grilla de 0,5 s) para que entre su frase. **Con voz se quita la base musical**: queda voz + SFX de las animaciones.
 Salidas: `output/SavingHub_MG*_VozIA.mp4` (12–17,5 s, -15/-16 LUFS). Las versiones sin voz siguen en `output/SavingHub_MG*.mp4`.
 GATE PASS ×5.
+
+## Corrección — voz duplicada en los videos con voz IA
+
+**Problema:** en los 9 videos con voz IA se escuchaban dos voces encimadas.
+**Causa:** `loudnorm` devuelve el bus de voz a 192 kHz en mono; al pasarlo a estéreo sin re-muestrear primero,
+ffmpeg generaba dos canales desfasados entre sí (correlación L/R 0,065), que se escuchan como dos voces superpuestas.
+**Arreglo:** `aresample=48000` después de `loudnorm`, antes de `aformat=stereo`, en `build_vo.py` y `build_mg.py`.
+Se regeneró el audio de los 9 videos; la imagen no cambió.
+**Control nuevo (`check_vo.py`):** exige correlación L/R > 0,98 y que cada frase aparezca una sola vez, en su
+tiempo planeado (±40 ms). Las posiciones quedan en `edit-v2-*/vo.json` y `mg-*-voz/timeline.json`.
+Resultado: los 9 videos pasan (L/R 1,000; todas las frases en su lugar).
