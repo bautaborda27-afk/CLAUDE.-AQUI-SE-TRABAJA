@@ -8,3 +8,10 @@ edit-*/base.mp4
 edit-*/master.m4a
 edit-*/vendor/
 edit-*/node_modules/
+# motion graphics (regenerable: mg_assets.py + build_mg.py)
+mg/
+mg-*/clips/
+mg-*/renders/
+mg-*/snapshots/
+mg-*/vendor/
+mg-*/master.m4a

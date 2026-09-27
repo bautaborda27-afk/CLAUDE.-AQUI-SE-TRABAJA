@@ -85,3 +85,23 @@ Para medir: publicarlos con el mismo copy y horario (o como variantes de anuncio
 y el % de reproducción completa.
 
 Verificación: lint 0 errores, `verify-render.mjs` GATE PASS ×4 y contact sheets revisados.
+
+---
+
+# Ronda 3 — 5 reels motion graphics
+
+Cada cuadro es una pieza diseñada, no footage a pantalla completa. Fondo negro con grilla o rojo, titulares en Anton
+revelados con máscara, etiquetas en JetBrains Mono, clips del producto dentro de tarjetas animadas con marcas de esquina,
+HUD fijo ("SAVING HUB" + sección) con barra de progreso, y transición con cortina roja y blanca entre escenas.
+Audio: beat de 120 BPM sintetizado (libre de derechos, `mg_assets.py`) + SFX (whoosh, click, impact, riser). Sin voz.
+
+| Video | Idea | Escenas | Duración |
+|-------|------|---------|----------|
+| `SavingHub_MG1_DecantVsFrasco` | ¿Frasco entero o decant? | título → tabla comparativa ✗/✓ con VS → tarjeta de la jeringa → logo | 14.5 s |
+| `SavingHub_MG2_TresPasos` | Así se arma un decant | título → 01 EXTRAEMOS → 02 TRASVASAMOS → 03 SELLAMOS (barra de progreso segmentada) → logo | 14.0 s |
+| `SavingHub_MG3_FichaJeanLowe` | Ficha técnica Jean Lowe Immortel | título → ficha (casa, tipo, 100 ML, perfil, origen) → holograma con marcas → contador 100 ML → logo | 15.5 s |
+| `SavingHub_MG4_LlegoTuPedido` | POV: llegó tu decant | notificaciones tipo celular sobre el producto desenfocado → tarjeta del decant → logo | 12.0 s |
+| `SavingHub_MG5_PerfumesArabes` | Lujo sin pagar de más | tipografía cinética + marquesina → tarjeta Jean Lowe → tarjeta Bharara → FRASCOS Y DECANTS → logo | 14.0 s |
+
+El logo "SH" del cierre es una versión simplificada para el video (cuadro rojo con SH subrayado); se reemplaza por el oficial si lo pasan en PNG/SVG.
+Verificación: lint 0 errores, snapshots revisados (tildes, estados iniciales, overflow), GATE PASS ×5, contact sheet `work/mg_all.png`.
