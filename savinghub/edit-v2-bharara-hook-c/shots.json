@@ -1,0 +1,60 @@
+{
+  "duration": 16.757,
+  "shots": [
+    {
+      "start": 0.0,
+      "duration": 1.406,
+      "src": 3.5
+    },
+    {
+      "start": 1.406,
+      "duration": 1.406,
+      "src": 7.0
+    },
+    {
+      "start": 2.812,
+      "duration": 1.411,
+      "src": 15.0
+    },
+    {
+      "start": 4.223,
+      "duration": 1.7,
+      "src": 57.0
+    },
+    {
+      "start": 5.923,
+      "duration": 1.7,
+      "src": 64.0
+    },
+    {
+      "start": 7.623,
+      "duration": 2.147,
+      "src": 76.0
+    },
+    {
+      "start": 9.77,
+      "duration": 0.661,
+      "src": 86.0
+    },
+    {
+      "start": 10.431,
+      "duration": 0.661,
+      "src": 100.0
+    },
+    {
+      "start": 11.092,
+      "duration": 1.4,
+      "src": 40.0
+    },
+    {
+      "start": 12.492,
+      "duration": 1.4,
+      "src": 50.5
+    },
+    {
+      "start": 13.892,
+      "duration": 2.865,
+      "src": 106.0
+    }
+  ]
+}

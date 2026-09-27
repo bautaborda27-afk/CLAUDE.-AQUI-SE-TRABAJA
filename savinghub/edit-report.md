@@ -61,3 +61,27 @@
 - ¿Precio, @usuario o WhatsApp para el cierre? Hoy dice "PEDILO POR DM".
 - ¿Agregar música (tema propio o generada)?
 - "¿LUJO FRANCÉS A PRECIO ÁRABE?" alude a que el Immortel es una alternativa a un perfume francés de lujo, sin nombrar la marca.
+
+---
+
+# Ronda 2 — ideas nuevas + test de hooks + voz IA
+
+**Voz IA:** Kokoro-82M local (`hyperframes tts`, voz `ef_dora`, español, velocidad 1.08). Gratis y offline.
+Los nombres propios se escriben fonéticamente para el TTS ("Séiving Jab", "Yin Lou Inmortel", "Bajarára", "decánt").
+El ASMR queda de fondo, con ducking bajo la voz (sidechain). Subtítulos palabra por palabra, a la velocidad de la voz.
+Todo se genera con `build_vo.py` y el pase final con `finalize.sh`.
+
+| Video | Idea | Duración |
+|-------|------|----------|
+| `SavingHub_V2_JeanLowe_EsOriginal_VozIA` | "¿Cómo saber si tu perfume árabe es original?" — 1. holograma, 2. sellado con film, 3. info impresa → lo abrimos frente a cámara → cierre | 17.3 s |
+| `SavingHub_V2_Decant_HookA_QueEsUnDecant_VozIA` | Hook A: "¿Qué es un decant? Mirá." | 15.4 s |
+| `SavingHub_V2_Decant_HookB_ACiegas_VozIA` | Hook B: "No compres un perfume de lujo a ciegas." | 16.2 s |
+| `SavingHub_V2_Decant_HookC_Fortuna_VozIA` | Hook C: "Este perfume cuesta una fortuna. Pero hay un truco." | 16.8 s |
+
+**Test de hooks:** las 3 versiones del decant comparten los mismos planos (caja abriéndose con pixelado → nítido) y el mismo cuerpo:
+"Así armamos tu decant → directo del frasco original, con jeringa → a un atomizador de vidrio → y listo →
+probás Bharara King sin gastar de más → Saving Hub, pedilo por mensaje". **Solo cambian el texto y la voz del hook.**
+Para medir: publicarlos con el mismo copy y horario (o como variantes de anuncio) y comparar la retención a los 3 s
+y el % de reproducción completa.
+
+Verificación: lint 0 errores, `verify-render.mjs` GATE PASS ×4 y contact sheets revisados.
