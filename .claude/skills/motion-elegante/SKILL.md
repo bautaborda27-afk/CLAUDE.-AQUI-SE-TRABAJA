@@ -16,7 +16,7 @@ Genera un proyecto HyperFrames completo desde dos archivos JSON: la **marca** y 
 4. **Generar** → `python3 .claude/skills/motion-elegante/scripts/build.py motion-elegante/<proyecto>/spec.json`
 5. **Validar** → en la carpeta del proyecto: `npx --yes hyperframes@0.8.97 lint` (0 errores; las advertencias `nested_structure_needs_subcomposition` son sólo de organización en Studio).
 6. **Revisar** → `npx --yes hyperframes@0.8.97 snapshot --at <mitad de cada escena> --no-end --describe false` y mirar `snapshots/contact-sheet.jpg`. Revisar que nada se corte, se pise o quede chico.
-7. **Render** → `npx --yes hyperframes@0.8.97 render` → `renders/*.mp4`. Opcional: `node .claude/skills/video-editing/scripts/verify-render.mjs <mp4>`.
+7. **Render** → `npx --yes hyperframes@0.8.97 render` → `renders/*.mp4`. Verificar: `node .claude/skills/video-editing/scripts/verify-render.mjs <mp4> --width <W> --height <H>` (por defecto espera 1080×1920). Copiar el final a `motion-elegante/output/<proyecto>.mp4`.
 8. Después de cambiar código de la habilidad: `graphify update .`
 
 ## brand.json
