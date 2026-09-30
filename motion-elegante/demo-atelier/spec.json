@@ -1,0 +1,72 @@
+{
+  "marca": "../marcas/atelier-nube/brand.json",
+  "formato": "horizontal",
+  "etiqueta": "Taller creativo",
+  "musica": "ambiente",
+  "escenas": [
+    {
+      "tipo": "titulo",
+      "kicker": "Taller creativo",
+      "lineas": [
+        "Diseño hecho",
+        "a *mano*"
+      ],
+      "sub": "Identidad, papelería y packaging"
+    },
+    {
+      "tipo": "icono",
+      "icono": "pencil",
+      "titulo": "Todo empieza con *un boceto*",
+      "sub": "Escuchamos tu idea y la dibujamos"
+    },
+    {
+      "tipo": "pasos",
+      "titulo": "El *proceso*",
+      "items": [
+        {
+          "icono": "user",
+          "texto": "Conocemos tu marca"
+        },
+        {
+          "icono": "writing",
+          "texto": "Bocetamos ideas"
+        },
+        {
+          "icono": "palette",
+          "texto": "Definimos color y forma"
+        },
+        {
+          "icono": "package",
+          "texto": "Entregamos todo listo"
+        }
+      ]
+    },
+    {
+      "tipo": "iconos",
+      "titulo": "Lo que *hacemos*",
+      "items": [
+        {
+          "icono": "brush",
+          "texto": "Logos"
+        },
+        {
+          "icono": "mail",
+          "texto": "Papelería"
+        },
+        {
+          "icono": "gift",
+          "texto": "Packaging"
+        },
+        {
+          "icono": "brand-instagram",
+          "texto": "Redes"
+        }
+      ]
+    },
+    {
+      "tipo": "cierre",
+      "tagline": "Estudio de diseño",
+      "cta": "Escribinos"
+    }
+  ]
+}

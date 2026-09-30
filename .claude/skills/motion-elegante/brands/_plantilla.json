@@ -1,0 +1,16 @@
+{
+  "nombre": "Atelier Nube",
+  "colores": {
+    "fondo": "#F3EDE4",
+    "superficie": "#E8DFD2",
+    "texto": "#1F1B17",
+    "acento": "#A8553A",
+    "suave": "#7C7166"
+  },
+  "fuentes": {
+    "titulo": { "archivo": "cormorant-garamond-latin-500-normal.woff2", "italica": "cormorant-garamond-latin-500-italic.woff2" },
+    "texto": { "archivo": "manrope-latin-400-normal.woff2", "negrita": "manrope-latin-600-normal.woff2" }
+  },
+  "estilo": { "titulos_mayuscula": false },
+  "logo": { "tipo": "icono", "icono": "feather", "texto": "Atelier Nube" }
+}

@@ -1,0 +1,59 @@
+{
+  "marca": "../marcas/savinghub/brand.json",
+  "formato": "vertical",
+  "etiqueta": "Perfumes árabes",
+  "musica": "ambiente",
+  "escenas": [
+    {
+      "tipo": "titulo",
+      "kicker": "Perfumes árabes",
+      "lineas": [
+        "Lujo",
+        "*sin pagar*",
+        "de más"
+      ],
+      "sub": "Decants del frasco original"
+    },
+    {
+      "tipo": "iconos",
+      "titulo": "Cómo *funciona*",
+      "items": [
+        {
+          "icono": "perfume",
+          "texto": "Elegís tu aroma"
+        },
+        {
+          "icono": "droplet",
+          "texto": "Lo decantamos"
+        },
+        {
+          "icono": "truck",
+          "texto": "Te llega a casa"
+        }
+      ]
+    },
+    {
+      "tipo": "imagen",
+      "archivo": "assets/bharara.mp4",
+      "titulo": "Bharara *King*",
+      "kicker": "Directo del original"
+    },
+    {
+      "tipo": "dato",
+      "valor": 100,
+      "sufijo": "ml",
+      "texto": "Frasco *completo*, original y sellado",
+      "kicker": "Jean Lowe Immortel"
+    },
+    {
+      "tipo": "frase",
+      "texto": "Probalo en tu piel *antes de comprar* el frasco",
+      "autor": "Saving Hub"
+    },
+    {
+      "tipo": "cierre",
+      "tagline": "Perfumes árabes · Decants",
+      "cta": "Pedilo por DM"
+    }
+  ]
+}

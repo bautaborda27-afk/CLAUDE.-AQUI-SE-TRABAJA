@@ -1,0 +1,16 @@
+{
+  "nombre": "Saving Hub",
+  "colores": {
+    "fondo": "#0D0C0B",
+    "superficie": "#1A1817",
+    "texto": "#F4EFE8",
+    "acento": "#E0201B",
+    "suave": "#9A928A"
+  },
+  "fuentes": {
+    "titulo": { "archivo": "Anton.woff2", "italica": "cormorant-garamond-latin-500-italic.woff2" },
+    "texto": { "archivo": "manrope-latin-400-normal.woff2", "negrita": "manrope-latin-600-normal.woff2" }
+  },
+  "estilo": { "titulos_mayuscula": true },
+  "logo": { "tipo": "icono", "icono": "perfume", "texto": "Saving Hub" }
+}

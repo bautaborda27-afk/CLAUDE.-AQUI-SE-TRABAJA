@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Saving Hub · motion elegante</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>@font-face { font-family: "Display"; src: url("fonts/Anton.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: block; }
+@font-face { font-family: "Display"; src: url("fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: block; }
+@font-face { font-family: "Body"; src: url("fonts/manrope-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "Body"; src: url("fonts/manrope-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: block; }
+:root { --bg: #0D0C0B; --surface: #1A1817; --ink: #F4EFE8;
+  --accent: #E0201B; --muted: #9A928A; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; container-type: size;
+  background: var(--bg); color: var(--ink); font-family: "Body", sans-serif; }
+.glow { position: absolute; width: 120cqmax; height: 120cqmax; left: 50%; top: 50%; margin: -60cqmax 0 0 -60cqmax;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%);
+  opacity: .55; }
+.vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 45%,
+  color-mix(in srgb, var(--bg) 85%, black) 100%); }
+.grain { position: absolute; inset: 0; opacity: .09; mix-blend-mode: overlay; background-size: 256px 256px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='7' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+.frame-line { position: absolute; inset: 3.2cqmin; border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent); }
+.hud { position: absolute; left: 6cqmin; right: 6cqmin; top: 5.2cqmin; display: flex; justify-content: space-between;
+  font: 600 2.1cqmin "Body"; letter-spacing: .45cqmin; text-transform: uppercase; color: var(--muted); z-index: 40; }
+.hud .dot { display: inline-block; width: 1cqmin; height: 1cqmin; border-radius: 50%; background: var(--accent);
+  margin-right: 1.2cqmin; vertical-align: .15cqmin; }
+.prog { position: absolute; left: 6cqmin; right: 6cqmin; bottom: 5.2cqmin; height: 2px; background: var(--accent);
+  transform-origin: left center; z-index: 40; opacity: .8; }
+.scene { position: absolute; inset: 0; z-index: 10; }
+.inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  padding: 14cqmin 8cqmin; }
+.stack { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4.5cqmin;
+  max-width: 88cqw; }
+.kicker { font: 600 2.7cqmin "Body"; letter-spacing: .7cqmin; text-transform: uppercase; color: var(--accent); }
+.mask { display: block; overflow: hidden; padding: .06em .1em .14em; margin: -.06em 0 -.14em; }
+.ln { display: block; will-change: transform; }
+.h1 { font: 500 17cqmin/1.02 "Display", serif; letter-spacing: -.02em;
+  text-transform: uppercase; font-weight: 500; }
+.h2 { font: 500 11.5cqmin/1.05 "Display", serif; letter-spacing: -.015em; text-transform: uppercase; }
+.ac { font-style: italic; color: var(--accent); }
+.sub { font: 400 3.9cqmin/1.5 "Body"; color: var(--muted); max-width: 80cqmin; }
+.sub.big { font-size: 4.6cqmin; color: var(--ink); }
+.rule { width: 18cqmin; height: 2px; background: var(--accent); }
+.badge { position: relative; width: 42cqmin; height: 42cqmin; display: flex; align-items: center; justify-content: center; color: var(--ink); }
+.badge .ring { position: absolute; inset: 0; width: 100%; height: 100%; stroke: var(--accent); stroke-width: .6; }
+.badge .ic { width: 48%; height: 48%; stroke-width: 1.1; }
+.badge.sm { width: 23cqmin; height: 23cqmin; flex: 0 0 auto; }
+.badge.sm .ring { stroke-width: .8; }
+.badge.xs { width: 9cqmin; height: 9cqmin; flex: 0 0 auto; }
+.badge.xs .ic { width: 100%; height: 100%; stroke-width: 1.3; color: var(--accent); }
+.d { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.items { display: flex; flex-direction: column; flex-wrap: nowrap; justify-content: center; align-items: flex-start; gap: 4.5cqmin; margin-top: 2cqmin; }
+
+.item { display: flex; flex-direction: row; align-items: center; gap: 5cqmin; width: auto; text-align: left; }
+.cap { font: 600 3.3cqmin/1.35 "Body"; letter-spacing: .2cqmin; text-transform: uppercase; }
+.steps { position: relative; display: flex; flex-direction: column; gap: 6.5cqmin; margin-top: 3cqmin; text-align: left; }
+.spine { position: absolute; left: 4cqmin; top: 1cqmin; bottom: 1cqmin; width: 1px; background: color-mix(in srgb, var(--muted) 50%, transparent); }
+.step { position: relative; display: flex; align-items: center; gap: 3.2cqmin; }
+.num { position: relative; flex: 0 0 8cqmin; height: 8cqmin; border-radius: 50%; background: var(--bg);
+  border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center;
+  font: 600 2.5cqmin "Body"; color: var(--accent); letter-spacing: .1cqmin; }
+.stx { font: 400 5cqmin/1.3 "Display", serif; }
+.dial { position: relative; width: 72cqmin; height: 72cqmin; }
+.dring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); fill: none; }
+.dring .track { stroke: color-mix(in srgb, var(--muted) 30%, transparent); stroke-width: .5; }
+.dring .arc { stroke: var(--accent); stroke-width: .9; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font: 500 21cqmin "Display", serif; font-variant-numeric: lining-nums tabular-nums; }
+.val .pre, .val .suf { font-size: .45em; color: var(--accent); font-style: italic; margin: 0 .08em; }
+.media .fr { width: 78cqw; }
+.ghost-copy { visibility: hidden; }
+.frame { position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden;
+  border-radius: 2.2cqmin; background: var(--surface); }
+.frame.ghost { background: transparent; }
+.frame .push { position: absolute; inset: 0; }
+.frame img, .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media-layer { position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.quote-mark { font: 500 32cqmin/.6 "Display", serif; color: var(--accent); height: 10cqmin; }
+.quote { font: 500 9.4cqmin/1.2 "Display", serif; letter-spacing: -.01em; }
+.quote .w { display: inline-block; }
+.quote .w.ac { font-style: italic; color: var(--accent); }
+.mark .badge { width: 34cqmin; height: 34cqmin; }
+.logo-img { height: 26cqmin; width: auto; max-width: 60cqmin; object-fit: contain; display: block; }
+.wordmark { font: 500 12.5cqmin/1 "Display", serif; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.wordmark .L { display: inline-block; }
+.cta span { display: inline-block; padding: 1.8cqmin 5cqmin; border: 1px solid var(--accent); border-radius: 99cqmin;
+  font: 600 3cqmin "Body"; letter-spacing: .6cqmin; text-transform: uppercase; color: var(--ink); }
+</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27.0" data-width="1080" data-height="1920">
+      <div class="glow"></div><div class="vignette"></div>
+            <div class="media-layer inner" id="v1w"><div class="stack media"><div class="ghost-copy"><div class="kicker">Directo del original</div></div><div class="fr"><div class="frame vframe"><div class="push"><video id="v1" class="clip" src="media/bharara.mp4" muted playsinline data-start="9.00" data-duration="4.50" data-track-index="5"></video></div></div></div><div class="ghost-copy"><h2 class="h2"><span class="mask"><span class="ln">Bharara <em class="ac">King</em></span></span></h2></div></div></div>
+            <section id="s1" class="clip scene titulo" data-start="0.00" data-duration="4.00" data-track-index="2"><div class="inner"><div class="stack"><div class="out"><div class="kicker">Perfumes árabes</div></div><div class="out"><h1 class="h1"><span class="mask"><span class="ln">Lujo</span></span><span class="mask"><span class="ln"><em class="ac">sin pagar</em></span></span><span class="mask"><span class="ln">de más</span></span></h1></div><div class="out"><div class="rule"></div></div><div class="out"><p class="sub">Decants del frasco original</p></div></div></div></section>
+      <section id="s2" class="clip scene iconos" data-start="4.00" data-duration="5.00" data-track-index="1"><div class="inner"><div class="stack"><div class="out"><h2 class="h2"><span class="mask"><span class="ln">Cómo <em class="ac">funciona</em></span></span></h2></div><div class="items n3"><div class="out item i0"><div class="badge sm"><svg class="ring" viewBox="0 0 100 100" fill="none"><circle pathLength="1" class="d" cx="50" cy="50" r="48"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" class="d" d="M10 6v3" /> <path pathLength="1" class="d" d="M14 6v3" /> <path pathLength="1" class="d" d="M5 11a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -8" /> <path pathLength="1" class="d" d="M10 15a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path pathLength="1" class="d" d="M9 3h6v3h-6l0 -3" /></svg></div><p class="cap">Elegís tu aroma</p></div><div class="out item i1"><div class="badge sm"><svg class="ring" viewBox="0 0 100 100" fill="none"><circle pathLength="1" class="d" cx="50" cy="50" r="48"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" class="d" d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546" /></svg></div><p class="cap">Lo decantamos</p></div><div class="out item i2"><div class="badge sm"><svg class="ring" viewBox="0 0 100 100" fill="none"><circle pathLength="1" class="d" cx="50" cy="50" r="48"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" class="d" d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path pathLength="1" class="d" d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path pathLength="1" class="d" d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></svg></div><p class="cap">Te llega a casa</p></div></div></div></div></section>
+      <section id="s3" class="clip scene imagen" data-start="9.00" data-duration="4.50" data-track-index="2"><div class="inner"><div class="stack media"><div class="out"><div class="kicker">Directo del original</div></div><div class="out fr"><div class="frame ghost"></div></div><div class="out"><h2 class="h2"><span class="mask"><span class="ln">Bharara <em class="ac">King</em></span></span></h2></div></div></div></section>
+      <section id="s4" class="clip scene dato" data-start="13.50" data-duration="4.00" data-track-index="1"><div class="inner"><div class="stack"><div class="out"><div class="kicker">Jean Lowe Immortel</div></div><div class="out"><div class="dial"><svg class="dring" viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="46"/><circle class="arc" pathLength="1" cx="50" cy="50" r="46"/></svg><div class="val"><span class="pre"></span><span class="n">0</span><span class="suf">ml</span></div></div></div><div class="out"><p class="sub big">Frasco <em class="ac">completo</em>, original y sellado</p></div></div></div></section>
+      <section id="s5" class="clip scene frase" data-start="17.50" data-duration="5.00" data-track-index="2"><div class="inner"><div class="stack"><div class="out"><div class="quote-mark">“</div></div><div class="out"><p class="quote"><span class="w">Probalo</span> <span class="w">en</span> <span class="w">tu</span> <span class="w">piel</span> <span class="w ac">antes</span> <span class="w ac">de</span> <span class="w ac">comprar</span> <span class="w">el</span> <span class="w">frasco</span></p></div><div class="out"><div class="rule"></div></div><div class="out"><p class="kicker">Saving Hub</p></div></div></div></section>
+      <section id="s6" class="clip scene cierre" data-start="22.50" data-duration="4.50" data-track-index="1"><div class="inner"><div class="stack"><div class="out"><div class="mark"><div class="badge"><svg class="ring" viewBox="0 0 100 100" fill="none"><circle pathLength="1" class="d" cx="50" cy="50" r="48"/></svg><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" class="d" d="M10 6v3" /> <path pathLength="1" class="d" d="M14 6v3" /> <path pathLength="1" class="d" d="M5 11a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -8" /> <path pathLength="1" class="d" d="M10 15a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path pathLength="1" class="d" d="M9 3h6v3h-6l0 -3" /></svg></div></div></div><div class="out"><div class="wordmark"><span class="L">S</span><span class="L">a</span><span class="L">v</span><span class="L">i</span><span class="L">n</span><span class="L">g</span><span class="L">&nbsp;</span><span class="L">H</span><span class="L">u</span><span class="L">b</span></div></div><div class="out"><div class="rule"></div></div><div class="out"><p class="sub">Perfumes árabes · Decants</p></div><div class="out"><div class="cta"><span>Pedilo por DM</span></div></div></div></div></section>
+      <div class="frame-line"></div><div class="hud"><span><i class="dot"></i>Saving Hub</span><span class="count">Perfumes árabes</span></div><div class="prog"></div><div class="grain"></div>
+      <audio id="master" class="clip" src="master.m4a" data-start="0" data-duration="27.0" data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+            tl.fromTo(".glow", { xPercent: -18, yPercent: -10, scale: 0.9 }, { xPercent: 18, yPercent: 10, scale: 1.1, duration: 27.0, ease: "sine.inOut", immediateRender: true }, 0);
+      tl.fromTo("#s1 .inner", { scale: 1 }, { scale: 1.03, duration: 4.00, ease: "sine.inOut", immediateRender: true }, 0.00);
+      tl.fromTo("#s1 .d", { strokeDashoffset: 0 }, { strokeDashoffset: -1, duration: 0.80, ease: "power2.in", immediateRender: false }, 3.10);
+      tl.fromTo("#s1 .out", { y: 0, opacity: 1, filter: "blur(0px)" }, { y: -40, opacity: 0, filter: "blur(10px)", duration: 0.75, ease: "power2.in", stagger: { each: 0.06, from: "end" }, immediateRender: false }, 3.10);
+      tl.fromTo("#s1 .kicker", { x: 0, y: 20, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 0.10);
+      tl.fromTo("#s1 .h1 .ln", { yPercent: 105, opacity: 0, filter: "blur(10px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 1.3, ease: "expo.out", stagger: 0.14, immediateRender: true }, 0.30);
+      tl.fromTo("#s1 .rule", { scaleX: 0, transformOrigin: "center center" }, { scaleX: 1, duration: 1.2, ease: "expo.inOut", immediateRender: true }, 0.90);
+      tl.fromTo("#s1 .sub", { x: 0, y: 24, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 1.20);
+      tl.fromTo("#s2 .inner", { scale: 1 }, { scale: 1.03, duration: 5.00, ease: "sine.inOut", immediateRender: true }, 4.00);
+      tl.fromTo("#s2 .d", { strokeDashoffset: 0 }, { strokeDashoffset: -1, duration: 0.80, ease: "power2.in", immediateRender: false }, 8.10);
+      tl.fromTo("#s2 .out", { y: 0, opacity: 1, filter: "blur(0px)" }, { y: -40, opacity: 0, filter: "blur(10px)", duration: 0.75, ease: "power2.in", stagger: { each: 0.06, from: "end" }, immediateRender: false }, 8.10);
+      tl.fromTo("#s2 .kicker", { x: 0, y: 20, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 4.10);
+      tl.fromTo("#s2 .h2 .ln", { yPercent: 105, opacity: 0, filter: "blur(10px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 1.3, ease: "expo.out", stagger: 0.14, immediateRender: true }, 4.20);
+      tl.fromTo("#s2 .i0 .ring .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.4, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 4.80);
+      tl.fromTo("#s2 .i0 .ic .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.6, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 5.05);
+      tl.fromTo("#s2 .i0 .cap", { x: 0, y: 18, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 5.40);
+      tl.fromTo("#s2 .i1 .ring .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.4, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 5.15);
+      tl.fromTo("#s2 .i1 .ic .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.6, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 5.40);
+      tl.fromTo("#s2 .i1 .cap", { x: 0, y: 18, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 5.75);
+      tl.fromTo("#s2 .i2 .ring .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.4, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 5.50);
+      tl.fromTo("#s2 .i2 .ic .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.6, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 5.75);
+      tl.fromTo("#s2 .i2 .cap", { x: 0, y: 18, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 6.10);
+      tl.fromTo("#s3 .inner", { scale: 1 }, { scale: 1.03, duration: 4.50, ease: "sine.inOut", immediateRender: true }, 9.00);
+      tl.fromTo("#s3 .d", { strokeDashoffset: 0 }, { strokeDashoffset: -1, duration: 0.80, ease: "power2.in", immediateRender: false }, 12.60);
+      tl.fromTo("#s3 .out", { y: 0, opacity: 1, filter: "blur(0px)" }, { y: -40, opacity: 0, filter: "blur(10px)", duration: 0.75, ease: "power2.in", stagger: { each: 0.06, from: "end" }, immediateRender: false }, 12.60);
+      tl.fromTo("#v1w .vframe", { clipPath: "inset(12% 12% 12% 12% round 2.2cqmin)", opacity: 0 }, { clipPath: "inset(0% 0% 0% 0% round 2.2cqmin)", opacity: 1, duration: 1.6, ease: "expo.inOut", immediateRender: true }, 9.10);
+      tl.fromTo("#v1w .vframe .push", { scale: 1.18 }, { scale: 1.02, duration: 4.50, ease: "power1.out", immediateRender: true }, 9.00);
+      tl.fromTo("#v1w", { scale: 1 }, { scale: 1.03, duration: 4.50, ease: "sine.inOut", immediateRender: true }, 9.00);
+      tl.fromTo("#v1w .vframe", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(10px)", duration: 0.75, ease: "power2.in", immediateRender: false }, 12.70);
+      tl.fromTo("#s3 .kicker", { x: 0, y: 20, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 9.20);
+      tl.fromTo("#s3 .h2 .ln", { yPercent: 105, opacity: 0, filter: "blur(10px)" }, { yPercent: 0, opacity: 1, filter: "blur(0px)", duration: 1.3, ease: "expo.out", stagger: 0.14, immediateRender: true }, 9.80);
+      tl.fromTo("#s4 .inner", { scale: 1 }, { scale: 1.03, duration: 4.00, ease: "sine.inOut", immediateRender: true }, 13.50);
+      tl.fromTo("#s4 .d", { strokeDashoffset: 0 }, { strokeDashoffset: -1, duration: 0.80, ease: "power2.in", immediateRender: false }, 16.60);
+      tl.fromTo("#s4 .out", { y: 0, opacity: 1, filter: "blur(0px)" }, { y: -40, opacity: 0, filter: "blur(10px)", duration: 0.75, ease: "power2.in", stagger: { each: 0.06, from: "end" }, immediateRender: false }, 16.60);
+      tl.fromTo("#s4 .kicker", { x: 0, y: 20, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 13.60);
+      tl.fromTo("#s4 .dial", { x: 0, y: 0, scale: 0.92, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.4, ease: "expo.out", stagger: 0.0, immediateRender: true }, 13.60);
+      tl.fromTo("#s4 .arc", { strokeDashoffset: 1 }, { strokeDashoffset: 0.000, duration: 2.0, ease: "power3.inOut", immediateRender: true }, 13.80);
+      (() => { const o = { v: 0 }; const el = document.querySelector("#s4 .n"); const f = (v) => v.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, "."); tl.fromTo(o, { v: 0 }, { v: 100, duration: 2.0, ease: "power3.inOut", immediateRender: true, onUpdate: () => { el.textContent = f(o.v); } }, 13.80); })();
+      tl.fromTo("#s4 .sub", { x: 0, y: 24, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 14.90);
+      tl.fromTo("#s5 .inner", { scale: 1 }, { scale: 1.03, duration: 5.00, ease: "sine.inOut", immediateRender: true }, 17.50);
+      tl.fromTo("#s5 .d", { strokeDashoffset: 0 }, { strokeDashoffset: -1, duration: 0.80, ease: "power2.in", immediateRender: false }, 21.60);
+      tl.fromTo("#s5 .out", { y: 0, opacity: 1, filter: "blur(0px)" }, { y: -40, opacity: 0, filter: "blur(10px)", duration: 0.75, ease: "power2.in", stagger: { each: 0.06, from: "end" }, immediateRender: false }, 21.60);
+      tl.fromTo("#s5 .quote-mark", { x: 0, y: 0, scale: 0.8, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.6, ease: "expo.out", stagger: 0.0, immediateRender: true }, 17.60);
+      tl.fromTo("#s5 .quote .w", { opacity: 0, y: 14, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "power2.out", stagger: 0.160, immediateRender: true }, 17.90);
+      tl.fromTo("#s5 .rule", { scaleX: 0, transformOrigin: "center center" }, { scaleX: 1, duration: 1.2, ease: "expo.inOut", immediateRender: true }, 19.54);
+      tl.fromTo("#s5 p.kicker", { x: 0, y: 16, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 19.84);
+      tl.fromTo("#s6 .inner", { scale: 1 }, { scale: 1.03, duration: 4.50, ease: "sine.inOut", immediateRender: true }, 22.50);
+      tl.fromTo("#s6 .d", { strokeDashoffset: 0 }, { strokeDashoffset: -1, duration: 0.80, ease: "power2.in", immediateRender: false }, 26.10);
+      tl.fromTo("#s6 .out", { y: 0, opacity: 1, filter: "blur(0px)" }, { y: -40, opacity: 0, filter: "blur(10px)", duration: 0.75, ease: "power2.in", stagger: { each: 0.06, from: "end" }, immediateRender: false }, 26.10);
+      tl.fromTo("#s6 .mark .ring .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.5, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 22.60);
+      tl.fromTo("#s6 .mark .ic .d", { strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0, opacity: 1, duration: 1.8, ease: "power2.inOut", stagger: 0.1, immediateRender: true }, 22.90);
+      tl.fromTo("#s6 .wordmark .L", { opacity: 0, y: 30, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.05, immediateRender: true }, 23.40);
+      tl.fromTo("#s6 .rule", { scaleX: 0, transformOrigin: "center center" }, { scaleX: 1, duration: 1.2, ease: "expo.inOut", immediateRender: true }, 24.50);
+      tl.fromTo("#s6 .sub", { x: 0, y: 20, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 24.70);
+      tl.fromTo("#s6 .cta", { x: 0, y: 20, scale: 1.0, opacity: 0, filter: "blur(8px)" }, { x: 0, y: 0, scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out", stagger: 0.0, immediateRender: true }, 25.10);
+      tl.fromTo(".prog", { scaleX: 0 }, { scaleX: 1, duration: 27.0, ease: "none", immediateRender: true }, 0);
+      tl.fromTo(".hud, .frame-line", { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "power2.out", immediateRender: true }, 0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
