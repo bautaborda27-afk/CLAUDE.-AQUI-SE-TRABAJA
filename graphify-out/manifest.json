@@ -1,0 +1,896 @@
+{
+  ".claude/hooks/session-start.sh": {
+    "mtime": 1790792829.6312609,
+    "seen": 1790792957.2831767,
+    "ast_hash": "347eebdaf2afa1c77fd66924bb6448e0",
+    "semantic_hash": "347eebdaf2afa1c77fd66924bb6448e0"
+  },
+  ".claude/settings.json": {
+    "mtime": 1790792038.933949,
+    "seen": 1790792957.2831798,
+    "ast_hash": "44cc106134b8afd0b6b1f75b6e6f8768",
+    "semantic_hash": "44cc106134b8afd0b6b1f75b6e6f8768"
+  },
+  ".claude/skills/video-editing/scripts/verify-render.mjs": {
+    "mtime": 1790475695.2731295,
+    "seen": 1790792957.2831807,
+    "ast_hash": "303ecf4d67c0a3235da24317dad4b85b",
+    "semantic_hash": "303ecf4d67c0a3235da24317dad4b85b"
+  },
+  "my-video/eslint.config.mjs": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.2831824,
+    "ast_hash": "e20d59bb6b64567da14d80c3da2c6b15",
+    "semantic_hash": "e20d59bb6b64567da14d80c3da2c6b15"
+  },
+  "my-video/package.json": {
+    "mtime": 1790792414.2112362,
+    "seen": 1790792957.283183,
+    "ast_hash": "71b40dec7d1046eadc5bd004d6ac3c5d",
+    "semantic_hash": "71b40dec7d1046eadc5bd004d6ac3c5d"
+  },
+  "my-video/remotion.config.ts": {
+    "mtime": 1790792209.267736,
+    "seen": 1790792957.283184,
+    "ast_hash": "9c8fcbd0f09f9cf94ec1afc157eb0a83",
+    "semantic_hash": "9c8fcbd0f09f9cf94ec1afc157eb0a83"
+  },
+  "my-video/src/HelloWorld.tsx": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.2831855,
+    "ast_hash": "63a898ce73f11b728d83dda57b999005",
+    "semantic_hash": "63a898ce73f11b728d83dda57b999005"
+  },
+  "my-video/src/HelloWorld/Arc.tsx": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.2831936,
+    "ast_hash": "7f8782ca47399196e610847f4eac80cf",
+    "semantic_hash": "7f8782ca47399196e610847f4eac80cf"
+  },
+  "my-video/src/HelloWorld/Atom.tsx": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.2831955,
+    "ast_hash": "e5a5651af60adf73e4042e23ac4a1498",
+    "semantic_hash": "e5a5651af60adf73e4042e23ac4a1498"
+  },
+  "my-video/src/HelloWorld/Logo.tsx": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.2831964,
+    "ast_hash": "186d4498f801c6fefbf0d3cdaad27134",
+    "semantic_hash": "186d4498f801c6fefbf0d3cdaad27134"
+  },
+  "my-video/src/HelloWorld/Title.tsx": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.2831972,
+    "ast_hash": "3ddbf4873dc30dab8657cca6690ac7fa",
+    "semantic_hash": "3ddbf4873dc30dab8657cca6690ac7fa"
+  },
+  "my-video/src/Root.tsx": {
+    "mtime": 1790792222.598573,
+    "seen": 1790792957.283198,
+    "ast_hash": "0d7a0d25b680da2796ad695126f97b48",
+    "semantic_hash": "0d7a0d25b680da2796ad695126f97b48"
+  },
+  "my-video/src/index.ts": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.283199,
+    "ast_hash": "6c2ce436880cb16c98160769ed0f6150",
+    "semantic_hash": "6c2ce436880cb16c98160769ed0f6150"
+  },
+  "my-video/tsconfig.json": {
+    "mtime": 1790781604.0,
+    "seen": 1790792957.2831998,
+    "ast_hash": "3f9d94814358aa5e8a039f53ae3eee99",
+    "semantic_hash": "3f9d94814358aa5e8a039f53ae3eee99"
+  },
+  "savinghub/build_audio.py": {
+    "mtime": 1790475695.2741716,
+    "seen": 1790792957.2832005,
+    "ast_hash": "5e9d53e5928a7383d9ee2c8f89d772c1",
+    "semantic_hash": "5e9d53e5928a7383d9ee2c8f89d772c1"
+  },
+  "savinghub/build_base.py": {
+    "mtime": 1790475695.2741716,
+    "seen": 1790792957.2832015,
+    "ast_hash": "90666993228a07505748a8500edfa7a0",
+    "semantic_hash": "90666993228a07505748a8500edfa7a0"
+  },
+  "savinghub/build_comp.py": {
+    "mtime": 1790475695.2741716,
+    "seen": 1790792957.2832024,
+    "ast_hash": "0cfb839e203f2f8a58247d8fa6139ed3",
+    "semantic_hash": "0cfb839e203f2f8a58247d8fa6139ed3"
+  },
+  "savinghub/build_mg.py": {
+    "mtime": 1790791978.2432103,
+    "seen": 1790792957.2832031,
+    "ast_hash": "cc929e1502396bcd1d751f02cbba0889",
+    "semantic_hash": "cc929e1502396bcd1d751f02cbba0889"
+  },
+  "savinghub/build_mg_vo.py": {
+    "mtime": 1790791978.2432103,
+    "seen": 1790792957.2832038,
+    "ast_hash": "1d9df09715c28a66f5fcf42cadf6790c",
+    "semantic_hash": "1d9df09715c28a66f5fcf42cadf6790c"
+  },
+  "savinghub/build_vo.py": {
+    "mtime": 1790791978.2432103,
+    "seen": 1790792957.2832046,
+    "ast_hash": "e1bce3115abe14c7d09e368876e82791",
+    "semantic_hash": "e1bce3115abe14c7d09e368876e82791"
+  },
+  "savinghub/check_vo.py": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.2832053,
+    "ast_hash": "61b606a33f46323a963476207255d547",
+    "semantic_hash": "61b606a33f46323a963476207255d547"
+  },
+  "savinghub/edit-bharara/hyperframes.json": {
+    "mtime": 1790475695.2747622,
+    "seen": 1790792957.2832062,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/edit-bharara/meta.json": {
+    "mtime": 1790475695.2747622,
+    "seen": 1790792957.2832074,
+    "ast_hash": "6d0f8271e619ada4330382123efdda41",
+    "semantic_hash": "6d0f8271e619ada4330382123efdda41"
+  },
+  "savinghub/edit-bharara/package.json": {
+    "mtime": 1790475695.2747622,
+    "seen": 1790792957.2832081,
+    "ast_hash": "6703f524cf04fdbd614730c06da6e5f6",
+    "semantic_hash": "6703f524cf04fdbd614730c06da6e5f6"
+  },
+  "savinghub/edit-bharara/shots.json": {
+    "mtime": 1790475695.2747622,
+    "seen": 1790792957.2832086,
+    "ast_hash": "1bb2555ad671f16f05f9350ebfa01582",
+    "semantic_hash": "1bb2555ad671f16f05f9350ebfa01582"
+  },
+  "savinghub/edit-jeanlowe/hyperframes.json": {
+    "mtime": 1790475695.2752924,
+    "seen": 1790792957.2832096,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/edit-jeanlowe/meta.json": {
+    "mtime": 1790475695.2752924,
+    "seen": 1790792957.28321,
+    "ast_hash": "c1970d8ecfd90436574fef7824608737",
+    "semantic_hash": "c1970d8ecfd90436574fef7824608737"
+  },
+  "savinghub/edit-jeanlowe/package.json": {
+    "mtime": 1790475695.2752924,
+    "seen": 1790792957.2832108,
+    "ast_hash": "ac2bbc6324440eb3e6b859164488a710",
+    "semantic_hash": "ac2bbc6324440eb3e6b859164488a710"
+  },
+  "savinghub/edit-jeanlowe/shots.json": {
+    "mtime": 1790475695.2752924,
+    "seen": 1790792957.2832112,
+    "ast_hash": "0b4fb5402fbf21b50a999f3323ffa876",
+    "semantic_hash": "0b4fb5402fbf21b50a999f3323ffa876"
+  },
+  "savinghub/edit-v2-bharara-hook-a/hyperframes.json": {
+    "mtime": 1790475695.2761047,
+    "seen": 1790792957.2832117,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/edit-v2-bharara-hook-a/meta.json": {
+    "mtime": 1790475695.2761047,
+    "seen": 1790792957.2832127,
+    "ast_hash": "95d2fad02dd36a299f5d0ced6ccc32a3",
+    "semantic_hash": "95d2fad02dd36a299f5d0ced6ccc32a3"
+  },
+  "savinghub/edit-v2-bharara-hook-a/package.json": {
+    "mtime": 1790475695.2761047,
+    "seen": 1790792957.2832134,
+    "ast_hash": "1c83e5d51fe0c0aefcb2323f6af736ca",
+    "semantic_hash": "1c83e5d51fe0c0aefcb2323f6af736ca"
+  },
+  "savinghub/edit-v2-bharara-hook-a/shots.json": {
+    "mtime": 1790475695.2761047,
+    "seen": 1790792957.2832139,
+    "ast_hash": "b06b88cfb5f86fc2de281356d02781c9",
+    "semantic_hash": "b06b88cfb5f86fc2de281356d02781c9"
+  },
+  "savinghub/edit-v2-bharara-hook-a/vo.json": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.2832146,
+    "ast_hash": "e96ded2cc4b43e3d1dc2f6f88fcf6f7b",
+    "semantic_hash": "e96ded2cc4b43e3d1dc2f6f88fcf6f7b"
+  },
+  "savinghub/edit-v2-bharara-hook-b/hyperframes.json": {
+    "mtime": 1790475695.2766154,
+    "seen": 1790792957.2832153,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/edit-v2-bharara-hook-b/meta.json": {
+    "mtime": 1790475695.2766154,
+    "seen": 1790792957.2832158,
+    "ast_hash": "d503f17df1f9cb05466a156cac8ea537",
+    "semantic_hash": "d503f17df1f9cb05466a156cac8ea537"
+  },
+  "savinghub/edit-v2-bharara-hook-b/package.json": {
+    "mtime": 1790475695.2766154,
+    "seen": 1790792957.2832167,
+    "ast_hash": "a7e96d40c3d303cc0ecfefa5e76cf168",
+    "semantic_hash": "a7e96d40c3d303cc0ecfefa5e76cf168"
+  },
+  "savinghub/edit-v2-bharara-hook-b/shots.json": {
+    "mtime": 1790475695.2766154,
+    "seen": 1790792957.2832172,
+    "ast_hash": "81f5f2f415a79e769eefbf91516be9a4",
+    "semantic_hash": "81f5f2f415a79e769eefbf91516be9a4"
+  },
+  "savinghub/edit-v2-bharara-hook-b/vo.json": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.283218,
+    "ast_hash": "dc3030c0fc2e36f2d277fd84bbef3d5b",
+    "semantic_hash": "dc3030c0fc2e36f2d277fd84bbef3d5b"
+  },
+  "savinghub/edit-v2-bharara-hook-c/hyperframes.json": {
+    "mtime": 1790475695.277125,
+    "seen": 1790792957.2832184,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/edit-v2-bharara-hook-c/meta.json": {
+    "mtime": 1790475695.277125,
+    "seen": 1790792957.2832189,
+    "ast_hash": "34646abab838e3e79df5b8d83ec0789a",
+    "semantic_hash": "34646abab838e3e79df5b8d83ec0789a"
+  },
+  "savinghub/edit-v2-bharara-hook-c/package.json": {
+    "mtime": 1790475695.277125,
+    "seen": 1790792957.2832198,
+    "ast_hash": "e727106a7b37f6c1cdf78e089546f8e2",
+    "semantic_hash": "e727106a7b37f6c1cdf78e089546f8e2"
+  },
+  "savinghub/edit-v2-bharara-hook-c/shots.json": {
+    "mtime": 1790475695.277125,
+    "seen": 1790792957.2832203,
+    "ast_hash": "3cf1034d40b451490f523bf95dad080a",
+    "semantic_hash": "3cf1034d40b451490f523bf95dad080a"
+  },
+  "savinghub/edit-v2-bharara-hook-c/vo.json": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.283231,
+    "ast_hash": "68c368b7de17393d1c8b6e239355a010",
+    "semantic_hash": "68c368b7de17393d1c8b6e239355a010"
+  },
+  "savinghub/edit-v2-jeanlowe-original/hyperframes.json": {
+    "mtime": 1790475695.277775,
+    "seen": 1790792957.2832317,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/edit-v2-jeanlowe-original/meta.json": {
+    "mtime": 1790475695.277775,
+    "seen": 1790792957.2832325,
+    "ast_hash": "a08ab5958954bcaa44c67634e81a140a",
+    "semantic_hash": "a08ab5958954bcaa44c67634e81a140a"
+  },
+  "savinghub/edit-v2-jeanlowe-original/package.json": {
+    "mtime": 1790475695.277775,
+    "seen": 1790792957.2832332,
+    "ast_hash": "c9f911d1e4d92b64f76a643f3337bd46",
+    "semantic_hash": "c9f911d1e4d92b64f76a643f3337bd46"
+  },
+  "savinghub/edit-v2-jeanlowe-original/shots.json": {
+    "mtime": 1790475695.277775,
+    "seen": 1790792957.283234,
+    "ast_hash": "a49ace7579065221499ead7c81991630",
+    "semantic_hash": "a49ace7579065221499ead7c81991630"
+  },
+  "savinghub/edit-v2-jeanlowe-original/vo.json": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.2832346,
+    "ast_hash": "616ecb244ca2b3740a2aac478568c1bf",
+    "semantic_hash": "616ecb244ca2b3740a2aac478568c1bf"
+  },
+  "savinghub/finalize.sh": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.283235,
+    "ast_hash": "5a2c1e9e7c472e5c5917977ed4de2030",
+    "semantic_hash": "5a2c1e9e7c472e5c5917977ed4de2030"
+  },
+  "savinghub/mg-01-decant-vs-frasco-voz/hyperframes.json": {
+    "mtime": 1790791978.2539878,
+    "seen": 1790792957.2832358,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-01-decant-vs-frasco-voz/meta.json": {
+    "mtime": 1790791978.2539878,
+    "seen": 1790792957.2832365,
+    "ast_hash": "d490c94e74dff65a617c2d7f1868766f",
+    "semantic_hash": "d490c94e74dff65a617c2d7f1868766f"
+  },
+  "savinghub/mg-01-decant-vs-frasco-voz/package.json": {
+    "mtime": 1790791978.2539878,
+    "seen": 1790792957.2832372,
+    "ast_hash": "7c800e52a9d0b6c41c76c8bd52f59b40",
+    "semantic_hash": "7c800e52a9d0b6c41c76c8bd52f59b40"
+  },
+  "savinghub/mg-01-decant-vs-frasco-voz/timeline.json": {
+    "mtime": 1790791978.2539878,
+    "seen": 1790792957.283238,
+    "ast_hash": "ae8c9bcf8c48b09d7e886289c58492d0",
+    "semantic_hash": "ae8c9bcf8c48b09d7e886289c58492d0"
+  },
+  "savinghub/mg-01-decant-vs-frasco/hyperframes.json": {
+    "mtime": 1790791978.25487,
+    "seen": 1790792957.2832386,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-01-decant-vs-frasco/meta.json": {
+    "mtime": 1790791978.25487,
+    "seen": 1790792957.2832391,
+    "ast_hash": "ba675d335360f61f81a50a57ba6fa038",
+    "semantic_hash": "ba675d335360f61f81a50a57ba6fa038"
+  },
+  "savinghub/mg-01-decant-vs-frasco/package.json": {
+    "mtime": 1790791978.25487,
+    "seen": 1790792957.2832398,
+    "ast_hash": "02d3739a30418ef0fd47005aab23711a",
+    "semantic_hash": "02d3739a30418ef0fd47005aab23711a"
+  },
+  "savinghub/mg-01-decant-vs-frasco/timeline.json": {
+    "mtime": 1790791978.25487,
+    "seen": 1790792957.2832406,
+    "ast_hash": "8cee029bc83f3c70ea5c206edbf9c5a7",
+    "semantic_hash": "8cee029bc83f3c70ea5c206edbf9c5a7"
+  },
+  "savinghub/mg-02-tres-pasos-voz/hyperframes.json": {
+    "mtime": 1790791978.256188,
+    "seen": 1790792957.2832413,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-02-tres-pasos-voz/meta.json": {
+    "mtime": 1790791978.256188,
+    "seen": 1790792957.283242,
+    "ast_hash": "eac9dfb3b505f5a516f567c7657e15b2",
+    "semantic_hash": "eac9dfb3b505f5a516f567c7657e15b2"
+  },
+  "savinghub/mg-02-tres-pasos-voz/package.json": {
+    "mtime": 1790791978.256188,
+    "seen": 1790792957.2832425,
+    "ast_hash": "3165b957fef5b9a03a9e66ebd486d298",
+    "semantic_hash": "3165b957fef5b9a03a9e66ebd486d298"
+  },
+  "savinghub/mg-02-tres-pasos-voz/timeline.json": {
+    "mtime": 1790791978.256188,
+    "seen": 1790792957.2832432,
+    "ast_hash": "8564a1d6eea0057e593ca07c04aea7fa",
+    "semantic_hash": "8564a1d6eea0057e593ca07c04aea7fa"
+  },
+  "savinghub/mg-02-tres-pasos/hyperframes.json": {
+    "mtime": 1790791978.2571363,
+    "seen": 1790792957.283244,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-02-tres-pasos/meta.json": {
+    "mtime": 1790791978.2571363,
+    "seen": 1790792957.2832446,
+    "ast_hash": "75f0add6ea8e821e81714235efa01377",
+    "semantic_hash": "75f0add6ea8e821e81714235efa01377"
+  },
+  "savinghub/mg-02-tres-pasos/package.json": {
+    "mtime": 1790791978.2571363,
+    "seen": 1790792957.283245,
+    "ast_hash": "76d0f6cf31acb924b29bbcef3eb7d6ad",
+    "semantic_hash": "76d0f6cf31acb924b29bbcef3eb7d6ad"
+  },
+  "savinghub/mg-02-tres-pasos/timeline.json": {
+    "mtime": 1790791978.2571363,
+    "seen": 1790792957.2832458,
+    "ast_hash": "d1e44abf0c693e5f8f47132839f53926",
+    "semantic_hash": "d1e44abf0c693e5f8f47132839f53926"
+  },
+  "savinghub/mg-03-ficha-jean-lowe-voz/hyperframes.json": {
+    "mtime": 1790791978.2578518,
+    "seen": 1790792957.2832463,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-03-ficha-jean-lowe-voz/meta.json": {
+    "mtime": 1790791978.2578518,
+    "seen": 1790792957.283247,
+    "ast_hash": "458d870e6511ee3915927693f35a0caa",
+    "semantic_hash": "458d870e6511ee3915927693f35a0caa"
+  },
+  "savinghub/mg-03-ficha-jean-lowe-voz/package.json": {
+    "mtime": 1790791978.2578518,
+    "seen": 1790792957.283248,
+    "ast_hash": "8438cdad0f5ee0d7903b94e853da9386",
+    "semantic_hash": "8438cdad0f5ee0d7903b94e853da9386"
+  },
+  "savinghub/mg-03-ficha-jean-lowe-voz/timeline.json": {
+    "mtime": 1790791978.2578518,
+    "seen": 1790792957.2832484,
+    "ast_hash": "144110bf100eeebac332033010476b3f",
+    "semantic_hash": "144110bf100eeebac332033010476b3f"
+  },
+  "savinghub/mg-03-ficha-jean-lowe/hyperframes.json": {
+    "mtime": 1790791978.2587616,
+    "seen": 1790792957.2832513,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-03-ficha-jean-lowe/meta.json": {
+    "mtime": 1790791978.2587616,
+    "seen": 1790792957.2832518,
+    "ast_hash": "9b6cb6f7beb82cec9fe0abe1d35d9a9f",
+    "semantic_hash": "9b6cb6f7beb82cec9fe0abe1d35d9a9f"
+  },
+  "savinghub/mg-03-ficha-jean-lowe/package.json": {
+    "mtime": 1790791978.2587616,
+    "seen": 1790792957.2832525,
+    "ast_hash": "566cffb037fe0a30cd13b1d88846d66c",
+    "semantic_hash": "566cffb037fe0a30cd13b1d88846d66c"
+  },
+  "savinghub/mg-03-ficha-jean-lowe/timeline.json": {
+    "mtime": 1790791978.2587616,
+    "seen": 1790792957.283253,
+    "ast_hash": "a792b4919e8eed48e04760640e8d303f",
+    "semantic_hash": "a792b4919e8eed48e04760640e8d303f"
+  },
+  "savinghub/mg-04-llego-tu-pedido-voz/hyperframes.json": {
+    "mtime": 1790791978.2597215,
+    "seen": 1790792957.2832537,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-04-llego-tu-pedido-voz/meta.json": {
+    "mtime": 1790791978.2597215,
+    "seen": 1790792957.2832558,
+    "ast_hash": "99a084bb2e42f9c0a7bb94e3461cc8b7",
+    "semantic_hash": "99a084bb2e42f9c0a7bb94e3461cc8b7"
+  },
+  "savinghub/mg-04-llego-tu-pedido-voz/package.json": {
+    "mtime": 1790791978.2597215,
+    "seen": 1790792957.2832568,
+    "ast_hash": "dc05b46e7d66dd829a4d76d6a51b8ea6",
+    "semantic_hash": "dc05b46e7d66dd829a4d76d6a51b8ea6"
+  },
+  "savinghub/mg-04-llego-tu-pedido-voz/timeline.json": {
+    "mtime": 1790791978.2597215,
+    "seen": 1790792957.2832575,
+    "ast_hash": "b265a1461adb7e47d2602787a62376ce",
+    "semantic_hash": "b265a1461adb7e47d2602787a62376ce"
+  },
+  "savinghub/mg-04-llego-tu-pedido/hyperframes.json": {
+    "mtime": 1790791978.2605715,
+    "seen": 1790792957.2832584,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-04-llego-tu-pedido/meta.json": {
+    "mtime": 1790791978.2605715,
+    "seen": 1790792957.2832592,
+    "ast_hash": "d057b2f43eef3dad1127710e327526e5",
+    "semantic_hash": "d057b2f43eef3dad1127710e327526e5"
+  },
+  "savinghub/mg-04-llego-tu-pedido/package.json": {
+    "mtime": 1790791978.2605715,
+    "seen": 1790792957.2832596,
+    "ast_hash": "8bf8cf9fadcdd45cb3cb18870ee5aebd",
+    "semantic_hash": "8bf8cf9fadcdd45cb3cb18870ee5aebd"
+  },
+  "savinghub/mg-04-llego-tu-pedido/timeline.json": {
+    "mtime": 1790791978.2605715,
+    "seen": 1790792957.2832603,
+    "ast_hash": "ec1558ea78250752bc110102207780fc",
+    "semantic_hash": "ec1558ea78250752bc110102207780fc"
+  },
+  "savinghub/mg-05-perfumes-arabes-voz/hyperframes.json": {
+    "mtime": 1790791978.261338,
+    "seen": 1790792957.2832608,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-05-perfumes-arabes-voz/meta.json": {
+    "mtime": 1790791978.261338,
+    "seen": 1790792957.2832618,
+    "ast_hash": "ea84bc238730dc3ab8d51c1a328bca60",
+    "semantic_hash": "ea84bc238730dc3ab8d51c1a328bca60"
+  },
+  "savinghub/mg-05-perfumes-arabes-voz/package.json": {
+    "mtime": 1790791978.261338,
+    "seen": 1790792957.2832625,
+    "ast_hash": "6165180fb3e81a80daf04562a1d2bb62",
+    "semantic_hash": "6165180fb3e81a80daf04562a1d2bb62"
+  },
+  "savinghub/mg-05-perfumes-arabes-voz/timeline.json": {
+    "mtime": 1790791978.261338,
+    "seen": 1790792957.283263,
+    "ast_hash": "ba1835821d716ebb8abc41b9ae74476c",
+    "semantic_hash": "ba1835821d716ebb8abc41b9ae74476c"
+  },
+  "savinghub/mg-05-perfumes-arabes/hyperframes.json": {
+    "mtime": 1790791978.2620995,
+    "seen": 1790792957.2832644,
+    "ast_hash": "9aba7af72c9a867a940b5ea847eb18da",
+    "semantic_hash": "9aba7af72c9a867a940b5ea847eb18da"
+  },
+  "savinghub/mg-05-perfumes-arabes/meta.json": {
+    "mtime": 1790791978.2620995,
+    "seen": 1790792957.2832654,
+    "ast_hash": "4b68d30555542f8fcb7c50edb68ed687",
+    "semantic_hash": "4b68d30555542f8fcb7c50edb68ed687"
+  },
+  "savinghub/mg-05-perfumes-arabes/package.json": {
+    "mtime": 1790791978.2620995,
+    "seen": 1790792957.283266,
+    "ast_hash": "4539fb07d3b073d8c89a0422f3c59dc2",
+    "semantic_hash": "4539fb07d3b073d8c89a0422f3c59dc2"
+  },
+  "savinghub/mg-05-perfumes-arabes/timeline.json": {
+    "mtime": 1790791978.2620995,
+    "seen": 1790792957.2832665,
+    "ast_hash": "20549e036fca18cd76a46419055f412c",
+    "semantic_hash": "20549e036fca18cd76a46419055f412c"
+  },
+  "savinghub/mg_assets.py": {
+    "mtime": 1790791978.2620995,
+    "seen": 1790792957.2832673,
+    "ast_hash": "dbf1b7914e015b21ad137fa243879b43",
+    "semantic_hash": "dbf1b7914e015b21ad137fa243879b43"
+  },
+  ".claude/skills/video-editing/SKILL.md": {
+    "mtime": 1790475695.2727726,
+    "seen": 1790792957.2832677,
+    "ast_hash": "ce447bc706278e98cafd01ac0a79a30e",
+    "semantic_hash": "ce447bc706278e98cafd01ac0a79a30e"
+  },
+  ".claude/skills/video-editing/styles/README.md": {
+    "mtime": 1790475695.2731295,
+    "seen": 1790792957.2832687,
+    "ast_hash": "acdfa465188875d3eb6bb4d26551df17",
+    "semantic_hash": "acdfa465188875d3eb6bb4d26551df17"
+  },
+  ".claude/skills/video-editing/styles/_template/FRAME.md": {
+    "mtime": 1790475695.2733169,
+    "seen": 1790792957.2832694,
+    "ast_hash": "098bf3197e6d8f3fbef64232dddb4553",
+    "semantic_hash": "098bf3197e6d8f3fbef64232dddb4553"
+  },
+  ".claude/skills/video-editing/styles/vibe-life/FRAME.md": {
+    "mtime": 1790475695.2733169,
+    "seen": 1790792957.28327,
+    "ast_hash": "249a2546afe434000643f1c2e87f9092",
+    "semantic_hash": "249a2546afe434000643f1c2e87f9092"
+  },
+  ".claude/skills/video-editing/styles/vibe-life/README.html": {
+    "mtime": 1790475695.273801,
+    "seen": 1790792957.2832706,
+    "ast_hash": "1c0d4bf1e85f54b298f098b73fd8c08c",
+    "semantic_hash": "1c0d4bf1e85f54b298f098b73fd8c08c"
+  },
+  ".claude/skills/video-editing/styles/vibe-life/frame-showcase.html": {
+    "mtime": 1790475695.273801,
+    "seen": 1790792957.283271,
+    "ast_hash": "e3155a27d9d247bd01a39f3ca5fb855a",
+    "semantic_hash": "e3155a27d9d247bd01a39f3ca5fb855a"
+  },
+  "CLAUDE.md": {
+    "mtime": 1790792839.5072615,
+    "seen": 1790792957.283272,
+    "ast_hash": "76561534985765883ca4b9307f66e649",
+    "semantic_hash": "76561534985765883ca4b9307f66e649"
+  },
+  "my-video/README.md": {
+    "mtime": 1790792209.267736,
+    "seen": 1790792957.2832725,
+    "ast_hash": "fcdfe1e0c3220831519fdbf617e6d7ae",
+    "semantic_hash": "fcdfe1e0c3220831519fdbf617e6d7ae"
+  },
+  "savinghub/README.md": {
+    "mtime": 1790475695.2741716,
+    "seen": 1790792957.2832732,
+    "ast_hash": "a71c18f6faef332775d5fe8add23e5d0",
+    "semantic_hash": "a71c18f6faef332775d5fe8add23e5d0"
+  },
+  "savinghub/edit-bharara/AGENTS.md": {
+    "mtime": 1790475695.2741716,
+    "seen": 1790792957.2832737,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-bharara/CLAUDE.md": {
+    "mtime": 1790475695.2747622,
+    "seen": 1790792957.2832742,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-bharara/index.html": {
+    "mtime": 1790475695.2747622,
+    "seen": 1790792957.283275,
+    "ast_hash": "7aa8b01dca6fefb30351811b46cac7a4",
+    "semantic_hash": "7aa8b01dca6fefb30351811b46cac7a4"
+  },
+  "savinghub/edit-jeanlowe/AGENTS.md": {
+    "mtime": 1790475695.2747622,
+    "seen": 1790792957.2832756,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-jeanlowe/CLAUDE.md": {
+    "mtime": 1790475695.2752924,
+    "seen": 1790792957.2832763,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-jeanlowe/index.html": {
+    "mtime": 1790475695.2752924,
+    "seen": 1790792957.2832768,
+    "ast_hash": "4a42ed0940258424a939234ba92ff39b",
+    "semantic_hash": "4a42ed0940258424a939234ba92ff39b"
+  },
+  "savinghub/edit-report.md": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.2832775,
+    "ast_hash": "2c20223da28efa680ea8be4793ccab0e",
+    "semantic_hash": "2c20223da28efa680ea8be4793ccab0e"
+  },
+  "savinghub/edit-v2-bharara-hook-a/AGENTS.md": {
+    "mtime": 1790475695.2752924,
+    "seen": 1790792957.2832797,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-bharara-hook-a/CLAUDE.md": {
+    "mtime": 1790475695.2761047,
+    "seen": 1790792957.2832804,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-bharara-hook-a/index.html": {
+    "mtime": 1790475695.2761047,
+    "seen": 1790792957.2832808,
+    "ast_hash": "ff5457bc62d42f7af480247657c84239",
+    "semantic_hash": "ff5457bc62d42f7af480247657c84239"
+  },
+  "savinghub/edit-v2-bharara-hook-b/AGENTS.md": {
+    "mtime": 1790475695.2761047,
+    "seen": 1790792957.2832816,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-bharara-hook-b/CLAUDE.md": {
+    "mtime": 1790475695.2766154,
+    "seen": 1790792957.2832823,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-bharara-hook-b/index.html": {
+    "mtime": 1790475695.2766154,
+    "seen": 1790792957.283283,
+    "ast_hash": "879a1b8ba42a30a023f07b0344bb581e",
+    "semantic_hash": "879a1b8ba42a30a023f07b0344bb581e"
+  },
+  "savinghub/edit-v2-bharara-hook-c/AGENTS.md": {
+    "mtime": 1790475695.2766154,
+    "seen": 1790792957.2832837,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-bharara-hook-c/CLAUDE.md": {
+    "mtime": 1790475695.277125,
+    "seen": 1790792957.2832842,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-bharara-hook-c/index.html": {
+    "mtime": 1790475695.277125,
+    "seen": 1790792957.2832847,
+    "ast_hash": "24097d95b1e585ae1956ddd421b57e43",
+    "semantic_hash": "24097d95b1e585ae1956ddd421b57e43"
+  },
+  "savinghub/edit-v2-jeanlowe-original/AGENTS.md": {
+    "mtime": 1790475695.277125,
+    "seen": 1790792957.2832856,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-jeanlowe-original/CLAUDE.md": {
+    "mtime": 1790475695.277775,
+    "seen": 1790792957.283286,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/edit-v2-jeanlowe-original/index.html": {
+    "mtime": 1790475695.277775,
+    "seen": 1790792957.2832866,
+    "ast_hash": "bc1380f6498bd8546637e4f1ab05b314",
+    "semantic_hash": "bc1380f6498bd8546637e4f1ab05b314"
+  },
+  "savinghub/mg-01-decant-vs-frasco-voz/AGENTS.md": {
+    "mtime": 1790791978.2472103,
+    "seen": 1790792957.2832873,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-01-decant-vs-frasco-voz/CLAUDE.md": {
+    "mtime": 1790791978.2533362,
+    "seen": 1790792957.2832878,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-01-decant-vs-frasco-voz/index.html": {
+    "mtime": 1790791978.2539878,
+    "seen": 1790792957.2832885,
+    "ast_hash": "aaf818b0607d6eea76cc8eafb7d009a6",
+    "semantic_hash": "aaf818b0607d6eea76cc8eafb7d009a6"
+  },
+  "savinghub/mg-01-decant-vs-frasco/AGENTS.md": {
+    "mtime": 1790791978.2539878,
+    "seen": 1790792957.2832894,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-01-decant-vs-frasco/CLAUDE.md": {
+    "mtime": 1790791978.254643,
+    "seen": 1790792957.28329,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-01-decant-vs-frasco/index.html": {
+    "mtime": 1790791978.25487,
+    "seen": 1790792957.2832906,
+    "ast_hash": "786b407ac2023ad88aaa6c46d1c0fb71",
+    "semantic_hash": "786b407ac2023ad88aaa6c46d1c0fb71"
+  },
+  "savinghub/mg-02-tres-pasos-voz/AGENTS.md": {
+    "mtime": 1790791978.25487,
+    "seen": 1790792957.283291,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-02-tres-pasos-voz/CLAUDE.md": {
+    "mtime": 1790791978.2558985,
+    "seen": 1790792957.2832918,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-02-tres-pasos-voz/index.html": {
+    "mtime": 1790791978.256188,
+    "seen": 1790792957.2832928,
+    "ast_hash": "e55f0ac8a27f69ab1b8d8df61e83a244",
+    "semantic_hash": "e55f0ac8a27f69ab1b8d8df61e83a244"
+  },
+  "savinghub/mg-02-tres-pasos/AGENTS.md": {
+    "mtime": 1790791978.256188,
+    "seen": 1790792957.2832932,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-02-tres-pasos/CLAUDE.md": {
+    "mtime": 1790791978.2568877,
+    "seen": 1790792957.283294,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-02-tres-pasos/index.html": {
+    "mtime": 1790791978.2571363,
+    "seen": 1790792957.2832944,
+    "ast_hash": "6615564a71c7b37a1c3279db9d33ac97",
+    "semantic_hash": "6615564a71c7b37a1c3279db9d33ac97"
+  },
+  "savinghub/mg-03-ficha-jean-lowe-voz/AGENTS.md": {
+    "mtime": 1790791978.2571363,
+    "seen": 1790792957.2832952,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-03-ficha-jean-lowe-voz/CLAUDE.md": {
+    "mtime": 1790791978.2575793,
+    "seen": 1790792957.2832956,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-03-ficha-jean-lowe-voz/index.html": {
+    "mtime": 1790791978.2578518,
+    "seen": 1790792957.2832966,
+    "ast_hash": "33db3b168371a673b06da10f46825267",
+    "semantic_hash": "33db3b168371a673b06da10f46825267"
+  },
+  "savinghub/mg-03-ficha-jean-lowe/AGENTS.md": {
+    "mtime": 1790791978.2578518,
+    "seen": 1790792957.283297,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-03-ficha-jean-lowe/CLAUDE.md": {
+    "mtime": 1790791978.258504,
+    "seen": 1790792957.2832978,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-03-ficha-jean-lowe/index.html": {
+    "mtime": 1790791978.2587616,
+    "seen": 1790792957.2832985,
+    "ast_hash": "6f69f43ee6d21a775fedefb31fc291bb",
+    "semantic_hash": "6f69f43ee6d21a775fedefb31fc291bb"
+  },
+  "savinghub/mg-04-llego-tu-pedido-voz/AGENTS.md": {
+    "mtime": 1790791978.2587616,
+    "seen": 1790792957.2832994,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-04-llego-tu-pedido-voz/CLAUDE.md": {
+    "mtime": 1790791978.259429,
+    "seen": 1790792957.2833,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-04-llego-tu-pedido-voz/index.html": {
+    "mtime": 1790791978.2597215,
+    "seen": 1790792957.2833009,
+    "ast_hash": "64ef06d421befc9419a37b669a0625a3",
+    "semantic_hash": "64ef06d421befc9419a37b669a0625a3"
+  },
+  "savinghub/mg-04-llego-tu-pedido/AGENTS.md": {
+    "mtime": 1790791978.2597215,
+    "seen": 1790792957.2833014,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-04-llego-tu-pedido/CLAUDE.md": {
+    "mtime": 1790791978.2601447,
+    "seen": 1790792957.283302,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-04-llego-tu-pedido/index.html": {
+    "mtime": 1790791978.2605715,
+    "seen": 1790792957.2833025,
+    "ast_hash": "64ef06d421befc9419a37b669a0625a3",
+    "semantic_hash": "64ef06d421befc9419a37b669a0625a3"
+  },
+  "savinghub/mg-05-perfumes-arabes-voz/AGENTS.md": {
+    "mtime": 1790791978.2605715,
+    "seen": 1790792957.2833035,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-05-perfumes-arabes-voz/CLAUDE.md": {
+    "mtime": 1790791978.2610116,
+    "seen": 1790792957.2833042,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-05-perfumes-arabes-voz/index.html": {
+    "mtime": 1790791978.261338,
+    "seen": 1790792957.283305,
+    "ast_hash": "a199d1b56f74a2a88b84ded1474d575c",
+    "semantic_hash": "a199d1b56f74a2a88b84ded1474d575c"
+  },
+  "savinghub/mg-05-perfumes-arabes/AGENTS.md": {
+    "mtime": 1790791978.261338,
+    "seen": 1790792957.2833054,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-05-perfumes-arabes/CLAUDE.md": {
+    "mtime": 1790791978.2618628,
+    "seen": 1790792957.283306,
+    "ast_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7",
+    "semantic_hash": "b5c9f2fb30749b8abf9288f6d2f3bfb7"
+  },
+  "savinghub/mg-05-perfumes-arabes/index.html": {
+    "mtime": 1790791978.2620995,
+    "seen": 1790792957.2833068,
+    "ast_hash": "79c6c6730541c657438d905d9ac4c882",
+    "semantic_hash": "79c6c6730541c657438d905d9ac4c882"
+  }
+}
