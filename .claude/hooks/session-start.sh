@@ -37,3 +37,13 @@ fi
 if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
   echo "export HYPERFRAMES_GSAP_JS=\"$GSAP_DIR/gsap.min.js\"" >> "$CLAUDE_ENV_FILE"
 fi
+
+# graphify — knowledge graph of the repo (graphify-out/). The PreToolUse
+# hooks in settings.json call /usr/local/bin/graphify, so it must exist.
+if ! command -v graphify >/dev/null 2>&1; then
+  pip install -q graphifyy >/dev/null 2>&1 \
+    || pip install -q --break-system-packages graphifyy >/dev/null 2>&1 || true
+fi
+if [ ! -f "$HOME/.claude/skills/graphify/SKILL.md" ] && command -v graphify >/dev/null 2>&1; then
+  graphify install </dev/null >/dev/null 2>&1 || true
+fi
