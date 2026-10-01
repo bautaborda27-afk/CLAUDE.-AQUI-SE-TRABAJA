@@ -6,98 +6,95 @@
     <title>Axis Automatizaciones</title>
     <script src="assets/gsap.min.js"></script>
     <style>
+      @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 600; src: url("assets/fonts/cormorant-italic-600.woff2") format("woff2"); }
+      @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 600; src: url("assets/fonts/cormorant-normal-600.woff2") format("woff2"); }
+      @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 700; src: url("assets/fonts/cormorant-normal-700.woff2") format("woff2"); }
       :root {
-        --bg: #0b1020;
-        --bg2: #121a33;
-        --ink: #f5f1ea;
-        --dim: #8f9ab8;
-        --orange: #ff7a1a;
-        --teal: #2dd4bf;
-        --wood: #c98a4b;
-        --red: #ff4d5e;
+        --bg: #0a0908;
+        --bg2: #141210;
+        --ink: #f3ece0;
+        --dim: #a39a88;
+        --orange: #d4b06a;
+        --teal: #e9d6a6;
+        --wood: #b8935a;
+        --red: #c8697a;
+        --hair: rgba(212,176,106,.45);
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { margin: 0; background: var(--bg); overflow: hidden; }
-      #root {
-        position: relative; width: 100%; height: 100%; overflow: hidden;
-        background: var(--bg); color: var(--ink);
-        font-family: "Montserrat", sans-serif;
-      }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink);
+        font-family: "Montserrat", sans-serif; font-weight: 400; }
       .clip { position: absolute; inset: 0; }
-      .sc { position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; padding: 0 70px; text-align: center; }
-      .mono { font-family: "Space Mono", monospace; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); font-size: 30px; }
-      .big { font-weight: 800; font-size: 118px; line-height: 1.02; letter-spacing: -0.03em; }
-      .mid { font-weight: 700; font-size: 74px; line-height: 1.1; letter-spacing: -0.02em; }
-      .acc { color: var(--orange); }
+      .sc { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 90px; text-align: center; }
+      .mono { font-family: "Montserrat", sans-serif; font-weight: 500; letter-spacing: 0.42em; text-transform: uppercase; color: var(--orange); font-size: 26px; }
+      .big, .mid { font-family: "Cormorant Garamond", serif; font-weight: 600; letter-spacing: -0.01em; }
+      .big { font-size: 138px; line-height: 0.98; }
+      .mid { font-size: 84px; line-height: 1.04; }
+      .acc { color: var(--orange); font-style: italic; }
       .tea { color: var(--teal); }
-      .ln { display: block; overflow: hidden; padding: 6px 0; }
+      .ln { display: block; overflow: hidden; padding: 10px 0 14px; }
       .ln > span { display: block; }
-      #bg-grid { position: absolute; inset: -200px; background-image:
-        linear-gradient(rgba(255,255,255,.045) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(255,255,255,.045) 2px, transparent 2px);
-        background-size: 120px 120px; }
-      #bg-glow1 { position: absolute; width: 900px; height: 900px; border-radius: 50%; left: -300px; top: 100px;
-        background: radial-gradient(circle, rgba(255,122,26,.28), transparent 65%); }
-      #bg-glow2 { position: absolute; width: 1000px; height: 1000px; border-radius: 50%; right: -400px; bottom: 150px;
-        background: radial-gradient(circle, rgba(45,212,191,.2), transparent 65%); }
-      .tag { position: absolute; top: 120px; left: 0; right: 0; text-align: center; }
+      #bg-grid { position: absolute; inset: -200px; background-image: radial-gradient(rgba(212,176,106,.18) 2px, transparent 2.5px); background-size: 120px 120px; }
+      #bg-glow1 { position: absolute; width: 1000px; height: 1000px; border-radius: 50%; left: -400px; top: 100px; background: radial-gradient(circle, rgba(212,176,106,.16), transparent 65%); }
+      #bg-glow2 { position: absolute; width: 1000px; height: 1000px; border-radius: 50%; right: -450px; bottom: 150px; background: radial-gradient(circle, rgba(184,147,90,.12), transparent 65%); }
+      #bg-vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,.65) 100%); }
+      #bg-frame { position: absolute; inset: 44px; border: 1.5px solid var(--hair); }
+      #bg-frame2 { position: absolute; inset: 58px; border: 1px solid rgba(212,176,106,.18); }
+      .tag { position: absolute; top: 150px; left: 0; right: 0; text-align: center; }
+      .rule { width: 120px; height: 2px; background: var(--orange); margin: 34px auto; }
       /* S1 */
-      #clock { width: 360px; height: 360px; border-radius: 50%; border: 14px solid var(--ink); position: relative; margin-bottom: 70px; }
-      #clock .h { position: absolute; left: 50%; top: 50%; width: 12px; height: 110px; margin-left: -6px; margin-top: -110px; background: var(--ink); border-radius: 6px; transform-origin: 50% 100%; }
-      #clock .m { position: absolute; left: 50%; top: 50%; width: 10px; height: 150px; margin-left: -5px; margin-top: -150px; background: var(--orange); border-radius: 6px; transform-origin: 50% 100%; }
-      #clock .dot { position: absolute; left: 50%; top: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; background: var(--ink); border-radius: 50%; }
+      #clock { width: 340px; height: 340px; border-radius: 50%; border: 3px solid var(--orange); position: relative; margin-bottom: 70px; }
+      #clock::after { content: ""; position: absolute; inset: 22px; border-radius: 50%; border: 1px solid rgba(212,176,106,.35); }
+      #clock .h { position: absolute; left: 50%; top: 50%; width: 5px; height: 100px; margin-left: -2.5px; margin-top: -100px; background: var(--ink); transform-origin: 50% 100%; }
+      #clock .m { position: absolute; left: 50%; top: 50%; width: 3px; height: 140px; margin-left: -1.5px; margin-top: -140px; background: var(--orange); transform-origin: 50% 100%; }
+      #clock .dot { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; background: var(--orange); border-radius: 50%; }
       /* S2 */
-      .chips { display: flex; flex-direction: column; gap: 36px; margin-top: 70px; width: 100%; }
-      .chip { display: flex; align-items: center; gap: 30px; background: var(--bg2); border: 3px solid rgba(255,255,255,.1);
-        border-radius: 36px; padding: 34px 40px; font-weight: 700; font-size: 48px; text-align: left; }
-      .chip .ic { width: 96px; height: 96px; border-radius: 26px; flex: none; display: grid; place-items: center; font-size: 52px; }
-      .chip .rep { margin-left: auto; font-family: "Space Mono", monospace; color: var(--red); font-size: 40px; }
+      .chips { display: flex; flex-direction: column; gap: 30px; margin-top: 70px; width: 100%; }
+      .chip { display: flex; align-items: center; gap: 36px; background: rgba(20,18,16,.75); border: 1.5px solid var(--hair); border-radius: 4px; padding: 36px 44px; font-weight: 500; font-size: 42px; text-align: left; letter-spacing: .02em; }
+      .chip .ic { width: 84px; flex: none; text-align: center; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 64px; color: var(--orange); border-right: 1.5px solid var(--hair); padding-right: 30px; width: 110px; }
+      .chip .rep { margin-left: auto; font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--red); font-size: 60px; }
       /* S3 */
-      .rubros { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-top: 70px; }
-      .rb { background: var(--bg2); border: 3px solid rgba(255,255,255,.12); border-radius: 100px; padding: 24px 46px; font-weight: 700; font-size: 44px; }
-      #gears { position: relative; width: 460px; height: 260px; margin-top: 60px; }
+      .rubros { display: flex; flex-wrap: wrap; gap: 22px; justify-content: center; margin-top: 70px; }
+      .rb { background: transparent; border: 1.5px solid var(--hair); border-radius: 2px; padding: 24px 44px; font-weight: 500; font-size: 32px; letter-spacing: .22em; text-transform: uppercase; }
+      #gears { position: relative; width: 560px; height: 260px; margin-top: 60px; }
       .gear { position: absolute; font-size: 200px; line-height: 1; color: var(--orange); }
       /* S4 */
       #shop { width: 780px; height: 520px; position: relative; margin-bottom: 70px; }
-      #shop .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 24px; background: var(--wood); border-radius: 12px; }
-      #shop .leg { position: absolute; bottom: 24px; width: 40px; background: var(--wood); border-radius: 8px; }
-      #shop .top { position: absolute; left: 90px; right: 90px; height: 50px; background: var(--wood); border-radius: 12px; top: 220px; }
-      #shop .drw { position: absolute; left: 130px; right: 130px; top: 270px; height: 110px; background: #a76f37; border-radius: 10px; }
-      #shop .knob { position: absolute; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); left: 50%; margin-left: -18px; top: 307px; }
-      .spark { position: absolute; width: 22px; height: 22px; background: var(--orange); border-radius: 4px; }
+      #shop .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--orange); }
+      #shop .leg { position: absolute; bottom: 3px; width: 26px; background: var(--wood); border-radius: 2px; }
+      #shop .top { position: absolute; left: 90px; right: 90px; height: 36px; background: var(--orange); border-radius: 2px; top: 220px; }
+      #shop .drw { position: absolute; left: 130px; right: 130px; top: 262px; height: 110px; background: transparent; border: 2px solid var(--wood); border-radius: 2px; }
+      #shop .knob { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: var(--orange); left: 50%; margin-left: -11px; top: 306px; }
+      .spark { position: absolute; width: 16px; height: 16px; background: var(--orange); }
       /* S5 */
-      .msgs { display: flex; flex-direction: column; gap: 30px; margin-top: 60px; width: 100%; align-items: flex-start; }
-      .msg { padding: 30px 40px; border-radius: 36px 36px 36px 8px; font-weight: 600; font-size: 44px; max-width: 880px; text-align: left; }
-      .m1 { background: #1f3b2d; border: 3px solid #25d366; } .m2 { background: #3a1f3d; border: 3px solid #e1306c; } .m3 { background: #1f2c4a; border: 3px solid #5b8def; }
-      .badge { align-self: flex-end; margin-top: 40px; transform-origin: 50% 50%; background: var(--red); border-radius: 60px; padding: 14px 40px; font-weight: 800; font-size: 54px; }
+      .msgs { display: flex; flex-direction: column; gap: 26px; margin-top: 60px; width: 100%; align-items: flex-start; }
+      .msg { padding: 32px 44px; border-radius: 2px; font-weight: 400; font-size: 40px; max-width: 900px; text-align: left; background: rgba(20,18,16,.75); border: 1.5px solid var(--hair); border-left: 6px solid var(--orange); }
+      .msg b { display: block; font-weight: 500; font-size: 24px; letter-spacing: .35em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+      .badge { align-self: flex-end; margin-top: 40px; transform-origin: 50% 50%; border: 2px solid var(--red); color: var(--red); border-radius: 2px; padding: 16px 40px; font-weight: 600; font-size: 34px; letter-spacing: .2em; text-transform: uppercase; }
       /* S6 */
-      #flowhead { position: absolute; top: 140px; left: 0; right: 0; text-align: center; }
-      #steps { position: absolute; left: 70px; right: 70px; top: 330px; display: flex; flex-direction: column; gap: 30px; }
-      .stp { display: flex; align-items: center; gap: 36px; background: var(--bg2); border: 3px solid rgba(255,255,255,.1);
-        border-radius: 40px; padding: 38px 40px; height: 230px; position: relative; overflow: hidden; }
-      .stp .num { width: 110px; height: 110px; border-radius: 50%; background: var(--orange); color: var(--bg); font-weight: 800; font-size: 60px; display: grid; place-items: center; flex: none; }
-      .stp .t { font-weight: 800; font-size: 50px; text-align: left; line-height: 1.1; }
-      .stp .s { font-family: "Space Mono", monospace; font-size: 30px; color: var(--teal); margin-top: 10px; text-align: left; display: block; font-weight: 400; }
-      .stp .ck { position: absolute; right: 36px; font-size: 70px; color: var(--teal); font-weight: 800; }
-      .stp .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: rgba(45,212,191,.12); }
+      #flowhead { position: absolute; top: 150px; left: 0; right: 0; text-align: center; }
+      #steps { position: absolute; left: 90px; right: 90px; top: 380px; display: flex; flex-direction: column; gap: 26px; }
+      .stp { display: flex; align-items: center; gap: 40px; background: rgba(20,18,16,.8); border: 1.5px solid var(--hair); border-radius: 4px; padding: 34px 44px; height: 220px; position: relative; overflow: hidden; }
+      .stp .num { width: 96px; flex: none; font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 600; font-size: 110px; color: var(--orange); line-height: 1; text-align: center; border-right: 1.5px solid var(--hair); padding-right: 30px; width: 130px; }
+      .stp .t { font-family: "Cormorant Garamond", serif; font-weight: 700; font-size: 58px; text-align: left; line-height: 1.05; }
+      .stp .s { font-weight: 500; font-size: 22px; letter-spacing: .28em; text-transform: uppercase; color: var(--dim); margin-top: 14px; text-align: left; display: block; }
+      .stp .ck { position: absolute; right: 40px; font-size: 54px; color: var(--orange); font-weight: 400; }
+      .stp .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: rgba(212,176,106,.10); }
       /* S7 */
-      .kpis { display: flex; flex-direction: column; gap: 40px; margin-top: 70px; width: 100%; }
-      .kpi { background: var(--bg2); border: 3px solid rgba(255,255,255,.1); border-radius: 44px; padding: 44px 50px; text-align: left; }
-      .kpi .v { font-weight: 800; font-size: 130px; color: var(--teal); line-height: 1; letter-spacing: -0.03em; }
-      .kpi .l { font-weight: 600; font-size: 42px; margin-top: 10px; }
-      .note { position: absolute; bottom: 150px; left: 0; right: 0; text-align: center; }
+      .kpis { display: flex; flex-direction: column; gap: 30px; margin-top: 70px; width: 100%; }
+      .kpi { background: rgba(20,18,16,.8); border: 1.5px solid var(--hair); border-radius: 4px; padding: 40px 54px; text-align: left; }
+      .kpi .v { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 140px; color: var(--orange); line-height: 1; }
+      .kpi .l { font-weight: 500; font-size: 26px; letter-spacing: .26em; text-transform: uppercase; margin-top: 12px; color: var(--ink); }
+      .note { position: absolute; bottom: 150px; left: 0; right: 0; text-align: center; color: var(--dim); }
       /* S8 */
-      #logo { font-weight: 800; font-size: 210px; letter-spacing: -0.05em; }
-      #logo .x { color: var(--orange); }
-      .cta { margin-top: 70px; background: var(--orange); color: var(--bg); font-weight: 800; font-size: 54px; padding: 36px 70px; border-radius: 100px; }
+      .cta { margin-top: 20px; background: #0a0908; color: var(--teal); border: 2px solid var(--orange); font-weight: 600; font-size: 34px; letter-spacing: .3em; text-transform: uppercase; padding: 36px 64px; border-radius: 2px; }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-width="1080" data-height="1920" data-duration="55">
       <!-- persistent background -->
       <div class="clip" id="bg" data-start="0" data-duration="55" data-track-index="0">
-        <div id="bg-grid"></div><div id="bg-glow1"></div><div id="bg-glow2"></div>
+        <div id="bg-grid"></div><div id="bg-glow1"></div><div id="bg-glow2"></div><div id="bg-vig"></div><div id="bg-frame"></div><div id="bg-frame2"></div>
       </div>
 
       <!-- S1: gancho -->
@@ -114,9 +111,9 @@
           <div class="mono tag" style="top:150px">Lo de todos los días</div>
           <div class="mid" style="margin-top:-140px"><span class="ln"><span>Las mismas tareas,</span></span><span class="ln"><span class="acc">una y otra vez</span></span></div>
           <div class="chips">
-            <div class="chip c1"><div class="ic" style="background:#1f3b2d">💬</div>Responder lo mismo<span class="rep">×40</span></div>
-            <div class="chip c2"><div class="ic" style="background:#1f2c4a">📋</div>Pasar datos a mano<span class="rep">×25</span></div>
-            <div class="chip c3"><div class="ic" style="background:#3a1f3d">🔔</div>Hacer seguimiento<span class="rep">×15</span></div>
+            <div class="chip c1"><div class="ic">I</div>Responder lo mismo<span class="rep">×40</span></div>
+            <div class="chip c2"><div class="ic">II</div>Pasar datos a mano<span class="rep">×25</span></div>
+            <div class="chip c3"><div class="ic">III</div>Hacer seguimiento<span class="rep">×15</span></div>
           </div>
         </div>
       </div>
@@ -124,10 +121,10 @@
       <!-- S3: a todos les sirve -->
       <div class="clip" id="s3" data-start="9" data-duration="7.2" data-track-index="3">
         <div class="sc" id="s3c">
-          <div class="big" style="font-size:96px"><span class="ln"><span>Cualquier negocio</span></span><span class="ln"><span class="acc">puede automatizar</span></span></div>
+          <div class="big" style="font-size:112px"><span class="ln"><span>Cualquier negocio</span></span><span class="ln"><span class="acc">puede automatizar</span></span></div>
           <div class="rubros">
-            <div class="rb r1">🏥 Clínica</div><div class="rb r2">🛍️ Comercio</div><div class="rb r3">🏗️ Constructora</div>
-            <div class="rb r4">🍽️ Restaurante</div><div class="rb r5">⚖️ Estudio</div><div class="rb r6">🚚 Logística</div>
+            <div class="rb r1">Clínica</div><div class="rb r2">Comercio</div><div class="rb r3">Constructora</div>
+            <div class="rb r4">Restaurante</div><div class="rb r5">Estudio</div><div class="rb r6">Logística</div>
           </div>
           <div id="gears"><div class="gear" id="g1" style="left:30px;top:10px">⚙</div><div class="gear" id="g2" style="left:300px;top:50px;color:var(--teal);font-size:160px">⚙</div></div>
         </div>
@@ -136,14 +133,14 @@
       <!-- S4: carpintería -->
       <div class="clip" id="s4" data-start="16.2" data-duration="3.7" data-track-index="4">
         <div class="sc" id="s4c">
-          <div class="mono" style="margin-bottom:50px">Ejemplo real</div>
+          <div class="mono" style="margin-bottom:50px">Un ejemplo real</div>
           <div id="shop">
             <div class="floor"></div>
             <div class="leg" style="left:100px;height:196px"></div><div class="leg" style="right:100px;height:196px"></div>
             <div class="top" id="mtop"></div><div class="drw" id="mdrw"></div><div class="knob" id="mknob"></div>
             <div class="spark" style="left:60px;top:150px"></div><div class="spark" style="right:50px;top:110px"></div><div class="spark" style="left:380px;top:60px"></div>
           </div>
-          <div class="big" style="font-size:100px"><span class="ln"><span>Una <span class="acc">carpintería</span></span></span></div>
+          <div class="big" style="font-size:118px"><span class="ln"><span>Una <span class="acc">carpintería</span></span></span></div>
           <div class="mid" style="margin-top:20px;font-weight:600"><span class="ln"><span>Juan hace muebles a medida</span></span></div>
         </div>
       </div>
@@ -152,14 +149,14 @@
       <div class="clip" id="s5" data-start="19.9" data-duration="6.5" data-track-index="5">
         <div class="sc" id="s5c">
           <div class="mono tag" style="top:150px">Sin automatizar</div>
-          <div class="mid" style="margin-top:-200px;font-size:64px"><span class="ln"><span>Consultas por todos lados</span></span></div>
+          <div class="mid" style="margin-top:-200px;font-size:76px"><span class="ln"><span>Consultas por todos lados</span></span></div>
           <div class="msgs">
-            <div class="msg m1">💬 WhatsApp: “¿Cuánto sale una mesa?”</div>
-            <div class="msg m2">📸 Instagram: “Precio de placard?”</div>
-            <div class="msg m3">✉️ Mail: “Quiero un presupuesto”</div>
+            <div class="msg m1"><b>WhatsApp</b>“¿Cuánto sale una mesa?”</div>
+            <div class="msg m2"><b>Instagram</b>“¿Precio de un placard?”</div>
+            <div class="msg m3"><b>Mail</b>“Quiero un presupuesto”</div>
           </div>
           <div class="badge" id="badge">12 sin responder</div>
-          <div class="mid" id="s5b" style="margin-top:30px;color:var(--red);font-size:62px;line-height:1.15"><span class="ln"><span>Presupuesto a mano</span></span><span class="ln"><span>y sin seguimiento</span></span></div>
+          <div class="mid" id="s5b" style="margin-top:30px;color:var(--red);font-size:72px;line-height:1.05"><span class="ln"><span>Presupuesto a mano</span></span><span class="ln"><span>y sin seguimiento</span></span></div>
         </div>
       </div>
 
@@ -169,11 +166,11 @@
           <div id="flowhead"><div class="mono tea" style="color:var(--teal)">Con Axis</div>
             <div class="mid" style="margin-top:16px"><span class="ln"><span>Todo pasa <span class="acc">solo</span></span></span></div></div>
           <div id="steps">
-            <div class="stp" id="p1"><div class="fill"></div><div class="num">1</div><div><div class="t">Responde al instante</div><span class="s">medidas · material · fecha</span></div><div class="ck">✓</div></div>
-            <div class="stp" id="p2"><div class="fill"></div><div class="num">2</div><div><div class="t">Presupuesto automático</div><span class="s">madera + mano de obra</span></div><div class="ck">✓</div></div>
-            <div class="stp" id="p3"><div class="fill"></div><div class="num">3</div><div><div class="t">Seguimiento a los 3 días</div><span class="s">recordatorio si no responde</span></div><div class="ck">✓</div></div>
-            <div class="stp" id="p4"><div class="fill"></div><div class="num">4</div><div><div class="t">Avisa al taller</div><span class="s">pedido + compra de materiales</span></div><div class="ck">✓</div></div>
-            <div class="stp" id="p5"><div class="fill"></div><div class="num">5</div><div><div class="t">Entrega y reseña</div><span class="s">aviso al cliente + pedido de opinión</span></div><div class="ck">✓</div></div>
+            <div class="stp" id="p1"><div class="fill"></div><div class="num">I</div><div><div class="t">Responde al instante</div><span class="s">medidas · material · fecha</span></div><div class="ck">✓</div></div>
+            <div class="stp" id="p2"><div class="fill"></div><div class="num">II</div><div><div class="t">Presupuesto automático</div><span class="s">madera + mano de obra</span></div><div class="ck">✓</div></div>
+            <div class="stp" id="p3"><div class="fill"></div><div class="num">III</div><div><div class="t">Seguimiento a los 3 días</div><span class="s">recordatorio si no responde</span></div><div class="ck">✓</div></div>
+            <div class="stp" id="p4"><div class="fill"></div><div class="num">IV</div><div><div class="t">Avisa al taller</div><span class="s">pedido + compra de materiales</span></div><div class="ck">✓</div></div>
+            <div class="stp" id="p5"><div class="fill"></div><div class="num">V</div><div><div class="t">Entrega y reseña</div><span class="s">aviso + pedido de opinión</span></div><div class="ck">✓</div></div>
           </div>
         </div>
       </div>
@@ -182,7 +179,7 @@
       <div class="clip" id="s7" data-start="41.3" data-duration="7.1" data-track-index="7">
         <div class="sc" id="s7c">
           <div class="mono" style="margin-bottom:30px">El resultado</div>
-          <div class="big" style="font-size:96px"><span class="ln"><span>Más tiempo,</span></span><span class="ln"><span class="acc">más ventas</span></span></div>
+          <div class="big" style="font-size:112px"><span class="ln"><span>Más tiempo,</span></span><span class="ln"><span class="acc">más ventas</span></span></div>
           <div class="kpis">
             <div class="kpi k1"><div class="v"><span id="n1">0</span>h</div><div class="l">recuperadas por semana</div></div>
             <div class="kpi k2"><div class="v"><span id="n2">12</span></div><div class="l">consultas sin responder</div></div>
@@ -198,7 +195,7 @@
         <div class="sc" id="s8c">
           <div class="mid" style="font-weight:600"><span class="ln"><span>Tu negocio también</span></span><span class="ln"><span>tiene su versión de esto</span></span></div>
           <img id="logo" src="assets/axis-logo.jpg" alt="Axis" style="width:1350px;max-width:none;height:auto;margin:0;display:block" />
-          <div class="cta" id="cta" style="margin-top:20px;background:linear-gradient(90deg,#ff7a1a,#e0197d,#7a2cf0,#1ea0ff);color:#fff">Automatizá tu negocio →</div>
+          <div class="cta" id="cta" style="margin-top:20px">Automatizá tu negocio →</div>
         </div>
       </div>
 
@@ -230,7 +227,7 @@
       tl.fromTo("#bg-glow2", { y: 0 }, { y: -400, duration: 55, ease: "sine.inOut" }, 0);
 
       // S1 (0 – 4.2)
-      tl.fromTo("#clock", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.7, ease: "back.out(1.6)" }, 0.1);
+      tl.fromTo("#clock", { scale: 0.7, rotation: 0 }, { scale: 1, rotation: 0, duration: 1.0, ease: "power3.out" }, 0.1);
       tl.fromTo("#clock .m", { rotation: 0 }, { rotation: 1080, duration: 3.4, ease: "power1.inOut" }, 0.3);
       tl.fromTo("#clock .h", { rotation: 0 }, { rotation: 90, duration: 3.4, ease: "power1.inOut" }, 0.3);
       reveal("#s1c", 0.35, 0.8, 0.18);
@@ -240,14 +237,14 @@
       reveal("#s2c", 4.1, 0.7, 0.12);
       tl.fromTo("#s2c .tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.0);
       ["c1", "c2", "c3"].forEach((c, i) =>
-        tl.fromTo("#s2c ." + c, { x: i % 2 ? 900 : -900, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "back.out(1.3)" }, 4.8 + i * 0.9));
-      tl.fromTo("#s2c .rep", { scale: 0.5 }, { scale: 1.15, duration: 0.3, ease: "back.out(3)", stagger: 0.9 }, 5.3);
+        tl.fromTo("#s2c ." + c, { x: i % 2 ? 900 : -900, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.8 + i * 0.9));
+      tl.fromTo("#s2c .rep", { scale: 0.5 }, { scale: 1.15, duration: 0.3, ease: "power3.out", stagger: 0.9 }, 5.3);
       exit("#s2c", 8.65);
 
       // S3 (9 – 16.4)
       reveal("#s3c", 9.2, 0.8, 0.15);
       ["r1", "r2", "r3", "r4", "r5", "r6"].forEach((r, i) =>
-        tl.fromTo("#s3c ." + r, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }, 10.2 + i * 0.28));
+        tl.fromTo("#s3c ." + r, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" }, 10.2 + i * 0.28));
       tl.fromTo("#gears", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: IN }, 12.6);
       tl.to("#g1", { rotation: 360, duration: 3.6, ease: "none" }, 12.6);
       tl.to("#g2", { rotation: -360, duration: 3.6, ease: "none" }, 12.6);
@@ -255,10 +252,10 @@
       exit("#s3c", 15.85);
 
       // S4 (16.2 – 20.1)
-      tl.fromTo("#shop", { scale: 0.6, opacity: 0, rotation: -6 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.8, ease: "back.out(1.5)" }, 16.4);
+      tl.fromTo("#shop", { scale: 0.6, opacity: 0, rotation: -6 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.8, ease: "power3.out" }, 16.4);
       tl.fromTo("#s4c .mono", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 16.4);
       tl.fromTo("#mdrw", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: IN }, 17.0);
-      tl.fromTo(".spark", { scale: 0, rotation: 0 }, { scale: 1, rotation: 135, duration: 0.5, ease: "back.out(3)", stagger: 0.12 }, 17.1);
+      tl.fromTo(".spark", { scale: 0, rotation: 0 }, { scale: 1, rotation: 135, duration: 0.5, ease: "power3.out", stagger: 0.12 }, 17.1);
       reveal("#s4c .big", 17.0, 0.7, 0);
       tl.fromTo("#s4c .mid .ln > span", { yPercent: 110 }, { yPercent: 0, duration: 0.7, ease: "expo.out" }, 17.7);
       exit("#s4c", 19.55);
@@ -267,9 +264,9 @@
       tl.fromTo("#s5c .tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 20.0);
       tl.fromTo("#s5c > .mid:nth-of-type(2) .ln > span", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out" }, 20.1);
       ["m1", "m2", "m3"].forEach((m, i) =>
-        tl.fromTo("#s5c ." + m, { x: -700, opacity: 0, scale: 0.9 }, { x: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 20.9 + i * 0.9));
-      tl.fromTo("#badge", { scale: 0, rotation: -20 }, { scale: 1, rotation: 6, duration: 0.5, ease: "back.out(3)" }, 23.5);
-      tl.to("#badge", { scale: 1.12, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, 24.1);
+        tl.fromTo("#s5c ." + m, { x: -700, opacity: 0, scale: 0.9 }, { x: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 20.9 + i * 0.9));
+      tl.fromTo("#badge", { scale: 0.8, rotation: 0 }, { scale: 1, rotation: 0, duration: 0.7, ease: "power3.out" }, 23.5);
+      tl.to("#badge", { scale: 1.04, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, 24.1);
       tl.fromTo("#s5b .ln > span", { yPercent: 110 }, { yPercent: 0, duration: 0.6, ease: "expo.out", stagger: 0.15 }, 24.4);
       exit("#s5c", 26.05);
 
@@ -279,9 +276,9 @@
       const st = [27.3, 30.0, 33.0, 35.9, 38.6];
       st.forEach((t, i) => {
         const id = "#p" + (i + 1);
-        tl.fromTo(id, { x: 900, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "back.out(1.2)" }, t);
+        tl.fromTo(id, { x: 900, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, t);
         tl.fromTo(id + " .fill", { width: 0 }, { width: "100%", duration: 1.2, ease: "power1.inOut" }, t + 0.5);
-        tl.fromTo(id + " .ck", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(3)" }, t + 1.5);
+        tl.fromTo(id + " .ck", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, t + 1.5);
         tl.to(id, { borderColor: "#2dd4bf", duration: 0.3 }, t + 1.5);
       });
       exit("#s6c", 40.95);
@@ -290,7 +287,7 @@
       tl.fromTo("#s7c .mono", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 41.5);
       reveal("#s7c .big", 41.6, 0.7, 0.14);
       ["k1", "k2", "k3"].forEach((k, i) =>
-        tl.fromTo("#s7c ." + k, { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.3)" }, 42.6 + i * 0.9));
+        tl.fromTo("#s7c ." + k, { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 42.6 + i * 0.9));
       const c1 = { v: 0 }, c2 = { v: 12 }, c3 = { v: 0 };
       tl.fromTo(c1, { v: 0 }, { v: 10, duration: 1.2, ease: "power2.out", onUpdate: () => (document.getElementById("n1").textContent = "+" + Math.round(c1.v)) }, 42.7);
       tl.fromTo(c2, { v: 12 }, { v: 0, duration: 1.2, ease: "power2.out", onUpdate: () => (document.getElementById("n2").textContent = Math.round(c2.v)) }, 43.6);
@@ -300,11 +297,11 @@
 
       // S8 (48.4 – 55): white wipe, logo, CTA
       tl.to("#s8white", { clipPath: "circle(120% at 50% 50%)", duration: 0.9, ease: "power3.inOut" }, 48.5);
-      tl.to("#s8c .mid", { color: "#0b1020", duration: 0.3 }, 49.0);
+      tl.to("#s8c .mid", { color: "#0a0908", duration: 0.3 }, 49.0);
       reveal("#s8c .mid", 48.6, 0.7, 0.15);
-      tl.fromTo("#logo", { y: 120, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.6)" }, 49.6);
-      tl.fromTo("#cta", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2.4)" }, 51.2);
-      tl.to("#cta", { scale: 1.06, duration: 0.5, yoyo: true, repeat: 3, ease: "sine.inOut" }, 52.0);
+      tl.fromTo("#logo", { y: 120, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" }, 49.6);
+      tl.fromTo("#cta", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power3.out" }, 51.2);
+      tl.to("#cta", { scale: 1.025, duration: 0.8, yoyo: true, repeat: 3, ease: "sine.inOut" }, 52.0);
       tl.to("#s8c, #s8white", { opacity: 0, duration: 0.5, ease: "power1.in" }, 54.5);
 
       window.__timelines["main"] = tl;
