@@ -126,31 +126,32 @@ Resultado: los 9 videos pasan (L/R 1,000; todas las frases en su lugar).
 
 ---
 
-# Ronda 4 — "Todo esto es un solo pedido" (armado de pedido, voz IA)
+# Ronda 4 — "Todo esto es un pedido mayorista" (armado de pedido, voz IA)
 
 **Disposition:** in_review
-**Output:** `output/SavingHub_V4_UnSoloPedido_VozIA.mp4` — 1080x1920, 19.3 s, h264/yuv420p 30 fps, AAC, -14.1 LUFS
+**Output:** `output/SavingHub_V4_PedidoMayorista_VozIA.mp4` — 1080x1920, 20.0 s, h264/yuv420p 30 fps, AAC
 **Fuente:** `source/vid_pedido.mp4` (WhatsApp, 111,5 s, 576x1024 vertical por metadata de rotación, 30 fps, sin voz).
-Se arma una caja grande: Asad (Lattafa), cajas varias, Club de Nuit Intense (Armaf), Vulcan, un cargador
+Es un **pedido mayorista** (confirmado por el cliente). Se arma una caja grande: Asad (Lattafa), cajas varias, Club de Nuit Intense (Armaf), Vulcan, un cargador
 2-en-1 con cable, papel kraft de relleno y cierre con cinta.
 
-**Hook (0–2,7 s):** abre con el **final** — la caja ya llena, pixelada → nítida — y la voz dice
-"Todo esto, es un solo pedido." (golpe + flash en **PEDIDO**). Inmediatamente un **rebobinado**: 70 s del
+**Hook (0–2,9 s):** abre con el **final** — la caja ya llena, pixelada → nítida — y la voz dice
+"Todo esto, es un pedido mayorista." (golpe + flash en **MAYORISTA**). Inmediatamente un **rebobinado**: 70 s del
 video en reversa en 0,86 s con SFX de cinta y el texto **REBOBINEMOS**, y arranca el armado desde la caja vacía.
 Es un loop abierto (¿cómo entra todo eso?) + pattern interrupt a los 2 s. El cierre vuelve al plano de la caja
-llena, así el final empalma con el inicio cuando el reel se repite.
+llena, así el final empalma con el inicio cuando el reel se repite. Como es mayorista, el cierre le habla al
+revendedor: "¿Querés revender? Escribinos por mensaje."
 
 | ts | Voz IA | Texto (rojo = *) | Planos (src) |
 |----|--------|------------------|--------------|
-| 0.00–1.85 | Todo esto, es un solo pedido. | TODO ESTO ES UN SOLO *PEDIDO | caja llena 75.4–77.3, pixelado→nítido |
-| 1.85–2.71 | Rebobinemos. | *REBOBINEMOS | 77.3 → 7.0 en reversa (82x) |
-| 2.71–5.11 | Primero, el Asad de Lattafa, bien al fondo. | PRIMERO, EL *ASAD DE LATTAFA, · BIEN AL *FONDO | caja vacía 7–9.7 (3x), Asad en mano 9.9, al fondo 10.7–12.2 |
-| 5.11–7.71 | Después, cada caja en su lugar, bien apretada. | DESPUÉS, CADA CAJA · EN SU *LUGAR, · BIEN *APRETADA | 15.5–19.5, 22.5–26.5, 29–33 (≈4.6x) |
-| 7.71–9.98 | Club de Nuit Intense, de Armaf. Y el Vulcan. | CLUB DE NUIT INTENSE, DE *ARMAF. · Y EL *VULCAN | 37.6, 40.5–44, 47.8, 50–54 |
-| 9.98–11.85 | Y hasta el cargador, con su cable. | Y HASTA EL *CARGADOR, · CON SU *CABLE | 67.6 (cargador 2-en-1), 71.9 (cable) |
-| 11.85–14.18 | Papel de relleno, para que llegue perfecto. | PAPEL DE RELLENO, · PARA QUE LLEGUE *PERFECTO | 85–90, 93–97, 99–103 (≈5x) |
-| 14.18–15.91 | Cerramos, y listo para salir. | CERRAMOS, · Y LISTO PARA *SALIR | 103.5–107, 107–110.5 |
-| 15.91–19.24 | Saving Hub. Armá tu pedido por mensaje. | SAVING **HUB** · ARMÁ TU *PEDIDO · [PEDILO POR DM] | caja llena 75.4–77.3 (loop) |
+| 0.00–2.07 | Todo esto, es un pedido mayorista. | TODO ESTO ES UN PEDIDO *MAYORISTA | caja llena 75.4–77.3, pixelado→nítido |
+| 2.07–2.93 | Rebobinemos. | *REBOBINEMOS | 77.3 → 7.0 en reversa (82x) |
+| 2.93–5.33 | Primero, el Asad de Lattafa, bien al fondo. | PRIMERO, EL *ASAD DE LATTAFA, · BIEN AL *FONDO | caja vacía 7–9.7 (3x), Asad en mano 9.9, al fondo 10.7–12.2 |
+| 5.33–7.93 | Después, cada caja en su lugar, bien apretada. | DESPUÉS, CADA CAJA · EN SU *LUGAR, · BIEN *APRETADA | 15.5–19.5, 22.5–26.5, 29–33 (≈4.6x) |
+| 7.93–10.20 | Club de Nuit Intense, de Armaf. Y el Vulcan. | CLUB DE NUIT INTENSE, DE *ARMAF. · Y EL *VULCAN | 37.6, 40.5–44, 47.8, 50–54 |
+| 10.20–12.07 | Y hasta el cargador, con su cable. | Y HASTA EL *CARGADOR, · CON SU *CABLE | 67.6 (cargador 2-en-1), 71.9 (cable) |
+| 12.07–14.40 | Papel de relleno, para que llegue perfecto. | PAPEL DE RELLENO, · PARA QUE LLEGUE *PERFECTO | 85–90, 93–97, 99–103 (≈5x) |
+| 14.40–16.13 | Cerramos, y listo para salir. | CERRAMOS, · Y LISTO PARA *SALIR | 103.5–107, 107–110.5 |
+| 16.13–19.98 | Saving Hub. ¿Querés revender? Escribinos por mensaje. | SAVING **HUB** · ¿QUERÉS *REVENDER? · [ESCRIBINOS POR DM] | caja llena 75.4–77.3 (loop) |
 
 ## Audio
 - Voz: Kokoro `ef_dora`, velocidad 1.08 (la misma de las rondas 2–3). Fonética para el TTS: "Asád de Latáfa",
@@ -174,21 +175,22 @@ llena, así el final empalma con el inicio cuando el reel se repite.
   whips con blur, punch-in, grano, cierre SAVING HUB + "PEDILO POR DM").
 - Nuevo: tramos acelerados (3–5x) para que el armado tenga ritmo sin perder qué producto se ve, y el rebobinado
   como transición del hook. No hay disolvencias ni transiciones de plantilla.
-- El tag del cierre es "ARMÁ TU *PEDIDO" (en vez de "LUJO SIN PAGAR DE MÁS") para que repita la palabra del hook.
+- Cierre para revendedores: tag "¿QUERÉS *REVENDER?" y botón "ESCRIBINOS POR DM" (en vez de "LUJO SIN PAGAR DE
+  MÁS" / "PEDILO POR DM"). `build_vo.py` ahora acepta `"cta"` por video (default "PEDILO POR DM").
 
 ## Verification
 - `hyperframes lint`: 0 errores (19 advertencias de estructura/sub-compositions, igual que los reels anteriores).
 - Snapshots de preview revisados; se corrigió el plano del Asad (entraba recién a los 9,75 s del original:
   ahora aparece con la etiqueta cuando la voz lo nombra).
-- `verify-render.mjs --duration 19.24`: GATE PASS (19.30 s).
+- `verify-render.mjs --duration 19.98`: GATE PASS (20.00 s). Loudness -14.1 LUFS, pico -3.0 dBFS.
 - `check_vo.py`: L/R 1,000 y las 9 frases de voz en su lugar (±10 ms), sin voces duplicadas.
-- Contact sheet `work/SavingHub_V4_UnSoloPedido_VozIA_sheet.png`: cada texto coincide con el producto en pantalla.
+- Contact sheet `work/SavingHub_V4_PedidoMayorista_VozIA_sheet.png`: cada texto coincide con el producto en pantalla.
+- La primera versión ("Todo esto, es un solo pedido", cierre "ARMÁ TU PEDIDO") se reemplazó por esta al confirmar
+  que es mayorista.
 - No se pudo transcribir la voz con Whisper (la red del entorno bloquea la descarga del modelo); la pronunciación
   se revisó por fonemas de Kokoro.
 
 ## A confirmar antes de publicar
-- **"Un solo pedido"**: asumimos que la caja es un único pedido de un cliente. Si fuera un envío mayorista o
-  varios pedidos juntos, cambiar el hook (p. ej. "Así armamos un pedido grande").
 - **Cargador y cable:** son cajas con logo de Apple ("2in1"). La voz no nombra la marca a propósito; confirmar
   que se pueden mostrar.
 - **Datos personales:** en los planos usados no aparecen etiquetas de envío ni datos del cliente.

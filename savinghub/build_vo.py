@@ -73,13 +73,14 @@ HOOKS = {
           "cap": "ESTE PERFUME CUESTA UNA *FORTUNA"},
 }
 
-# ---- Round 4: packing a big order — "Todo esto es un solo pedido" (rewind hook)
+# ---- Round 4: packing a wholesale order — "Todo esto es un pedido mayorista" (rewind hook)
 PEDIDO = {
     "src": "source/vid_pedido.mp4",
-    "tag": ["ARMÁ TU", "*PEDIDO"],
+    "tag": ["¿QUERÉS", "*REVENDER?"],
+    "cta": "ESCRIBINOS POR DM",
     "sync": True,
     "lines": [
-        {"vo": "Todo esto, es un solo pedido.", "cap": "TODO ESTO ES UN SOLO *PEDIDO",
+        {"vo": "Todo esto, es un pedido mayorista.", "cap": "TODO ESTO ES UN PEDIDO *MAYORISTA",
          "shots": [[75.4, 77.3]], "punch": True},
         {"vo": "Rebobinemos.", "cap": "*REBOBINEMOS", "shots": [[77.3, 7.0]], "sfx": "rewind"},
         {"vo": "Primero, el Asád de Latáfa, bien al fondo.",
@@ -98,7 +99,8 @@ PEDIDO = {
          "shots": [[85.0, 90.0], [93.0, 97.0], [99.0, 103.0]]},
         {"vo": "Serramos, y listo para salir.", "cap": "CERRAMOS, | Y LISTO PARA *SALIR",
          "shots": [[103.5, 107.0], [107.0, 110.5]]},
-        {"vo": "Séiving Jab. Armá tu pedido por mensaje.", "cap": None, "shots": [[75.4, 77.3]]},
+        {"vo": "Séiving Jab. ¿Querés revender? Escribinos por mensaje.", "cap": None,
+         "shots": [[75.4, 77.3]]},
     ],
 }
 
@@ -229,7 +231,7 @@ def layout(name, cfg):
         t += span
     shot_sum = sum(d for _, d in shots)
     comp = {"punch": punch, "phrases": phrases, "sfx": extra,
-            "end": {"t": round(end_t, 3), "tag": cfg["tag"], "cta": "PEDILO POR DM"}}
+            "end": {"t": round(end_t, 3), "tag": cfg["tag"], "cta": cfg.get("cta", "PEDILO POR DM")}}
     return comp, shots, vo_events, shot_sum
 
 
