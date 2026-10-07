@@ -129,7 +129,7 @@ Resultado: los 9 videos pasan (L/R 1,000; todas las frases en su lugar).
 # Ronda 4 — "Todo esto es un solo pedido" (armado de pedido, voz IA)
 
 **Disposition:** in_review
-**Output:** `output/SavingHub_V4_UnSoloPedido_VozIA.mp4`
+**Output:** `output/SavingHub_V4_UnSoloPedido_VozIA.mp4` — 1080x1920, 19.3 s, h264/yuv420p 30 fps, AAC, -14.1 LUFS
 **Fuente:** `source/vid_pedido.mp4` (WhatsApp, 111,5 s, 576x1024 vertical por metadata de rotación, 30 fps, sin voz).
 Se arma una caja grande: Asad (Lattafa), cajas varias, Club de Nuit Intense (Armaf), Vulcan, un cargador
 2-en-1 con cable, papel kraft de relleno y cierre con cinta.
@@ -175,6 +175,16 @@ llena, así el final empalma con el inicio cuando el reel se repite.
 - Nuevo: tramos acelerados (3–5x) para que el armado tenga ritmo sin perder qué producto se ve, y el rebobinado
   como transición del hook. No hay disolvencias ni transiciones de plantilla.
 - El tag del cierre es "ARMÁ TU *PEDIDO" (en vez de "LUJO SIN PAGAR DE MÁS") para que repita la palabra del hook.
+
+## Verification
+- `hyperframes lint`: 0 errores (19 advertencias de estructura/sub-compositions, igual que los reels anteriores).
+- Snapshots de preview revisados; se corrigió el plano del Asad (entraba recién a los 9,75 s del original:
+  ahora aparece con la etiqueta cuando la voz lo nombra).
+- `verify-render.mjs --duration 19.24`: GATE PASS (19.30 s).
+- `check_vo.py`: L/R 1,000 y las 9 frases de voz en su lugar (±10 ms), sin voces duplicadas.
+- Contact sheet `work/SavingHub_V4_UnSoloPedido_VozIA_sheet.png`: cada texto coincide con el producto en pantalla.
+- No se pudo transcribir la voz con Whisper (la red del entorno bloquea la descarga del modelo); la pronunciación
+  se revisó por fonemas de Kokoro.
 
 ## A confirmar antes de publicar
 - **"Un solo pedido"**: asumimos que la caja es un único pedido de un cliente. Si fuera un envío mayorista o
