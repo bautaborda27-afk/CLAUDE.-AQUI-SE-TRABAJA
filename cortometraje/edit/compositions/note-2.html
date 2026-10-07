@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="vendor/gsap.min.js"></script>
+  </head>
+  <body>
+    <div id="note-2-root" data-composition-id="note-2" data-start="0" data-duration="3.4333"
+         data-width="1920" data-height="1080">
+      <style>
+  @font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-display: block; }
+
+  [data-composition-id] { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    container-type: size; font-family: "Anton"; background: transparent; }
+  .phrase, .shake, .inner { position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; }
+  .inner { text-align: center; color: #fff; text-transform: uppercase; font-family: "Anton"; }
+  .ln { display: block; line-height: 0.9; letter-spacing: 0.06cqw; white-space: nowrap; }
+  .w { display: inline-block; opacity: 0; margin: 0 1.1cqw;
+    text-shadow: 0 0.35cqw 1.6cqw rgba(0,0,0,.7), 0 0 0.25cqw rgba(0,0,0,.4); }
+  .w.red { color: #E0201B; text-shadow: 0 0.35cqw 1.8cqw rgba(0,0,0,.85); }
+  .fin-word { font-family: "Anton"; color: #fff; font-size: 13cqw; line-height: 1; letter-spacing: 2.2cqw; margin-right: -2.2cqw; }
+  .fin-word span { display: inline-block; opacity: 0; }
+  .fin-rule { width: 16cqw; height: 0.55cqw; margin-top: 1.6cqw; background: #E0201B;
+    transform: scaleX(0); transform-origin: left center; }
+
+      </style>
+      <div class="phrase"><div class="shake"><div class="inner"><span class="ln" style="font-size:12cqw"><span class="w" data-i="0">¡YA</span><span class="w" data-i="1">TE</span></span><span class="ln" style="font-size:18cqw"><span class="w red" data-i="2">ENCONTRÉ!</span></span></div></div></div>
+      <script>
+      (() => {
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo('#note-2-root .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 0.1);
+        tl.fromTo('#note-2-root .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 0.35);
+        tl.fromTo('#note-2-root .w[data-i="2"]', { opacity: 0, scale: 1.6, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out", immediateRender: false }, 0.75);
+        tl.to("#note-2-root .shake", { keyframes: [{ x: -12, duration: 0.0333 }, { x: 9, duration: 0.0333 }, { x: -4, duration: 0.0333 }, { x: 0, duration: 0.0333 }], ease: "none" }, 0.85);
+        tl.fromTo("#note-2-root .inner", { scale: 1 }, { scale: 1.04, duration: 3.3133, ease: "sine.inOut", immediateRender: false }, 0);
+        tl.fromTo("#note-2-root .w", { opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: -40, filter: "blur(14px)", duration: 0.12, ease: "power2.in", immediateRender: false }, 3.3133);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["note-2"] = tl;
+      })();
+      </script>
+    </div>
+  </body>
+</html>

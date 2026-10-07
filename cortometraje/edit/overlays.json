@@ -1,0 +1,17 @@
+[
+ {
+  "id": "note-1",
+  "start": 97.4,
+  "duration": 3.5
+ },
+ {
+  "id": "note-2",
+  "start": 179.2,
+  "duration": 3.4333
+ },
+ {
+  "id": "fin",
+  "start": 256.0,
+  "duration": 2.5
+ }
+]

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="vendor/gsap.min.js"></script>
+  </head>
+  <body>
+    <div id="fin-root" data-composition-id="fin" data-start="0" data-duration="2.5"
+         data-width="1920" data-height="1080">
+      <style>
+  @font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-display: block; }
+
+  [data-composition-id] { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    container-type: size; font-family: "Anton"; background: transparent; }
+  .phrase, .shake, .inner { position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; }
+  .inner { text-align: center; color: #fff; text-transform: uppercase; font-family: "Anton"; }
+  .ln { display: block; line-height: 0.9; letter-spacing: 0.06cqw; white-space: nowrap; }
+  .w { display: inline-block; opacity: 0; margin: 0 1.1cqw;
+    text-shadow: 0 0.35cqw 1.6cqw rgba(0,0,0,.7), 0 0 0.25cqw rgba(0,0,0,.4); }
+  .w.red { color: #E0201B; text-shadow: 0 0.35cqw 1.8cqw rgba(0,0,0,.85); }
+  .fin-word { font-family: "Anton"; color: #fff; font-size: 13cqw; line-height: 1; letter-spacing: 2.2cqw; margin-right: -2.2cqw; }
+  .fin-word span { display: inline-block; opacity: 0; }
+  .fin-rule { width: 16cqw; height: 0.55cqw; margin-top: 1.6cqw; background: #E0201B;
+    transform: scaleX(0); transform-origin: left center; }
+
+      </style>
+      <div class="phrase"><div class="fin-word"><span>F</span><span>I</span><span>N</span></div><div class="fin-rule"></div></div>
+      <script>
+      (() => {
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#fin-root .fin-word span", { opacity: 0, scale: 1.25, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.2, stagger: 0.1, ease: "power3.out", immediateRender: false }, 0.35);
+        tl.fromTo("#fin-root .fin-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out", immediateRender: false }, 0.75);
+        tl.fromTo("#fin-root .phrase", { opacity: 1 }, { opacity: 0, duration: 0.5, ease: "power1.in", immediateRender: false }, 1.95);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["fin"] = tl;
+      })();
+      </script>
+    </div>
+  </body>
+</html>

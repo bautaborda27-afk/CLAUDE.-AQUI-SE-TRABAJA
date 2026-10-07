@@ -1,0 +1,10 @@
+# regenerable: build_base.py / build_audio.py / fx_film.py / hyperframes render
+work/
+sfx/
+__pycache__/
+edit/base.mp4
+edit/assets/stills/
+edit/renders/
+edit/snapshots/
+edit/vendor/
+edit/node_modules/

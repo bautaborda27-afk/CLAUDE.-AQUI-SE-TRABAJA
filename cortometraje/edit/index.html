@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="preload" href="fonts/Anton.woff2" as="font" type="font/woff2" crossorigin />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-display: block; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: transparent; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: transparent; }
+.font-warm { position: absolute; left: 0; top: 0; font-family: "Anton"; font-size: 20px; opacity: 0; }
+</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="258.5"
+         data-width="1920" data-height="1080">
+      <span class="font-warm" aria-hidden="true">TE BUSQUÉ ¡YA ENCONTRÉ! FIN</span>
+      <div id="note-1" class="clip" data-composition-id="note-1" data-composition-src="compositions/note-1.html" data-start="97.4" data-duration="3.5" data-track-index="1"></div>
+      <div id="note-2" class="clip" data-composition-id="note-2" data-composition-src="compositions/note-2.html" data-start="179.2" data-duration="3.4333" data-track-index="2"></div>
+      <div id="fin" class="clip" data-composition-id="fin" data-composition-src="compositions/fin.html" data-start="256" data-duration="2.5" data-track-index="3"></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
