@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-display: block; }
+:root { --red: #E0201B; --white: #FFFFFF; --ink: #0b0b0b; --amber: #F5A623; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+  container-type: size; font-family: "Anton"; }
+#cam { position: absolute; inset: 0; will-change: transform, filter;
+  backface-visibility: hidden; transform-origin: 50% 55%; }
+#cam video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scrim { position: absolute; left: 0; right: 0; top: 0; height: 62cqh; pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.38) 55%, rgba(0,0,0,0) 100%); }
+.vig { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 75% 60% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.phrase { position: absolute; left: 4cqw; right: 4cqw; top: 9cqh; text-align: center;
+  color: var(--white); text-transform: uppercase; }
+.phrase .ln { display: block; font-size: 16.5cqw; line-height: 0.9; letter-spacing: 0.1cqw;
+  white-space: nowrap; }
+.phrase.num .ln { font-size: 34cqw; line-height: 0.86; }
+.phrase .sub { display: block; margin-top: 1.6cqh; font-size: 6.4cqw; letter-spacing: 0.8cqw; }
+.w { display: inline-block; opacity: 0; margin: 0 1.1cqw;
+  text-shadow: 0 0.6cqw 2.4cqw rgba(0,0,0,.65), 0 0 0.4cqw rgba(0,0,0,.35); }
+.w.red { color: var(--red); }
+.plate { display: inline-block; padding: 2.2cqw 4.2cqw 2.8cqw; transform: rotate(-3deg);
+  background:
+    linear-gradient(rgba(255,255,255,.10) 1px, transparent 1px) 0 0 / 3cqw 3cqw,
+    linear-gradient(90deg, rgba(255,255,255,.10) 1px, transparent 1px) 0 0 / 3cqw 3cqw,
+    var(--red);
+  box-shadow: 0 1.2cqw 3cqw rgba(0,0,0,.45); }
+.plate .ln { font-size: 13.5cqw; }
+.plate .w { text-shadow: 0 0.3cqw 0.8cqw rgba(0,0,0,.35); }
+.endcard { position: absolute; inset: 0; }
+.endcard .shade { position: absolute; inset: 0; background: rgba(8,8,8,.58); opacity: 0; }
+.endcard .brand { position: absolute; left: 0; right: 0; top: 30cqh; text-align: center;
+  color: var(--white); font-size: 21cqw; line-height: 0.88; }
+.endcard .brand .w { margin: 0 1.4cqw; }
+.endcard .tag { position: absolute; left: 0; right: 0; top: 52cqh; text-align: center;
+  color: var(--white); font-size: 10.5cqw; line-height: 0.92; }
+.endcard .tag .ln { display: block; }
+.endcard .cta { position: absolute; left: 0; right: 0; top: 71cqh; text-align: center; opacity: 0; }
+.endcard .cta span { display: inline-block; padding: 1.6cqw 4cqw 2cqw; background: var(--white);
+  color: var(--ink); font-size: 7.4cqw; transform: rotate(-2deg);
+  box-shadow: 0 1cqw 2.6cqw rgba(0,0,0,.5); }
+</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="19.244"
+         data-width="1080" data-height="1920">
+      <div class="punch" style="position:absolute;inset:0;transform-origin:50% 50%;">
+        <div id="cam">
+          <video id="base" class="clip" src="base.mp4" muted playsinline
+                 data-start="0" data-duration="19.244" data-track-index="0"></video>
+        </div>
+      </div>
+      <div class="scrim"></div>
+      <div class="vig"></div>
+            <div id="p0" class="clip phrase" data-start="0.0" data-duration="1.83" data-track-index="2"><div class="inner"><span class="ln" style="font-size:15.60cqw"><span class="w" data-i="0">TODO</span><span class="w" data-i="1">ESTO</span><span class="w" data-i="2">ES</span></span><span class="ln"><span class="w" data-i="3">UN</span><span class="w" data-i="4">SOLO</span></span><span class="ln"><span class="w red" data-i="5">PEDIDO</span></span></div></div>
+      <div id="p1" class="clip phrase" data-start="1.85" data-duration="0.84" data-track-index="3"><div class="inner"><span class="ln"><span class="w red" data-i="0">REBOBINEMOS</span></span></div></div>
+      <div id="p2" class="clip phrase" data-start="2.706" data-duration="1.50" data-track-index="2"><div class="inner"><span class="ln"><span class="w" data-i="0">PRIMERO,</span><span class="w" data-i="1">EL</span></span><span class="ln"><span class="w red" data-i="2">ASAD</span><span class="w" data-i="3">DE</span></span><span class="ln"><span class="w" data-i="4">LATTAFA,</span></span></div></div>
+      <div id="p3" class="clip phrase" data-start="4.226" data-duration="0.86" data-track-index="3"><div class="inner"><span class="ln"><span class="w" data-i="0">BIEN</span><span class="w" data-i="1">AL</span></span><span class="ln"><span class="w red" data-i="2">FONDO</span></span></div></div>
+      <div id="p4" class="clip phrase" data-start="5.107" data-duration="0.97" data-track-index="2"><div class="inner"><span class="ln"><span class="w" data-i="0">DESPUÉS,</span></span><span class="ln"><span class="w" data-i="1">CADA</span><span class="w" data-i="2">CAJA</span></span></div></div>
+      <div id="p5" class="clip phrase" data-start="6.098" data-duration="0.73" data-track-index="3"><div class="inner"><span class="ln" style="font-size:15.60cqw"><span class="w" data-i="0">EN</span><span class="w" data-i="1">SU</span><span class="w red" data-i="2">LUGAR,</span></span></div></div>
+      <div id="p6" class="clip phrase" data-start="6.848" data-duration="0.84" data-track-index="2"><div class="inner"><span class="ln"><span class="w" data-i="0">BIEN</span></span><span class="ln"><span class="w red" data-i="1">APRETADA</span></span></div></div>
+      <div id="p7" class="clip phrase" data-start="7.71" data-duration="1.52" data-track-index="3"><div class="inner"><span class="ln" style="font-size:15.60cqw"><span class="w" data-i="0">CLUB</span><span class="w" data-i="1">DE</span><span class="w" data-i="2">NUIT</span></span><span class="ln"><span class="w" data-i="3">INTENSE,</span><span class="w" data-i="4">DE</span></span><span class="ln"><span class="w red" data-i="5">ARMAF.</span></span></div></div>
+      <div id="p8" class="clip phrase" data-start="9.253" data-duration="0.71" data-track-index="2"><div class="inner"><span class="ln"><span class="w" data-i="0">Y</span><span class="w" data-i="1">EL</span><span class="w red" data-i="2">VULCAN</span></span></div></div>
+      <div id="p9" class="clip phrase" data-start="9.982" data-duration="1.04" data-track-index="3"><div class="inner"><span class="ln"><span class="w" data-i="0">Y</span><span class="w" data-i="1">HASTA</span><span class="w" data-i="2">EL</span></span><span class="ln"><span class="w red" data-i="3">CARGADOR,</span></span></div></div>
+      <div id="p10" class="clip phrase" data-start="11.037" data-duration="0.79" data-track-index="2"><div class="inner"><span class="ln" style="font-size:15.60cqw"><span class="w" data-i="0">CON</span><span class="w" data-i="1">SU</span><span class="w red" data-i="2">CABLE</span></span></div></div>
+      <div id="p11" class="clip phrase" data-start="11.846" data-duration="0.91" data-track-index="3"><div class="inner"><span class="ln"><span class="w" data-i="0">PAPEL</span><span class="w" data-i="1">DE</span></span><span class="ln"><span class="w" data-i="2">RELLENO,</span></span></div></div>
+      <div id="p12" class="clip phrase" data-start="12.775" data-duration="1.39" data-track-index="2"><div class="inner"><span class="ln"><span class="w" data-i="0">PARA</span><span class="w" data-i="1">QUE</span></span><span class="ln"><span class="w" data-i="2">LLEGUE</span></span><span class="ln"><span class="w red" data-i="3">PERFECTO</span></span></div></div>
+      <div id="p13" class="clip phrase" data-start="14.181" data-duration="0.53" data-track-index="3"><div class="inner"><span class="ln"><span class="w" data-i="0">CERRAMOS,</span></span></div></div>
+      <div id="p14" class="clip phrase" data-start="14.726" data-duration="1.16" data-track-index="2"><div class="inner"><span class="ln" style="font-size:15.60cqw"><span class="w" data-i="0">Y</span><span class="w" data-i="1">LISTO</span><span class="w" data-i="2">PARA</span></span><span class="ln"><span class="w red" data-i="3">SALIR</span></span></div></div>
+      <div id="end" class="clip endcard" data-start="15.91" data-duration="3.33" data-track-index="4"><div class="shade"></div><div class="brand"><span class="w" data-b="0">SAVING</span><span class="w red" data-b="1">HUB</span></div><div class="tag"><span class="ln"><span class="w" data-i="0">ARMÁ</span><span class="w" data-i="1">TU</span></span><span class="ln"><span class="w red" data-i="2">PEDIDO</span></span></div><div class="cta"><span>PEDILO POR DM</span></div></div>
+      <div class="flash"></div>
+      <audio id="master" class="clip" src="master.m4a" data-start="0" data-duration="19.244"
+             data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+            tl.set("#cam", { force3D: true, scale: 1, x: 0, y: 0, filter: "blur(0px)" }, 0);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 1.83, ease: "power1.inOut", immediateRender: false }, 0.0);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.84, ease: "power1.inOut", immediateRender: false }, 1.85);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 1.85);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.78, ease: "power1.inOut", immediateRender: false }, 2.707);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 2.707);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.78, ease: "power1.inOut", immediateRender: false }, 3.507);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 3.507);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.78, ease: "power1.inOut", immediateRender: false }, 4.307);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 4.307);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.85, ease: "power1.inOut", immediateRender: false }, 5.107);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 5.107);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.85, ease: "power1.inOut", immediateRender: false }, 5.975);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 5.975);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.85, ease: "power1.inOut", immediateRender: false }, 6.843);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 6.843);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.55, ease: "power1.inOut", immediateRender: false }, 7.711);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 7.711);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.55, ease: "power1.inOut", immediateRender: false }, 8.279);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 8.279);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.55, ease: "power1.inOut", immediateRender: false }, 8.847);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 8.847);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.55, ease: "power1.inOut", immediateRender: false }, 9.415);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 9.415);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.91, ease: "power1.inOut", immediateRender: false }, 9.983);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 9.983);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.91, ease: "power1.inOut", immediateRender: false }, 10.915);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 10.915);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.76, ease: "power1.inOut", immediateRender: false }, 11.847);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 11.847);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.76, ease: "power1.inOut", immediateRender: false }, 12.626);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 12.626);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.76, ease: "power1.inOut", immediateRender: false }, 13.405);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 13.405);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 0.84, ease: "power1.inOut", immediateRender: false }, 14.184);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 14.184);
+      tl.fromTo("#cam", { scale: 1.0 }, { scale: 1.08, duration: 0.84, ease: "power1.inOut", immediateRender: false }, 15.048);
+      tl.fromTo("#cam", { y: 90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 15.048);
+      tl.fromTo("#cam", { scale: 1.08 }, { scale: 1.02, duration: 3.31, ease: "power1.inOut", immediateRender: false }, 15.912);
+      tl.fromTo("#cam", { y: -90, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power3.out", immediateRender: false }, 15.912);
+      tl.to("#root .punch", { scale: 1.1, duration: 0.07, ease: "power2.out" }, 1.342);
+      tl.to("#root .punch", { scale: 1.0, duration: 0.35, ease: "power2.out" }, 1.41);
+      tl.fromTo(".flash", { opacity: 0.55 }, { opacity: 0, duration: 0.18, ease: "power2.out", immediateRender: false }, 1.342);
+      tl.fromTo('#p0 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 0.00);
+      tl.fromTo('#p0 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 0.28);
+      tl.fromTo('#p0 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 0.70);
+      tl.fromTo('#p0 .w[data-i="3"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 0.88);
+      tl.fromTo('#p0 .w[data-i="4"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 1.06);
+      tl.fromTo('#p0 .w[data-i="5"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 1.34);
+      tl.fromTo("#p0 .inner", { scale: 1 }, { scale: 1.04, duration: 1.83, ease: "none", immediateRender: false }, 0.00);
+      tl.fromTo('#p1 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 1.85);
+      tl.fromTo("#p1 .inner", { scale: 1 }, { scale: 1.04, duration: 0.84, ease: "none", immediateRender: false }, 1.85);
+      tl.fromTo('#p2 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 2.71);
+      tl.fromTo('#p2 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 3.22);
+      tl.fromTo('#p2 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 3.38);
+      tl.fromTo('#p2 .w[data-i="3"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 3.64);
+      tl.fromTo('#p2 .w[data-i="4"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 3.80);
+      tl.fromTo("#p2 .inner", { scale: 1 }, { scale: 1.04, duration: 1.50, ease: "none", immediateRender: false }, 2.71);
+      tl.fromTo('#p3 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 4.27);
+      tl.fromTo('#p3 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 4.52);
+      tl.fromTo('#p3 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 4.68);
+      tl.fromTo("#p3 .inner", { scale: 1 }, { scale: 1.04, duration: 0.86, ease: "none", immediateRender: false }, 4.23);
+      tl.fromTo('#p4 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 5.11);
+      tl.fromTo('#p4 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 5.62);
+      tl.fromTo('#p4 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 5.88);
+      tl.fromTo("#p4 .inner", { scale: 1 }, { scale: 1.04, duration: 0.97, ease: "none", immediateRender: false }, 5.11);
+      tl.fromTo('#p5 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 6.14);
+      tl.fromTo('#p5 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 6.30);
+      tl.fromTo('#p5 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 6.47);
+      tl.fromTo("#p5 .inner", { scale: 1 }, { scale: 1.04, duration: 0.73, ease: "none", immediateRender: false }, 6.10);
+      tl.fromTo('#p6 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 6.89);
+      tl.fromTo('#p6 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 7.14);
+      tl.fromTo("#p6 .inner", { scale: 1 }, { scale: 1.04, duration: 0.84, ease: "none", immediateRender: false }, 6.85);
+      tl.fromTo('#p7 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 7.71);
+      tl.fromTo('#p7 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 7.94);
+      tl.fromTo('#p7 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 8.09);
+      tl.fromTo('#p7 .w[data-i="3"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 8.28);
+      tl.fromTo('#p7 .w[data-i="4"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 8.70);
+      tl.fromTo('#p7 .w[data-i="5"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 8.85);
+      tl.fromTo("#p7 .inner", { scale: 1 }, { scale: 1.04, duration: 1.52, ease: "none", immediateRender: false }, 7.71);
+      tl.fromTo('#p8 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 9.29);
+      tl.fromTo('#p8 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 9.40);
+      tl.fromTo('#p8 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 9.55);
+      tl.fromTo("#p8 .inner", { scale: 1 }, { scale: 1.04, duration: 0.71, ease: "none", immediateRender: false }, 9.25);
+      tl.fromTo('#p9 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 9.98);
+      tl.fromTo('#p9 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 10.09);
+      tl.fromTo('#p9 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 10.38);
+      tl.fromTo('#p9 .w[data-i="3"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 10.54);
+      tl.fromTo("#p9 .inner", { scale: 1 }, { scale: 1.04, duration: 1.04, ease: "none", immediateRender: false }, 9.98);
+      tl.fromTo('#p10 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 11.08);
+      tl.fromTo('#p10 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 11.28);
+      tl.fromTo('#p10 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 11.44);
+      tl.fromTo("#p10 .inner", { scale: 1 }, { scale: 1.04, duration: 0.79, ease: "none", immediateRender: false }, 11.04);
+      tl.fromTo('#p11 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 11.85);
+      tl.fromTo('#p11 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 12.15);
+      tl.fromTo('#p11 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 12.31);
+      tl.fromTo("#p11 .inner", { scale: 1 }, { scale: 1.04, duration: 0.91, ease: "none", immediateRender: false }, 11.85);
+      tl.fromTo('#p12 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 12.81);
+      tl.fromTo('#p12 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 13.07);
+      tl.fromTo('#p12 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 13.28);
+      tl.fromTo('#p12 .w[data-i="3"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 13.62);
+      tl.fromTo("#p12 .inner", { scale: 1 }, { scale: 1.04, duration: 1.39, ease: "none", immediateRender: false }, 12.78);
+      tl.fromTo('#p13 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 14.18);
+      tl.fromTo("#p13 .inner", { scale: 1 }, { scale: 1.04, duration: 0.53, ease: "none", immediateRender: false }, 14.18);
+      tl.fromTo('#p14 .w[data-i="0"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 14.77);
+      tl.fromTo('#p14 .w[data-i="1"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 14.89);
+      tl.fromTo('#p14 .w[data-i="2"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 15.21);
+      tl.fromTo('#p14 .w[data-i="3"]', { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out", immediateRender: false }, 15.47);
+      tl.fromTo("#p14 .inner", { scale: 1 }, { scale: 1.04, duration: 1.16, ease: "none", immediateRender: false }, 14.73);
+      tl.fromTo("#end .shade", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out", immediateRender: false }, 15.91);
+      tl.fromTo("#end .brand .w", { opacity: 0, scale: 1.25, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.18, stagger: 0.14, ease: "power3.out", immediateRender: false }, 16.01);
+      tl.fromTo("#end .tag .w", { opacity: 0, scale: 1.1, filter: "blur(15px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.1, ease: "power2.out", immediateRender: false }, 16.46);
+      tl.fromTo("#end .cta", { opacity: 0, y: 40, rotation: -6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 17.16);
+      tl.fromTo(".flash", { opacity: 0.5 }, { opacity: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 15.91);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

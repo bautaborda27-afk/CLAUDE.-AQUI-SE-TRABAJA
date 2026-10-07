@@ -4,6 +4,8 @@
 Each reel is a list of (source_start, duration) shots. Shots are trimmed,
 scaled/cropped to 9:16, lightly graded, and concatenated with their original
 (ASMR) audio. The first shot gets a pixelated -> sharp reveal (hook).
+source_start may also be a [from, to] range: that stretch of the source is
+retimed to fill the shot (fast-forward, or a rewind when to < from).
 Writes <reel>/base.mp4 and <reel>/shots.json (edit timeline for the composition).
 """
 import json
@@ -57,9 +59,21 @@ def build(name, cfg):
     out_dir = ROOT / name
     out_dir.mkdir(exist_ok=True)
     src = str(ROOT / cfg["src"])
-    parts, labels, timeline, t = [], [], [], 0.0
+    # one seeked input per shot: shots out of source order would otherwise make
+    # ffmpeg buffer every decoded frame between them
+    inputs, parts, labels, timeline, t = [], [], [], [], 0.0
     for i, (ss, dur) in enumerate(cfg["shots"]):
-        v = (f"[0:v]trim=start={ss}:duration={dur},setpts=PTS-STARTPTS,{FIT},{GRADE}")
+        if isinstance(ss, (list, tuple)):
+            a, b = ss
+            lo, span = min(a, b), abs(b - a)
+            # drop to 30 fps before reversing so `reverse` only buffers this shot's frames
+            v = (f"[{i}:v]trim=duration={span},setpts=(PTS-STARTPTS)*{dur / span:.6f},"
+                 f"fps=30{',reverse' if b < a else ''},tpad=stop_mode=clone:stop_duration=0.2,"
+                 f"trim=duration={dur},{FIT},{GRADE}")
+        else:
+            lo, span = ss, dur
+            v = (f"[{i}:v]trim=duration={dur},setpts=PTS-STARTPTS,{FIT},{GRADE}")
+        inputs += ["-ss", f"{lo}", "-t", f"{max(span, dur) + 0.3:.3f}", "-i", src]
         if i == 0:
             # pixelated -> sharp reveal over the first 0.5s, three block sizes
             v += ",split=4[s0][p1][p2][p3];"
@@ -71,15 +85,16 @@ def build(name, cfg):
             v += f"[o2][q3]overlay=enable='between(t,0.33,0.5)'[v{i}]"
         else:
             v += f"[v{i}]"
-        a = (f"[0:a]atrim=start={ss}:duration={dur},asetpts=PTS-STARTPTS,"
-             f"aresample=48000,afade=t=in:d=0.03,afade=t=out:st={dur - 0.04:.2f}:d=0.04[a{i}]")
+        a = (f"[{i}:a]atrim=duration={dur},asetpts=PTS-STARTPTS,"
+             f"aresample=48000,apad=whole_dur={dur},atrim=duration={dur},"
+             f"afade=t=in:d=0.03,afade=t=out:st={dur - 0.04:.2f}:d=0.04[a{i}]")
         parts += [v, a]
         labels.append(f"[v{i}][a{i}]")
         timeline.append({"start": round(t, 3), "duration": dur, "src": ss})
         t += dur
     n = len(cfg["shots"])
     fc = ";".join(parts) + ";" + "".join(labels) + f"concat=n={n}:v=1:a=1[v][a]"
-    cmd = ["ffmpeg", "-v", "error", "-y", "-i", src, "-filter_complex", fc,
+    cmd = ["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", fc,
            "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-crf", "16",
            "-preset", "medium", "-g", "30", "-keyint_min", "30", "-pix_fmt", "yuv420p", "-c:a", "pcm_s16le",
            str(out_dir / "base.mkv")]

@@ -35,6 +35,14 @@ def make_sfx():
        "-filter_complex",
        "[1]highpass=f=2500[n];[0][n]amix=inputs=2:normalize=0,afade=t=in:st=0:d=0.7,afade=t=out:st=0.74:d=0.06",
        str(SFX / "riser.wav"))
+    # tape rewind: fast falling warble over hiss
+    ff("-f", "lavfi", "-i",
+       f"aevalsrc='0.3*sin(2*PI*(1700*t-650*t*t))':s={SR}:d=0.9",
+       "-f", "lavfi", "-i", f"anoisesrc=duration=0.9:color=pink:sample_rate={SR}:amplitude=0.3:seed=5",
+       "-filter_complex",
+       "[1]bandpass=f=2500:width_type=o:w=2[n];[0][n]amix=inputs=2:normalize=0,tremolo=f=22:d=0.7,"
+       "afade=t=in:st=0:d=0.05,afade=t=out:st=0.7:d=0.2",
+       str(SFX / "rewind.wav"))
 
 
 def mix(name, cfg):

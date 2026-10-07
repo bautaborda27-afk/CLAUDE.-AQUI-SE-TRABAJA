@@ -4,8 +4,13 @@
 Each video is a list of lines. A line has:
   vo   — what the voice says (spelled phonetically where Kokoro needs help)
   cap  — the on-screen caption (giant Anton caps, "*" marks the red key word)
-  shots — source timestamps covering the line (time is split evenly)
+  shots — source timestamps covering the line (time is split evenly); a
+          [from, to] pair retimes that stretch to fit (fast-forward / rewind)
+  sfx   — optional extra SFX at the start of the line (e.g. "rewind")
 The last line plays over the branded end card.
+A video with "sync": True writes `cap` word-for-word with `vo` and times each
+caption word to its estimated onset in the speech; "|" in a caption forces a
+new caption screen.
 
 Pipeline per video: TTS each line -> lay out timeline from VO durations ->
 cut base video (build_base) -> captions/animation (build_comp) -> mix VO +
@@ -16,6 +21,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import build_audio
 import build_base
 import build_comp
 
@@ -67,7 +73,36 @@ HOOKS = {
           "cap": "ESTE PERFUME CUESTA UNA *FORTUNA"},
 }
 
-VIDEOS = {"edit-v2-jeanlowe-original": JEANLOWE_ORIGINAL}
+# ---- Round 4: packing a big order — "Todo esto es un solo pedido" (rewind hook)
+PEDIDO = {
+    "src": "source/vid_pedido.mp4",
+    "tag": ["ARMÁ TU", "*PEDIDO"],
+    "sync": True,
+    "lines": [
+        {"vo": "Todo esto, es un solo pedido.", "cap": "TODO ESTO ES UN SOLO *PEDIDO",
+         "shots": [[75.4, 77.3]], "punch": True},
+        {"vo": "Rebobinemos.", "cap": "*REBOBINEMOS", "shots": [[77.3, 7.0]], "sfx": "rewind"},
+        {"vo": "Primero, el Asád de Latáfa, bien al fondo.",
+         "cap": "PRIMERO, EL *ASAD DE LATTAFA, | BIEN AL *FONDO",
+         "shots": [[7.0, 9.7], 9.9, [10.7, 12.2]]},
+        {"vo": "Después, cada caja en su lugar, bien apretada.",
+         "cap": "DESPUÉS, CADA CAJA | EN SU *LUGAR, | BIEN *APRETADA",
+         "shots": [[15.5, 19.5], [22.5, 26.5], [29.0, 33.0]]},
+        {"vo": "Club de Nuí Inténs, de Armáf. Y el Vúlcan.",
+         "cap": "CLUB DE NUIT INTENSE, DE *ARMAF. | Y EL *VULCAN",
+         "shots": [37.6, [40.5, 44.0], 47.8, [50.0, 54.0]]},
+        {"vo": "Y hasta el cargador, con su cable.", "cap": "Y HASTA EL *CARGADOR, | CON SU *CABLE",
+         "shots": [67.6, 71.9]},
+        {"vo": "Papel de relleno, para que llegue perfecto.",
+         "cap": "PAPEL DE RELLENO, | PARA QUE LLEGUE *PERFECTO",
+         "shots": [[85.0, 90.0], [93.0, 97.0], [99.0, 103.0]]},
+        {"vo": "Serramos, y listo para salir.", "cap": "CERRAMOS, | Y LISTO PARA *SALIR",
+         "shots": [[103.5, 107.0], [107.0, 110.5]]},
+        {"vo": "Séiving Jab. Armá tu pedido por mensaje.", "cap": None, "shots": [[75.4, 77.3]]},
+    ],
+}
+
+VIDEOS = {"edit-v2-jeanlowe-original": JEANLOWE_ORIGINAL, "edit-v4-pedido": PEDIDO}
 for k, h in HOOKS.items():
     VIDEOS[f"edit-v2-bharara-hook-{k}"] = {
         "src": "source/vid31.mp4",
@@ -103,7 +138,11 @@ def tts(text):
 
 
 def chunk_caption(cap):
-    """Split a caption into screens (<=6 words) of lines (<=12 chars)."""
+    """Split a caption into screens (<=6 words) of lines (<=12 chars); "|" forces a new screen."""
+    return [sc for part in cap.split("|") for sc in _chunk(part)]
+
+
+def _chunk(cap):
     words = cap.split()
     screens, cur = [], []
     for w in words:
@@ -129,15 +168,36 @@ def chunk_caption(cap):
     return out
 
 
+def word_onsets(vo, n, d):
+    """Estimated onset (s) of each of the n spoken words over d seconds: weighted
+    by letter count plus a pause after punctuation. None if the counts differ."""
+    words = vo.split()
+    if len(words) != n:
+        return None
+    weights = []
+    for i, w in enumerate(words):
+        pause = 0.0
+        if i < len(words) - 1:
+            pause = 4.0 if w[-1] in ".:?!" else 2.5 if w[-1] in ",;" else 0.0
+        weights.append(sum(c.isalnum() for c in w) + 1.5 + pause)
+    total, acc, out = sum(weights), 0.0, []
+    for w in weights:
+        out.append(d * acc / total)
+        acc += w
+    return out
+
+
 def layout(name, cfg):
     """TTS every line and derive shots, phrases and VO placement."""
-    t, shots, phrases, vo_events, punch = 0.0, [], [], [], []
+    t, shots, phrases, vo_events, punch, extra = 0.0, [], [], [], [], []
     for li, line in enumerate(cfg["lines"]):
         wav = tts(line["vo"])
         d = duration(wav)
         is_last = li == len(cfg["lines"]) - 1
         span = d + (TAIL if is_last else GAP)
         vo_events.append((wav, t))
+        if line.get("sfx"):
+            extra.append((line["sfx"], t - 0.05, 0.35))
         n = len(line["shots"])
         for s in line["shots"]:
             shots.append((s, round(span / n, 3)))
@@ -146,12 +206,18 @@ def layout(name, cfg):
             nwords = sum(len(ln) for sc in screens for ln in sc)
             per = min(d / max(nwords, 1), 0.33)
             slot = d / len(screens)
+            onsets = word_onsets(line["vo"], nwords, d) if cfg.get("sync") else None
             wi = 0
             for si, sc in enumerate(screens):
                 count = sum(len(ln) for ln in sc)
-                st = t + si * slot
-                en = t + (si + 1) * slot if si < len(screens) - 1 else t + span
-                at = [round(st + j * per, 3) for j in range(count)]
+                if onsets:
+                    at = [round(t + o, 3) for o in onsets[wi:wi + count]]
+                    st = t if si == 0 else at[0] - 0.04
+                    en = t + onsets[wi + count] - 0.04 if si < len(screens) - 1 else t + span
+                else:
+                    st = t + si * slot
+                    en = t + (si + 1) * slot if si < len(screens) - 1 else t + span
+                    at = [round(st + j * per, 3) for j in range(count)]
                 ph = {"t": round(st, 3), "end": round(en - 0.02, 3), "lines": sc, "at": at}
                 if line.get("plate"):
                     ph["plate"] = True
@@ -162,7 +228,7 @@ def layout(name, cfg):
         end_t = t
         t += span
     shot_sum = sum(d for _, d in shots)
-    comp = {"punch": punch, "phrases": phrases,
+    comp = {"punch": punch, "phrases": phrases, "sfx": extra,
             "end": {"t": round(end_t, 3), "tag": cfg["tag"], "cta": "PEDILO POR DM"}}
     return comp, shots, vo_events, shot_sum
 
@@ -177,6 +243,7 @@ def mix(name, comp, vo_events, dur):
         events.append(("impact", p, 0.45))
     et = comp["end"]["t"]
     events += [("riser", et - 0.8, 0.22), ("impact", et + 0.1, 0.4)]
+    events += comp.get("sfx", [])
     # voice replaces the original (ASMR) sound: master = AI voice + edit SFX only
     inputs, chains, vo_labels = [], [], []
     for i, (wav, t) in enumerate(vo_events):
@@ -217,5 +284,7 @@ def build(name, cfg):
 
 
 if __name__ == "__main__":
+    if not (SFX / "rewind.wav").exists():
+        build_audio.make_sfx()
     for name in sys.argv[1:] or VIDEOS:
         build(name, VIDEOS[name])
