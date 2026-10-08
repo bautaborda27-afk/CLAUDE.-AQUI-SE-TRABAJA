@@ -104,7 +104,31 @@ PEDIDO = {
     ],
 }
 
-VIDEOS = {"edit-v2-jeanlowe-original": JEANLOWE_ORIGINAL, "edit-v4-pedido": PEDIDO}
+# ---- Round 5: unboxing a stock box — open loop hook, payoff is the designer perfume
+CAJA = {
+    "src": "source/vid_caja.mp4",
+    "tag": ["¿CUÁL TE", "*LLEVÁS?"],
+    "sync": True,
+    "lines": [
+        {"vo": "Abrimos esta caja de perfumes... y hay uno que no te esperás.",
+         "cap": "ABRIMOS ESTA CAJA DE *PERFUMES | Y HAY UNO QUE NO TE *ESPERÁS",
+         "shots": [[0.5, 2.2], [2.2, 4.8]], "punch": True},
+        {"vo": "Yara, de Latáfa.", "cap": "YARA, DE *LATTAFA", "shots": [10.0]},
+        {"vo": "Un set de regalo.", "cap": "UN SET DE *REGALO", "shots": [75.5]},
+        {"vo": "Bajarára King.", "cap": "BHARARA *KING", "shots": [106.8]},
+        {"vo": "Vélvet Úd.", "cap": "*VELVET OUD", "shots": [122.3]},
+        {"vo": "Jauás, de Rasási.", "cap": "*HAWAS, DE RASASI", "shots": [130.9]},
+        {"vo": "Y el que no te esperabas: Yan Pol Goltié, Le Mal Elixír.",
+         "cap": "Y EL QUE NO TE *ESPERABAS: | JEAN PAUL GAULTIER, | LE MALE *ELIXIR",
+         "shots": [[58.0, 60.6], 60.9, 64.9], "punch": True},
+        {"vo": "Y la caja, vasía.", "cap": "Y LA CAJA, *VACÍA", "shots": [[141.6, 144.6]]},
+        {"vo": "Séiving Jab. ¿Cuál te llevás? Pedilo por mensaje.", "cap": None,
+         "shots": [[19.8, 21.2]]},
+    ],
+}
+
+VIDEOS = {"edit-v2-jeanlowe-original": JEANLOWE_ORIGINAL, "edit-v4-pedido": PEDIDO,
+          "edit-v5-caja": CAJA}
 for k, h in HOOKS.items():
     VIDEOS[f"edit-v2-bharara-hook-{k}"] = {
         "src": "source/vid31.mp4",

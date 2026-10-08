@@ -194,3 +194,60 @@ revendedor: "¿Querés revender? Escribinos por mensaje."
 - **Cargador y cable:** son cajas con logo de Apple ("2in1"). La voz no nombra la marca a propósito; confirmar
   que se pueden mostrar.
 - **Datos personales:** en los planos usados no aparecen etiquetas de envío ni datos del cliente.
+
+---
+
+# Ronda 5 — "Abrimos esta caja de perfumes... y hay uno que no te esperás" (voz IA)
+
+**Disposition:** in_review
+**Output:** `output/SavingHub_V5_CajaDePerfumes_VozIA.mp4` — 1080x1920, 16.3 s, h264/yuv420p 30 fps, AAC, -14 LUFS
+**Fuente:** `source/vid_caja.mp4` (WhatsApp, 147 s, 576x1024 vertical por metadata de rotación, 30 fps, sin voz).
+Se desarma una caja de mercadería tapada con bolsas negras, producto por producto, hasta dejarla vacía.
+
+**Hook (0–3,2 s):** la caja tapada con la bolsa negra (pixelada → nítida); la mano levanta la bolsa justo cuando
+la voz dice "perfumes". La frase abre un loop: "...y hay uno que no te esperás" (golpe + flash en **ESPERÁS**).
+El pago llega a los 8,4 s: **Le Male Elixir de Jean Paul Gaultier**, el único de diseñador entre los árabes
+(segundo golpe en **ELIXIR**). Entre medio, un producto por frase (~1 s cada uno) para sostener el ritmo.
+Cierre con pregunta para comentarios: "¿Cuál te llevás?".
+
+| ts | Voz IA | Texto (rojo = *) | Planos (src) |
+|----|--------|------------------|--------------|
+| 0.00–3.25 | Abrimos esta caja de perfumes... y hay uno que no te esperás. | ABRIMOS ESTA CAJA DE *PERFUMES · Y HAY UNO QUE NO TE *ESPERÁS | caja tapada 0.5–2.2, se levanta la bolsa 2.2–4.8 |
+| 3.25–4.37 | Yara, de Lattafa. | YARA, DE *LATTAFA | 10.0 |
+| 4.37–5.45 | Un set de regalo. | UN SET DE *REGALO | 75.5 (set rosa con miniaturas) |
+| 5.45–6.41 | Bharara King. | BHARARA *KING | 106.8 |
+| 6.41–7.25 | Velvet Oud. | *VELVET OUD | 122.3 |
+| 7.25–8.45 | Hawas, de Rasasi. | *HAWAS, DE RASASI | 130.9 |
+| 8.45–11.52 | Y el que no te esperabas: Jean Paul Gaultier, Le Male Elixir. | Y EL QUE NO TE *ESPERABAS: · JEAN PAUL GAULTIER, · LE MALE *ELIXIR | sacando la lata 58–60.6, lata 60.9, 64.9 |
+| 11.52–12.76 | Y la caja, vacía. | Y LA CAJA, *VACÍA | 141.6–144.6 |
+| 12.76–16.22 | Saving Hub. ¿Cuál te llevás? Pedilo por mensaje. | SAVING **HUB** · ¿CUÁL TE *LLEVÁS? · [PEDILO POR DM] | caja llena 19.8–21.2 |
+
+## Audio
+- Voz Kokoro `ef_dora` 1.08, sin sonido original; SFX de edición (whoosh por corte, impactos en los dos golpes,
+  riser + impacto en el cierre).
+- Fonética para el TTS: "Latáfa", "Bajarára King", "Vélvet Úd", "Jauás, de Rasási", "Yan Pol Goltié, Le Mal Elixír",
+  "vasía" (con C, Kokoro usa la z española). Fonemas revisados con el tokenizer de Kokoro.
+
+## Design decisions
+- Mismo estilo "Documental Reel" y mismo pipeline (`build_vo.py`, video `edit-v5-caja`); solo planos a velocidad
+  normal salvo la bolsa del hook y la caja vaciándose.
+- Nombres en pantalla: solo los que se leen en las cajas (YARA / Lattafa, BHARARA KING, VELVET OUD, HAWAS For Him,
+  Jean Paul Gaultier LE MALE ELIXIR). Las cajas con "X" (turquesa y blancas) no se nombran.
+
+## Entorno
+- El auto-update de HyperFrames (0.8.140 → 0.8.142) dejó `hyperframes.mjs` sin permiso de ejecución; se corrigió con
+  `chmod +x`. Este proyecto queda fijado a 0.8.142.
+
+## Verification
+- `hyperframes lint`: 0 errores (14 advertencias de estructura).
+- Snapshots de preview revisados: cada producto se ve con su etiqueta cuando la voz lo nombra.
+- `verify-render.mjs --duration 16.22`: GATE PASS (16.30 s). Loudness -14.0 LUFS, pico -3.3 dBFS.
+- `check_vo.py`: L/R 1,000 y las 9 frases en su lugar (±10 ms), sin voces duplicadas.
+- Cuadros a mitad de cada plano (`work/SavingHub_V5_CajaDePerfumes_VozIA_midshots.png`): producto y texto coinciden.
+  En el render de 0.8.142 la imagen cambia 1–2 cuadros (≤ 0,07 s) después que el texto en cada corte; no se nota
+  a velocidad normal.
+
+## A confirmar antes de publicar
+- "Hawas, de Rasasi": en la cara visible de la caja se lee "HAWAS For Him"; la marca Rasasi se agregó por el nombre
+  del perfume. Si fuera otra casa, se cambia la frase.
+- "Un set de regalo": es la caja rosa con miniaturas (logo de Yara). Si tiene otro nombre comercial, se ajusta.
