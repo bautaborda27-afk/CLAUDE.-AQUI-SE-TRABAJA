@@ -22,6 +22,7 @@ defaults to `vibe-life`.
 
 | Style        | Path                          | Use                                            |
 |--------------|-------------------------------|------------------------------------------------|
+| `savings-hub` | `styles/savings-hub/FRAME.md` | **savings.hub** (Saving Hub) house style, from the account's own reels: dark grid + clip cards, gold-keyword caption bars, burgundy seam pill, paper end card with "ESCRIBINOS · SAVINGS.HUB". Use for every Savings Hub video. |
 | `vibe-life`  | `styles/vibe-life/FRAME.md`   | Worked example: warm editorial — cream paper, ink outline, one italic-serif accent word, peach/butter accents. |
 | `_template`  | `styles/_template/FRAME.md`   | Starting point for your own style — copy it and fill in your tokens. |
 

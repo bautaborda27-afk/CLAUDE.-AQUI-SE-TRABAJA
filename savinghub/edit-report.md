@@ -199,7 +199,7 @@ revendedor: "¿Querés revender? Escribinos por mensaje."
 
 # Ronda 5 — "Abrimos esta caja de perfumes... y hay uno que no te esperás" (voz IA)
 
-**Disposition:** in_review
+**Disposition:** reemplazada por la Ronda 5b (el cliente marcó que no era el estilo de Saving)
 **Output:** `output/SavingHub_V5_CajaDePerfumes_VozIA.mp4` — 1080x1920, 16.3 s, h264/yuv420p 30 fps, AAC, -14 LUFS
 **Fuente:** `source/vid_caja.mp4` (WhatsApp, 147 s, 576x1024 vertical por metadata de rotación, 30 fps, sin voz).
 Se desarma una caja de mercadería tapada con bolsas negras, producto por producto, hasta dejarla vacía.
@@ -251,3 +251,45 @@ Cierre con pregunta para comentarios: "¿Cuál te llevás?".
 - "Hawas, de Rasasi": en la cara visible de la caja se lee "HAWAS For Him"; la marca Rasasi se agregó por el nombre
   del perfume. Si fuera otra casa, se cambia la frase.
 - "Un set de regalo": es la caja rosa con miniaturas (logo de Yara). Si tiene otro nombre comercial, se ajusta.
+
+---
+
+# Ronda 5b — misma caja, en el estilo de savings.hub
+
+**Disposition:** in_review
+**Output:** `output/SavingsHub_V5_CajaDePerfumes_VozIA.mp4`
+**Por qué:** el cliente indicó que el estilo Documental (Anton gigante rojo/blanco, grano, whips) **no es el estilo
+de Saving** y mandó capturas de su reel "Erba Pura G5" (guardadas en `referencias/`). Se tomó de ahí el estilo,
+se guardó como pack fijo (`.claude/skills/video-editing/styles/savings-hub/FRAME.md`) y se generó con un builder
+nuevo, `build_sh.py`. La voz, el guion y los planos son los de la Ronda 5.
+
+**Estilo (medido en las capturas):** tinta #110F0D con grilla, papel #F2ECE0, dorado #E1B857, bordó #842A36,
+pill de costura #8E1A2E. Space Grotesk 700 para subtítulos y titulares, Instrument Serif itálica para la palabra
+acento, JetBrains Mono espaciada para los pills. Imagen limpia (sin grano), grading natural.
+
+| ts | Layout | Texto | Planos (src) |
+|----|--------|-------|--------------|
+| 0.00–1.64 | tarjeta sobre grilla oscura + pill **LA APERTURA** | Abrimos esta caja / de *perfumes...* | caja tapada 0.5–2.2 |
+| 1.64–3.25 | la tarjeta crece a pantalla completa (0,55 s) | barras: y hay uno que / no te *esperás.* | se levanta la bolsa 2.2–4.8 |
+| 3.25–6.41 | pantalla completa | Yara, de *Lattafa.* · Un set de *regalo.* · Bharara *King.* | 10.0 · 75.5 · 106.8 |
+| 6.41–8.17 | split + pill bordó **VELVET OUD + HAWAS** | *Velvet Oud.* · *Hawas,* de Rasasi. | arriba 122.3 / abajo 130.9 |
+| 8.17–11.24 | tarjeta sobre grilla oscura + pill **LA SORPRESA** | Y el que no te / *esperabas:* · Jean Paul Gaultier, · titular Le Male *Elixir* (serif dorada + subrayado) | 58–60.6 · 60.9 · 64.9 |
+| 11.24–12.48 | pantalla completa | Y la caja, *vacía.* | 141.6–144.6 |
+| 12.48–16.09 | cierre en papel: tarjeta inclinada | ¿Cuál te *llevás?* (serif bordó + subrayado) · [ESCRIBINOS · SAVINGS.HUB] | caja llena 19.8–21.2 |
+
+## Audio
+- Voz Kokoro `ef_dora` 1.08 (la marca se pronuncia "Séivings Jab"), sin sonido original.
+- SFX suaves: click en cada subtítulo y pill, whoosh bajo en cortes y cambios de layout, impacto suave en
+  "Elixir", riser + impacto al entrar el cierre.
+
+## Cambios en el pipeline
+- `build_sh.py` (nuevo): layouts tarjeta / pantalla completa / split / cierre, dos videos (`base.mp4` y
+  `base_b.mp4` para la mitad de abajo del split), subtítulos por frase sincronizados con la voz.
+- `build_base.py`: `grade`, `pixel_reveal` y `basename` opcionales (los reels anteriores no cambian).
+- `finalize.sh`: `GRAIN=0` saltea el grano (el estilo de la marca es limpio).
+- Se borró el render Documental de la Ronda 5 (`SavingHub_V5_CajaDePerfumes_VozIA.mp4`) y su proyecto, para que no
+  se publique por error; sigue en el historial del branch.
+
+## Verification
+- `hyperframes lint`: 0 errores (19 advertencias de estructura).
+- Snapshots revisados contra las capturas de referencia (pills, barras, split, cierre en papel).

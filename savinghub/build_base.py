@@ -6,6 +6,8 @@ scaled/cropped to 9:16, lightly graded, and concatenated with their original
 (ASMR) audio. The first shot gets a pixelated -> sharp reveal (hook).
 source_start may also be a [from, to] range: that stretch of the source is
 retimed to fill the shot (fast-forward, or a rewind when to < from).
+Optional cfg keys: "grade" (ffmpeg eq chain), "pixel_reveal" (default True) and
+"basename" (default "base"; e.g. "base_b" for a second, split-screen video).
 Writes <reel>/base.mp4 and <reel>/shots.json (edit timeline for the composition).
 """
 import json
@@ -59,6 +61,8 @@ def build(name, cfg):
     out_dir = ROOT / name
     out_dir.mkdir(exist_ok=True)
     src = str(ROOT / cfg["src"])
+    grade = cfg.get("grade", GRADE)
+    basename = cfg.get("basename", "base")
     # one seeked input per shot: shots out of source order would otherwise make
     # ffmpeg buffer every decoded frame between them
     inputs, parts, labels, timeline, t = [], [], [], [], 0.0
@@ -69,12 +73,12 @@ def build(name, cfg):
             # drop to 30 fps before reversing so `reverse` only buffers this shot's frames
             v = (f"[{i}:v]trim=duration={span},setpts=(PTS-STARTPTS)*{dur / span:.6f},"
                  f"fps=30{',reverse' if b < a else ''},tpad=stop_mode=clone:stop_duration=0.2,"
-                 f"trim=duration={dur},{FIT},{GRADE}")
+                 f"trim=duration={dur},{FIT},{grade}")
         else:
             lo, span = ss, dur
-            v = (f"[{i}:v]trim=duration={dur},setpts=PTS-STARTPTS,{FIT},{GRADE}")
+            v = (f"[{i}:v]trim=duration={dur},setpts=PTS-STARTPTS,{FIT},{grade}")
         inputs += ["-ss", f"{lo}", "-t", f"{max(span, dur) + 0.3:.3f}", "-i", src]
-        if i == 0:
+        if i == 0 and cfg.get("pixel_reveal", True):
             # pixelated -> sharp reveal over the first 0.5s, three block sizes
             v += ",split=4[s0][p1][p2][p3];"
             v += "[p1]scale=27:48,scale=1080:1920:flags=neighbor[q1];"
@@ -97,17 +101,20 @@ def build(name, cfg):
     cmd = ["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", fc,
            "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-crf", "16",
            "-preset", "medium", "-g", "30", "-keyint_min", "30", "-pix_fmt", "yuv420p", "-c:a", "pcm_s16le",
-           str(out_dir / "base.mkv")]
+           str(out_dir / f"{basename}.mkv")]
     subprocess.run(cmd, check=True)
     # video-only MP4 for the composition, audio as wav for the master mix
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(out_dir / "base.mkv"),
+    mkv = out_dir / f"{basename}.mkv"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mkv),
                     "-an", "-c:v", "copy", "-movflags", "+faststart",
-                    str(out_dir / "base.mp4")], check=True)
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(out_dir / "base.mkv"),
+                    str(out_dir / f"{basename}.mp4")], check=True)
+    (ROOT / "work").mkdir(exist_ok=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mkv),
                     "-vn", "-c:a", "pcm_s16le", "-ac", "2",
-                    str(ROOT / "work" / f"{name}_asmr.wav")], check=True)
-    (out_dir / "base.mkv").unlink()
-    (out_dir / "shots.json").write_text(json.dumps(
+                    str(ROOT / "work" / f"{name}_{basename}_asmr.wav" if basename != "base"
+                        else ROOT / "work" / f"{name}_asmr.wav")], check=True)
+    mkv.unlink()
+    (out_dir / ("shots.json" if basename == "base" else f"{basename}_shots.json")).write_text(json.dumps(
         {"duration": round(t, 3), "shots": timeline}, indent=2))
     print(f"{name}: {n} shots, {t:.2f}s")
 
