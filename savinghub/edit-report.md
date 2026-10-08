@@ -257,7 +257,7 @@ Cierre con pregunta para comentarios: "¿Cuál te llevás?".
 # Ronda 5b — misma caja, en el estilo de savings.hub
 
 **Disposition:** in_review
-**Output:** `output/SavingsHub_V5_CajaDePerfumes_VozIA.mp4`
+**Output:** `output/SavingsHub_V5_CajaDePerfumes_VozIA.mp4` — 1080x1920, 16.1 s, h264/yuv420p 30 fps, AAC, -14 LUFS
 **Por qué:** el cliente indicó que el estilo Documental (Anton gigante rojo/blanco, grano, whips) **no es el estilo
 de Saving** y mandó capturas de su reel "Erba Pura G5" (guardadas en `referencias/`). Se tomó de ahí el estilo,
 se guardó como pack fijo (`.claude/skills/video-editing/styles/savings-hub/FRAME.md`) y se generó con un builder
@@ -293,3 +293,8 @@ acento, JetBrains Mono espaciada para los pills. Imagen limpia (sin grano), grad
 ## Verification
 - `hyperframes lint`: 0 errores (19 advertencias de estructura).
 - Snapshots revisados contra las capturas de referencia (pills, barras, split, cierre en papel).
+- `verify-render.mjs --duration 16.09`: GATE PASS (16.10 s). Loudness -14.0 LUFS, pico -3.1 dBFS, sin grano.
+- `check_vo.py`: L/R 1,000 y las 8 frases de voz en su lugar (±10 ms), sin voces duplicadas.
+- Cuadros a mitad de cada plano (`work/SavingsHub_V5_CajaDePerfumes_VozIA_midshots.png`): producto, texto y layout
+  coinciden en todos.
+- El cliente confirmó el estilo ("Ese es el estilo").
