@@ -43,6 +43,15 @@ VO = {
         "Frascos, y decánts.",
         "Perfumes árabes en Séiving Jab. Pedilo por mensaje.",
     ],
+    "mg-06-tips-revendedores": [
+        "¿Revendés perfumes? Cinco tips para vender más.",
+        "Uno: vendé solo originales. Fijate el holograma, el sello y el film.",
+        "Dos: vendé en decánts. Un frasco de cien mililitros te rinde veinte decánts de cinco.",
+        "Tres: mostrá el producto. Grabá el anbóxing: genera confianza.",
+        "Cuatro: armá kits de prueba, para que prueben varios aromas.",
+        "Cinco: respondé rápido. Cada mensaje es una venta.",
+        "Séiving Jab. Seguinos para más tips.",
+    ],
 }
 
 if __name__ == "__main__":

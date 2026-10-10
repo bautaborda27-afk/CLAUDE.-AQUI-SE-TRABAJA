@@ -123,3 +123,47 @@ Se regeneró el audio de los 9 videos; la imagen no cambió.
 **Control nuevo (`check_vo.py`):** exige correlación L/R > 0,98 y que cada frase aparezca una sola vez, en su
 tiempo planeado (±40 ms). Las posiciones quedan en `edit-v2-*/vo.json` y `mg-*-voz/timeline.json`.
 Resultado: los 9 videos pasan (L/R 1,000; todas las frases en su lugar).
+
+---
+
+# Ronda 4 — Tips para revendedores (motion graphics)
+
+Mismo sistema visual de la ronda 3 (`build_mg.py`): grilla negra, Anton + JetBrains Mono, rojo #E0201B, HUD con barra
+de progreso, cortina roja/blanca entre escenas, beat de 120 BPM + SFX. Escenas nuevas para el formato "tips":
+
+- `tip` — número gigante con contorno, chip "TIP 0N / DE 05", barra segmentada que avanza tip a tip, titular con
+  máscara, subtítulo tipeado y tarjeta con footage (con marcas de esquina o insignia REC parpadeando).
+- `tipcalc` — panel con la cuenta "1 FRASCO · 100 ML = 20 DECANTS DE 5 ML": contador 0→20 y 20 frasquitos que aparecen.
+- `tipkit` — kit de prueba: 3 decants de colores (aromas) que caen en la bandeja + "3 × 5 ML".
+- `tipdm` — mensajes de clientes que entran como notificaciones sobre el producto desenfocado.
+
+| ts | Escena | Texto |
+|----|--------|-------|
+| 0.0–2.5 | título | PARA REVENDEDORES · ¿REVENDÉS **PERFUMES?** · 5 TIPS PARA VENDER MÁS |
+| 2.5–6.0 | tip 01 (holograma, `jl_holo`) | VENDÉ SOLO **ORIGINALES** · HOLOGRAMA, SELLO Y FILM INTACTO |
+| 6.0–10.0 | tip 02 (cuenta) | VENDÉ EN **DECANTS** · 1 FRASCO 100 ML = 20 DECANTS DE 5 ML |
+| 10.0–13.5 | tip 03 (unboxing, `jl_peel`, REC) | MOSTRÁ EL **PRODUCTO** · GRABÁ EL UNBOXING: GENERA CONFIANZA |
+| 13.5–17.0 | tip 04 (kit) | ARMÁ **KITS** DE PRUEBA · QUE PRUEBEN VARIOS AROMAS |
+| 17.0–21.5 | tip 05 (DMs sobre `bh_spray`) | RESPONDÉ **RÁPIDO** · CADA MENSAJE ES UNA VENTA |
+| 21.5–24.5 | cierre | SAVING HUB · TIPS PARA REVENDEDORES · [SEGUINOS PARA MÁS] |
+
+Salidas:
+- `output/SavingHub_MG6_TipsRevendedores.mp4` — beat + SFX, 24.5 s, -14.6 LUFS.
+- `output/SavingHub_MG6_TipsRevendedores_VozIA.mp4` — voz IA (Kokoro `ef_dora`), una frase por escena, sin beat, 28.5 s, -13.9 LUFS.
+
+Regenerar: `python3 mg_assets.py && python3 -c "import build_audio; build_audio.make_sfx()"`, luego
+`python3 build_mg.py mg-06-tips-revendedores` / `python3 build_mg_vo.py mg-06-tips-revendedores`,
+`npx hyperframes render` en cada carpeta y `./finalize.sh <carpeta> <Nombre>`. La voz necesita `pip install kokoro-onnx soundfile`.
+
+Decisiones:
+- Tip 04 es gráfico (no footage): en el material disponible la caja del Bharara se cierra a los 2 s y no hay un plano limpio
+  de varios decants juntos.
+- Cierre "SEGUINOS PARA MÁS" en lugar de "PEDILO POR DM", porque el video le habla al revendedor, no al comprador final.
+- Tip 05 lleva un degradado oscuro arriba para que el rojo de "RÁPIDO" tenga contraste sobre el fondo desenfocado.
+- Los números con contorno usan relleno negro (no transparente) para pasar el control de texto visible de `hyperframes check`.
+
+Verificación: `hyperframes check` 0 errores en ambos (las advertencias son de estructura, como en la ronda 3), snapshots
+revisados, `verify-render.mjs` GATE PASS ×2, `check_vo.py` PASS (L/R 1,000; las 7 frases en su lugar).
+
+Pendiente / a confirmar: ¿Saving Hub vende por mayor a revendedores? Si es así, el cierre puede ser "CONSULTÁ PRECIO
+MAYORISTA" + WhatsApp/usuario.

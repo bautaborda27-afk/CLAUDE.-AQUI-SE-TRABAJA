@@ -133,6 +133,44 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .endtag { position: absolute; left: 0; right: 0; top: 63cqh; text-align: center; font-size: 3.8cqw; }
 .cta { position: absolute; left: 0; right: 0; top: 71cqh; text-align: center; }
 .cta span { display: inline-block; background: var(--white); color: var(--ink); font-size: 7.6cqw; padding: 1.8cqw 5cqw 2.2cqw; border-radius: 99cqw; }
+/* tips */
+.tipnum { position: absolute; left: 5cqw; top: 11cqh; font-size: 34cqw; line-height: 1; color: var(--ink);
+  -webkit-text-stroke: .6cqw var(--white); }
+.tiptag { position: absolute; right: 7cqw; top: 14cqh; text-align: right; }
+.tiptag .of { font-size: 3cqw; color: var(--mute); margin-top: 1.4cqh; }
+.tip-title { position: absolute; left: 7cqw; right: 7cqw; top: 31cqh; text-transform: uppercase; }
+.tip-title .ln { font-size: 13cqw; line-height: .92; }
+.tip-title .mono { font-size: 3.2cqw; color: var(--mute); margin-top: 1.6cqh; line-height: 1.35; }
+.card.tip { top: 53cqh; height: 39cqh; left: 7cqw; width: 86cqw; }
+.rec { position: absolute; left: 3cqw; top: 3cqw; z-index: 3; display: flex; align-items: center; gap: 1.4cqw;
+  background: rgba(11,11,11,.72); padding: 1.2cqw 2.2cqw; font-size: 2.8cqw; border-radius: 1cqw; }
+.rec i { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: var(--red); }
+.calc, .kit { position: absolute; left: 7cqw; width: 86cqw; top: 53cqh; height: 39cqh; border-radius: 3cqw;
+  background: var(--ink2); border: .5cqw solid #333; padding: 4.4cqw 4cqw;
+  display: flex; flex-direction: column; justify-content: center; }
+.calc .eq { display: flex; align-items: center; gap: 2.4cqw; }
+.calc .eq .chip { font-size: 3cqw; }
+.calc .eq .is { font-size: 7cqw; line-height: 1; }
+.calc .tot { display: flex; align-items: center; gap: 3.4cqw; margin-top: 1.2cqh; }
+.calc .n { font-size: 24cqw; line-height: 1; color: var(--red); min-width: 27cqw; }
+.calc .u { font-size: 8.6cqw; line-height: .95; text-transform: uppercase; }
+.calc .u .mono { font-size: 3.1cqw; color: var(--mute); margin-top: 1cqh; }
+.vials { display: grid; grid-template-columns: repeat(10, 1fr); gap: 1.6cqw 1.6cqw; margin-top: 1.6cqh; }
+.vial svg { display: block; width: 100%; height: auto; }
+.kit .khead { display: flex; justify-content: space-between; align-items: center; }
+.kit .khead .chip { font-size: 3cqw; }
+.kit .khead .ml { font-size: 7cqw; line-height: 1; }
+.kit .slots { display: flex; justify-content: space-around; align-items: flex-end; margin-top: 3cqh; }
+.kit .slot { width: 17cqw; text-align: center; }
+.kit .slot svg { display: block; width: 100%; height: auto; }
+.kit .slot .lab { display: inline-block; margin-top: 1.6cqh; font-size: 2.8cqw; white-space: nowrap; }
+.kit .tray { height: 1cqw; background: var(--red); margin-top: 1.4cqh; transform-origin: left center; }
+.tipdm .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,11,.96) 0%,
+  rgba(11,11,11,.93) 34%, rgba(11,11,11,.45) 62%, rgba(11,11,11,.25) 100%); }
+.tipdm .pov { top: 13cqh; }
+.tipdm .pov .mono { font-size: 3.4cqw; margin-top: 1.6cqh; text-transform: uppercase; }
+.tipdm .notifs { top: 43cqh; }
+.notif .app.dm svg { width: 7cqw; height: 7cqw; }
 /* HUD + wipe */
 .hud { position: absolute; left: 6cqw; right: 6cqw; top: 3.4cqh; display: flex; justify-content: space-between; font-size: 2.6cqw; z-index: 50; }
 .hud .dot { display: inline-block; width: 1.8cqw; height: 1.8cqw; background: var(--red); margin-right: 1.4cqw; vertical-align: -.1cqw; }
@@ -143,6 +181,12 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 
 CHECK = '<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="{c}" stroke-width="3.6" stroke-linecap="square"/></svg>'
 CROSS = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="{c}" stroke-width="3.6" stroke-linecap="square"/></svg>'
+VIAL = ('<svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/>'
+        '<rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/>'
+        '<rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>'
+        '<rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="{c}"/></svg>')
+DM = ('<svg viewBox="0 0 24 24"><path d="M4 4.5h16v11.5H10l-6 4.5z" fill="none" stroke="#FFFFFF" '
+      'stroke-width="2.4" stroke-linejoin="round"/></svg>')
 
 
 def esc(s):
@@ -181,10 +225,11 @@ class Comp:
                          f'data-track-index="{1 + self.n % 2}"><div class="{bg}"></div><div class="inner">{inner}</div></div>')
         return sid
 
-    def video(self, clip, t, d):
+    def video(self, clip, t, d, pos=None):
         self.vids = getattr(self, "vids", 0) + 1
+        style = f' style="object-position:{pos}"' if pos else ""
         return (f'<video id="v{self.vids}" class="clip" src="clips/{clip}.mp4" muted playsinline data-start="{t}" '
-                f'data-duration="{d}" data-track-index="{5 + self.n % 2}"></video>')
+                f'data-duration="{d}" data-track-index="{5 + self.n % 2}"{style}></video>')
 
     # ---------------- scenes ----------------
     def title(self, t, d, tag, lines, sub, bg="grid"):
@@ -349,6 +394,116 @@ class Comp:
         self.pop(f"#{sid} .cta", t + 1.3, frm="scale: 0")
         self.js.append(f'tl.fromTo("#{sid} .cta span", {{ scale: 1 }}, {{ scale: 1.07, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 3, immediateRender: true }}, {t + 1.8:.2f});')
         self.sfx += [("riser", t - 0.8, 0.2), ("impact", t + 0.1, 0.45), ("click", t + 1.3, 0.25)]
+
+    # ---------------- tips (round 4) ----------------
+    def _tip_head(self, num, total, title=None, sub=None, number=True):
+        segs = "".join(f'<div class="seg"><i class="g{k}"></i></div>' for k in range(total))
+        h = (f'<div class="segs">{segs}</div>'
+             f'<div class="tiptag"><span class="chip mono">TIP 0{num}</span><div class="of mono">DE 0{total}</div></div>')
+        if number:
+            h += f'<div class="tipnum">0{num}</div>'
+        if title:
+            h += f'<div class="tip-title">{mask_lines(title)}<div class="mono">{esc(sub)}</div></div>'
+        return h
+
+    def _tip_head_js(self, sid, t, d, num, total, full=True):
+        for k in range(total):
+            if k < num - 1:
+                self.js.append(f'tl.set("#{sid} .g{k}", {{ scaleX: 1 }}, {t});')
+            elif k == num - 1:
+                self.js.append(f'tl.fromTo("#{sid} .g{k}", {{ scaleX: 0 }}, {{ scaleX: 1, duration: {d - 0.2:.2f}, ease: "none", immediateRender: true }}, {t});')
+            else:
+                self.js.append(f'tl.set("#{sid} .g{k}", {{ scaleX: 0 }}, {t});')
+        self.pop(f"#{sid} .tiptag .chip", t + 0.15, frm="x: 120")
+        self.js.append(f'tl.fromTo("#{sid} .tiptag .of", {{ clipPath: "inset(0 0 0 100%)" }}, {{ clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "steps(6)", immediateRender: true }}, {t + 0.4:.2f});')
+        if full:
+            self.js.append(f'tl.fromTo("#{sid} .tipnum", {{ x: -500, opacity: 0 }}, {{ x: 0, opacity: 1, duration: 0.5, ease: "power4.out", immediateRender: true }}, {t + 0.05:.2f});')
+            self.reveal_lines(f"#{sid} .tip-title", t + 0.2)
+            self.js.append(f'tl.fromTo("#{sid} .tip-title .mono", {{ clipPath: "inset(0 100% 0 0)" }}, {{ clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "steps(22)", immediateRender: true }}, {t + 0.55:.2f});')
+        self.sfx += [("whoosh", t, 0.2), ("click", t + 0.15, 0.2), ("impact", t + 0.25, 0.25)]
+
+    def tip(self, t, d, num, total, title, sub, clip, pos=None, callouts=(), rec=False):
+        co = ""
+        for i, (x, y, w, h, lab) in enumerate(callouts):
+            co += (f'<div class="callout c{i}" style="left:{x}%;top:{y}%;width:{w}%;height:{h}%">'
+                   f'<i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br brr"></i>'
+                   f'<span class="lab chip mono">{esc(lab)}</span></div>')
+        badge = '<div class="rec mono"><i></i>REC</div>' if rec else ""
+        inner = (self._tip_head(num, total, title, sub) +
+                 f'<div class="card tip"><div class="push">{self.video(clip, t, d, pos)}</div>{badge}{co}</div>')
+        sid = self.scene(t, d, inner)
+        self._tip_head_js(sid, t, d, num, total)
+        self.js.append(f'tl.fromTo("#{sid} .card", {{ y: 700, rotation: 4 }}, {{ y: 0, rotation: 0, duration: 0.6, ease: "power4.out", immediateRender: true }}, {t + 0.3:.2f});')
+        self.js.append(f'tl.fromTo("#{sid} .push", {{ scale: 1.0 }}, {{ scale: 1.1, duration: {d}, ease: "power1.inOut", immediateRender: true }}, {t});')
+        if rec:
+            self.pop(f"#{sid} .rec", t + 0.8, frm="x: -60")
+            blinks = int((d - 1.2) / 0.3)
+            self.js.append(f'tl.fromTo("#{sid} .rec i", {{ opacity: 1 }}, {{ opacity: 0.15, duration: 0.3, ease: "steps(1)", yoyo: true, repeat: {blinks}, immediateRender: true }}, {t + 1.0:.2f});')
+            self.sfx.append(("click", t + 0.8, 0.2))
+        for i in range(len(callouts)):
+            ct = t + 1.1 + i * 0.5
+            self.pop(f"#{sid} .c{i}", ct, dur=0.4, frm="scale: 1.6")
+            self.sfx.append(("click", ct, 0.22))
+
+    def tipcalc(self, t, d, num, total, title, sub, have, to, unit, unit_sub):
+        vials = "".join(f'<div class="vial">{VIAL.format(c="#E0201B")}</div>' for _ in range(to))
+        panel = (f'<div class="calc"><div class="eq"><span class="chip w mono">{esc(have)}</span><span class="is">=</span></div>'
+                 f'<div class="tot"><div class="n">0</div><div class="u">{rich(unit)}<div class="mono">{esc(unit_sub)}</div></div></div>'
+                 f'<div class="vials">{vials}</div></div>')
+        sid = self.scene(t, d, self._tip_head(num, total, title, sub) + panel)
+        self._tip_head_js(sid, t, d, num, total)
+        self.js.append(f'tl.fromTo("#{sid} .calc", {{ y: 700 }}, {{ y: 0, duration: 0.55, ease: "power4.out", immediateRender: true }}, {t + 0.3:.2f});')
+        self.pop(f"#{sid} .eq .chip", t + 0.7, frm="x: -80")
+        self.pop(f"#{sid} .eq .is", t + 0.85, frm="scale: 0, rotation: -90")
+        self.js.append(f'tl.fromTo("#{sid} .u", {{ x: 60, opacity: 0 }}, {{ x: 0, opacity: 1, duration: 0.4, ease: "power3.out", immediateRender: true }}, {t + 1.0:.2f});')
+        run = 1.4
+        self.js.append(f'(() => {{ const o = {{ v: 0 }}; const el = document.querySelector("#{sid} .n");'
+                       f' tl.fromTo(o, {{ v: 0 }}, {{ v: {to}, duration: {run}, ease: "none", immediateRender: true,'
+                       f' onUpdate: () => {{ el.textContent = Math.round(o.v); }} }}, {t + 0.95:.2f}); }})();')
+        self.js.append(f'tl.fromTo("#{sid} .vial", {{ scale: 0, opacity: 0 }}, {{ scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.4)", '
+                       f'stagger: {run / to:.3f}, immediateRender: true }}, {t + 0.95:.2f});')
+        self.js.append(f'tl.to("#{sid} .n", {{ scale: 1.12, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 1 }}, {t + 0.95 + run:.2f});')
+        self.sfx += [("whoosh", t + 0.3, 0.18), ("click", t + 0.7, 0.2)]
+        self.sfx += [("click", t + 0.95 + k * run / to, 0.12) for k in range(0, to, 2)]
+        self.sfx.append(("impact", t + 0.95 + run, 0.35))
+
+    def tipkit(self, t, d, num, total, title, sub, label, size, aromas):
+        slots = "".join(f'<div class="slot s{j}">{VIAL.format(c=col)}<span class="lab chip w mono">{esc(name)}</span></div>'
+                        for j, (name, col) in enumerate(aromas))
+        panel = (f'<div class="kit"><div class="khead"><span class="chip mono">{esc(label)}</span>'
+                 f'<span class="ml">{rich(size)}</span></div><div class="slots">{slots}</div><div class="tray"></div></div>')
+        sid = self.scene(t, d, self._tip_head(num, total, title, sub) + panel)
+        self._tip_head_js(sid, t, d, num, total)
+        self.js.append(f'tl.fromTo("#{sid} .kit", {{ y: 700 }}, {{ y: 0, duration: 0.55, ease: "power4.out", immediateRender: true }}, {t + 0.3:.2f});')
+        self.js.append(f'tl.fromTo("#{sid} .tray", {{ scaleX: 0 }}, {{ scaleX: 1, duration: 0.45, ease: "power3.inOut", immediateRender: true }}, {t + 0.7:.2f});')
+        for j in range(len(aromas)):
+            vt = t + 0.9 + j * 0.35
+            self.js.append(f'tl.fromTo("#{sid} .s{j} svg", {{ y: -520, opacity: 0, rotation: -12 }}, {{ y: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "bounce.out", immediateRender: true }}, {vt:.2f});')
+            self.pop(f"#{sid} .s{j} .lab", vt + 0.4, frm="scale: 0")
+            self.sfx.append(("click", vt + 0.3, 0.24))
+        kt = t + 0.9 + len(aromas) * 0.35 + 0.3
+        self.pop(f"#{sid} .khead .chip", kt, frm="x: -80")
+        self.pop(f"#{sid} .khead .ml", kt + 0.1, frm="scale: 1.8")
+        self.sfx += [("whoosh", t + 0.3, 0.18), ("impact", kt + 0.1, 0.3)]
+
+    def tipdm(self, t, d, num, total, clip, pov, sub, cards):
+        cs = "".join(
+            f'<div class="notif n{j}"><div class="app dm">{DM}</div><div class="body">'
+            f'<div class="top mono"><span>{esc(a)}</span><span>{esc(tm)}</span></div>'
+            f'<div class="t">{esc(ti)}</div><div class="d mono">{esc(de)}</div></div></div>'
+            for j, (a, tm, ti, de) in enumerate(cards))
+        inner = (f'<div class="tipdm"><div class="bgclip">{self.video(clip, t, d)}</div><div class="scrim"></div>'
+                 f'{self._tip_head(num, total, number=False)}'
+                 f'<div class="pov">{mask_lines(pov)}<div class="mono">{esc(sub)}</div></div>'
+                 f'<div class="notifs">{cs}</div></div>')
+        sid = self.scene(t, d, inner, bg="")
+        self._tip_head_js(sid, t, d, num, total, full=False)
+        self.reveal_lines(f"#{sid} .pov", t + 0.15)
+        self.js.append(f'tl.fromTo("#{sid} .pov .mono", {{ clipPath: "inset(0 100% 0 0)" }}, {{ clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "steps(25)", immediateRender: true }}, {t + 0.5:.2f});')
+        for j in range(len(cards)):
+            nt = t + 0.9 + j * 0.9
+            self.js.append(f'tl.fromTo("#{sid} .n{j}", {{ y: -700, opacity: 0, scale: 0.9 }}, {{ y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)", immediateRender: true }}, {nt:.2f});')
+            self.sfx += [("click", nt + 0.25, 0.28), ("click", nt + 0.33, 0.18)]
 
 
 def build(name, spec):
@@ -520,6 +675,27 @@ VIDEOS = {
             ("card", 3.0, dict(clip="bh_box", label="BHARARA KING", caption=["BHARARA", "*KING"])),
             ("kinetic", 2.0, dict(words=["FRASCOS", "Y *DECANTS"], bg="grid")),
             ("end", 3.0, dict(tag="PERFUMES ÁRABES · DECANTS")),
+        ],
+    },
+    "mg-06-tips-revendedores": {
+        "hud": "TIPS PARA REVENDEDORES",
+        "scenes": [
+            ("title", 2.5, dict(tag="PARA REVENDEDORES", lines=["¿REVENDÉS", "*PERFUMES?"], sub="5 TIPS PARA VENDER MÁS")),
+            ("tip", 3.5, dict(num=1, total=5, title=["VENDÉ SOLO", "*ORIGINALES"], sub="HOLOGRAMA, SELLO Y FILM INTACTO",
+                              clip="jl_holo", pos="50% 55%", callouts=[(40, 24, 32, 46, "HOLOGRAMA")])),
+            ("tipcalc", 4.0, dict(num=2, total=5, title=["VENDÉ EN", "*DECANTS"], sub="UN FRASCO TE RINDE MUCHO MÁS",
+                                  have="1 FRASCO · 100 ML", to=20, unit="*DECANTS", unit_sub="DE 5 ML CADA UNO")),
+            ("tip", 3.5, dict(num=3, total=5, title=["MOSTRÁ EL", "*PRODUCTO"], sub="GRABÁ EL UNBOXING: GENERA CONFIANZA",
+                              clip="jl_peel", rec=True)),
+            ("tipkit", 3.5, dict(num=4, total=5, title=["ARMÁ *KITS", "DE PRUEBA"], sub="QUE PRUEBEN VARIOS AROMAS",
+                                 label="KIT DE PRUEBA", size="3 × *5 ML",
+                                 aromas=[("AROMA 01", "#E0201B"), ("AROMA 02", "#F5A623"), ("AROMA 03", "#D9D9D9")])),
+            ("tipdm", 4.5, dict(num=5, total=5, clip="bh_spray", pov=["RESPONDÉ", "*RÁPIDO"],
+                                sub="CADA MENSAJE ES UNA VENTA", cards=[
+                ("MENSAJE NUEVO", "AHORA", "¿TENÉS BHARARA KING?", "CLIENTE NUEVO"),
+                ("MENSAJE NUEVO", "AHORA", "¿CUÁNTO SALE EL DECANT?", "CONSULTA DE PRECIO"),
+                ("MENSAJE NUEVO", "AHORA", "¿HACÉS ENVÍOS?", "LISTO PARA COMPRAR")])),
+            ("end", 3.0, dict(tag="TIPS PARA REVENDEDORES", cta="SEGUINOS PARA MÁS")),
         ],
     },
 }

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "JBM"; src: url("fonts/JetBrainsMono-Bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+:root { --red: #E0201B; --white: #FFFFFF; --ink: #0b0b0b; --ink2: #171717; --amber: #F5A623; --mute: #8c8c8c; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; container-type: size;
+  font-family: "Anton"; color: var(--white); background: var(--ink); }
+.scene { position: absolute; inset: 0; overflow: hidden; }
+.inner { position: absolute; inset: 0; }
+.grid { position: absolute; inset: 0;
+  background: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0 / 6cqw 6cqw,
+              linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px) 0 0 / 6cqw 6cqw, var(--ink); }
+.grid.red { background: linear-gradient(rgba(0,0,0,.10) 1px, transparent 1px) 0 0 / 6cqw 6cqw,
+              linear-gradient(90deg, rgba(0,0,0,.10) 1px, transparent 1px) 0 0 / 6cqw 6cqw, var(--red); }
+.mono { font-family: "JBM"; font-weight: 700; text-transform: uppercase; letter-spacing: .35cqw; }
+.chip { display: inline-block; padding: 1.2cqw 2.4cqw; font-size: 3.1cqw; background: var(--red); color: var(--white); }
+.chip.w { background: var(--white); color: var(--ink); }
+.mask { display: block; overflow: hidden; padding: 5cqw 1cqw 0; margin-top: -5cqw; }
+.ln { display: block; will-change: transform; }
+.red { color: var(--red); }
+.title { position: absolute; left: 6cqw; right: 6cqw; top: 34cqh; text-align: left; text-transform: uppercase; }
+.title .ln { font-size: 19cqw; line-height: .92; }
+.title .bar { height: 1.6cqw; width: 42cqw; background: var(--red); margin: 3cqh 0 0 1cqw; transform-origin: left center; }
+.title .sub { margin: 3cqh 0 0 1cqw; font-size: 3.6cqw; color: var(--white); }
+.tagpos { position: absolute; left: 7cqw; top: 26cqh; }
+/* card with footage */
+.card { position: absolute; left: 10cqw; width: 80cqw; top: 14cqh; height: 56cqh; border-radius: 3cqw;
+  overflow: hidden; border: .7cqw solid var(--white); box-shadow: 0 3cqw 8cqw rgba(0,0,0,.6); background: #222; }
+.card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card .push { position: absolute; inset: 0; will-change: transform; }
+.card-label { position: absolute; left: 7cqw; top: 11cqh; z-index: 3; }
+.caption { position: absolute; left: 6cqw; right: 6cqw; top: 73cqh; text-transform: uppercase; }
+.caption .ln { font-size: 15.5cqw; line-height: .92; }
+.callout { position: absolute; z-index: 2; }
+.callout .br { position: absolute; width: 5cqw; height: 5cqw; border-color: var(--red); border-style: solid; border-width: 0; }
+.callout .tl { left: 0; top: 0; border-left-width: .8cqw; border-top-width: .8cqw; }
+.callout .tr { right: 0; top: 0; border-right-width: .8cqw; border-top-width: .8cqw; }
+.callout .bl { left: 0; bottom: 0; border-left-width: .8cqw; border-bottom-width: .8cqw; }
+.callout .brr { right: 0; bottom: 0; border-right-width: .8cqw; border-bottom-width: .8cqw; }
+.callout .lab { position: absolute; left: 0; top: 100%; margin-top: 1cqw; white-space: nowrap; font-size: 2.8cqw; }
+/* compare */
+.cmp-head { position: absolute; top: 12cqh; left: 6cqw; right: 6cqw; text-align: center; }
+.cmp-head .ln { font-size: 13cqw; line-height: .95; }
+.cols { position: absolute; left: 5cqw; right: 5cqw; top: 29cqh; display: flex; gap: 3cqw; }
+.col { flex: 1; border-radius: 2.4cqw; padding: 4cqw 3.4cqw 5cqw; min-height: 50cqh; }
+.col.a { background: var(--ink2); border: .5cqw solid #333; }
+.col.b { background: var(--red); }
+.col.b .red { color: var(--white); }
+.col h3 { font-weight: 400; font-size: 8.4cqw; line-height: .95; margin-bottom: 4cqh; }
+.row { display: flex; align-items: flex-start; gap: 2.2cqw; margin-bottom: 4cqh; }
+.row .ic { flex: 0 0 7.4cqw; height: 7.4cqw; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.col.a .ic { background: #3a3a3a; }
+.col.b .ic { background: var(--white); }
+.row .ic svg { width: 4.4cqw; height: 4.4cqw; }
+.row .tx { font-size: 3.5cqw; line-height: 1.3; padding-top: .9cqw; }
+.vs { position: absolute; left: 50%; top: 27.2cqh; width: 13cqw; height: 13cqw; margin-left: -6.5cqw; border-radius: 50%;
+  background: var(--white); color: var(--ink); font-size: 6.4cqw; display: flex; align-items: center; justify-content: center; z-index: 3; }
+/* steps */
+.segs { position: absolute; left: 7cqw; right: 7cqw; top: 9cqh; display: flex; gap: 2cqw; }
+.seg { flex: 1; height: 1.1cqw; background: #333; overflow: hidden; }
+.seg i { display: block; height: 100%; background: var(--red); transform-origin: left center; }
+.bignum { position: absolute; left: 5cqw; top: 11cqh; font-size: 44cqw; line-height: 1; color: transparent;
+  -webkit-text-stroke: .6cqw var(--white); }
+.step-title { position: absolute; left: 7cqw; right: 7cqw; top: 36cqh; text-transform: uppercase; }
+.step-title .ln { font-size: 14cqw; line-height: .95; }
+.step-title .mono { font-size: 3.2cqw; color: var(--mute); margin-top: 1.4cqh; }
+.card.step { top: 52cqh; height: 40cqh; left: 7cqw; width: 86cqw; }
+/* spec */
+.card.spec { top: 15cqh; height: 38cqh; left: 7cqw; width: 86cqw; }
+.spec-rows { position: absolute; left: 7cqw; right: 7cqw; top: 56cqh; }
+.spec-row { position: relative; display: flex; justify-content: space-between; align-items: baseline; padding: 1.5cqh 0; }
+.spec-row .k { font-size: 3.2cqw; color: var(--mute); }
+.spec-row .v { font-size: 7.4cqw; line-height: 1; }
+.spec-row .rule { position: absolute; left: 0; right: 0; bottom: 0; height: .3cqw; background: #3a3a3a; transform-origin: left center; }
+/* notifications */
+.bgclip { position: absolute; inset: -4cqw; }
+.bgclip video { width: 100%; height: 100%; object-fit: cover; filter: blur(18px) brightness(.45) saturate(.8); }
+.pov { position: absolute; left: 7cqw; right: 7cqw; top: 13cqh; text-transform: uppercase; }
+.pov .ln { font-size: 15cqw; line-height: .92; }
+.notifs { position: absolute; left: 6cqw; right: 6cqw; top: 42cqh; }
+.notif { display: flex; gap: 3cqw; align-items: center; background: rgba(245,245,245,.96); color: var(--ink);
+  border-radius: 4.2cqw; padding: 3.2cqw 3.6cqw; margin-bottom: 2.6cqh; box-shadow: 0 2cqw 6cqw rgba(0,0,0,.45); }
+.notif .app { flex: 0 0 12cqw; height: 12cqw; border-radius: 2.8cqw; background: var(--ink); color: var(--white);
+  font-size: 5.6cqw; display: flex; align-items: center; justify-content: center; }
+.notif .app span { border-bottom: .8cqw solid var(--red); line-height: 1; padding-bottom: .4cqw; }
+.notif .body { flex: 1; }
+.notif .top { display: flex; justify-content: space-between; font-size: 2.6cqw; color: #666; }
+.notif .t { font-family: "Anton"; font-size: 6.2cqw; line-height: 1.05; margin-top: .6cqw; text-transform: uppercase; }
+.notif .d { font-size: 3cqw; color: #333; margin-top: .6cqw; letter-spacing: .1cqw; }
+/* kinetic */
+.marq { position: absolute; left: 0; white-space: nowrap; font-size: 22cqw; line-height: 1; color: transparent;
+  -webkit-text-stroke: .35cqw rgba(0,0,0,.28); will-change: transform; }
+.marq.lite { -webkit-text-stroke-color: rgba(255,255,255,.12); }
+.kword { position: absolute; left: 4cqw; right: 4cqw; top: 50%; text-align: center; text-transform: uppercase;
+  font-size: 30cqw; line-height: .9; transform: translateY(-50%); opacity: 0; }
+/* counter */
+.ring { position: absolute; left: 50%; top: 42%; width: 78cqw; height: 78cqw; margin: -39cqw 0 0 -39cqw; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.count { position: absolute; left: 0; right: 0; top: 42%; transform: translateY(-50%); text-align: center; }
+.count .n { font-size: 36cqw; line-height: 1; }
+.count .u { font-size: 5cqw; margin-top: 1cqh; }
+.count-cap { position: absolute; left: 7cqw; right: 7cqw; top: 70cqh; text-align: center; text-transform: uppercase; }
+.count-cap .ln { font-size: 11cqw; line-height: .95; }
+/* end card */
+.logo { position: absolute; left: 50%; top: 27cqh; width: 34cqw; height: 34cqw; margin-left: -17cqw; background: var(--red);
+  border-radius: 3cqw; display: flex; align-items: center; justify-content: center; font-size: 19cqw; }
+.logo span { border-bottom: 1.4cqw solid var(--white); line-height: .95; padding-bottom: 1cqw; }
+.word { position: absolute; left: 0; right: 0; top: 50cqh; text-align: center; font-size: 17cqw; line-height: 1; }
+.word .L { display: inline-block; }
+.endtag { position: absolute; left: 0; right: 0; top: 63cqh; text-align: center; font-size: 3.8cqw; }
+.cta { position: absolute; left: 0; right: 0; top: 71cqh; text-align: center; }
+.cta span { display: inline-block; background: var(--white); color: var(--ink); font-size: 7.6cqw; padding: 1.8cqw 5cqw 2.2cqw; border-radius: 99cqw; }
+/* tips */
+.tipnum { position: absolute; left: 5cqw; top: 11cqh; font-size: 34cqw; line-height: 1; color: var(--ink);
+  -webkit-text-stroke: .6cqw var(--white); }
+.tiptag { position: absolute; right: 7cqw; top: 14cqh; text-align: right; }
+.tiptag .of { font-size: 3cqw; color: var(--mute); margin-top: 1.4cqh; }
+.tip-title { position: absolute; left: 7cqw; right: 7cqw; top: 31cqh; text-transform: uppercase; }
+.tip-title .ln { font-size: 13cqw; line-height: .92; }
+.tip-title .mono { font-size: 3.2cqw; color: var(--mute); margin-top: 1.6cqh; line-height: 1.35; }
+.card.tip { top: 53cqh; height: 39cqh; left: 7cqw; width: 86cqw; }
+.rec { position: absolute; left: 3cqw; top: 3cqw; z-index: 3; display: flex; align-items: center; gap: 1.4cqw;
+  background: rgba(11,11,11,.72); padding: 1.2cqw 2.2cqw; font-size: 2.8cqw; border-radius: 1cqw; }
+.rec i { width: 2.2cqw; height: 2.2cqw; border-radius: 50%; background: var(--red); }
+.calc, .kit { position: absolute; left: 7cqw; width: 86cqw; top: 53cqh; height: 39cqh; border-radius: 3cqw;
+  background: var(--ink2); border: .5cqw solid #333; padding: 4.4cqw 4cqw;
+  display: flex; flex-direction: column; justify-content: center; }
+.calc .eq { display: flex; align-items: center; gap: 2.4cqw; }
+.calc .eq .chip { font-size: 3cqw; }
+.calc .eq .is { font-size: 7cqw; line-height: 1; }
+.calc .tot { display: flex; align-items: center; gap: 3.4cqw; margin-top: 1.2cqh; }
+.calc .n { font-size: 24cqw; line-height: 1; color: var(--red); min-width: 27cqw; }
+.calc .u { font-size: 8.6cqw; line-height: .95; text-transform: uppercase; }
+.calc .u .mono { font-size: 3.1cqw; color: var(--mute); margin-top: 1cqh; }
+.vials { display: grid; grid-template-columns: repeat(10, 1fr); gap: 1.6cqw 1.6cqw; margin-top: 1.6cqh; }
+.vial svg { display: block; width: 100%; height: auto; }
+.kit .khead { display: flex; justify-content: space-between; align-items: center; }
+.kit .khead .chip { font-size: 3cqw; }
+.kit .khead .ml { font-size: 7cqw; line-height: 1; }
+.kit .slots { display: flex; justify-content: space-around; align-items: flex-end; margin-top: 3cqh; }
+.kit .slot { width: 17cqw; text-align: center; }
+.kit .slot svg { display: block; width: 100%; height: auto; }
+.kit .slot .lab { display: inline-block; margin-top: 1.6cqh; font-size: 2.8cqw; white-space: nowrap; }
+.kit .tray { height: 1cqw; background: var(--red); margin-top: 1.4cqh; transform-origin: left center; }
+.tipdm .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,11,.96) 0%,
+  rgba(11,11,11,.93) 34%, rgba(11,11,11,.45) 62%, rgba(11,11,11,.25) 100%); }
+.tipdm .pov { top: 13cqh; }
+.tipdm .pov .mono { font-size: 3.4cqw; margin-top: 1.6cqh; text-transform: uppercase; }
+.tipdm .notifs { top: 43cqh; }
+.notif .app.dm svg { width: 7cqw; height: 7cqw; }
+/* HUD + wipe */
+.hud { position: absolute; left: 6cqw; right: 6cqw; top: 3.4cqh; display: flex; justify-content: space-between; font-size: 2.6cqw; z-index: 50; }
+.hud .dot { display: inline-block; width: 1.8cqw; height: 1.8cqw; background: var(--red); margin-right: 1.4cqw; vertical-align: -.1cqw; }
+.prog { position: absolute; left: 0; bottom: 0; height: .9cqw; width: 100%; background: var(--red); transform-origin: left center; z-index: 50; }
+.wipe { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: var(--red); z-index: 60; }
+.wipe2 { position: absolute; left: 0; right: 0; top: 0; height: 100%; background: var(--white); z-index: 59; }
+</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="28.5" data-width="1080" data-height="1920">
+            <div id="s1" class="clip scene" data-start="0.0" data-duration="3.5" data-track-index="2"><div class="grid"></div><div class="inner"><div class="tagpos"><span class="chip mono">PARA REVENDEDORES</span></div><div class="title"><span class="mask"><span class="ln">¿REVENDÉS</span></span><span class="mask"><span class="ln"><span class="red">PERFUMES?</span></span></span><div class="bar"></div><div class="sub mono">5 TIPS PARA VENDER MÁS</div></div></div></div>
+      <div id="s2" class="clip scene" data-start="3.5" data-duration="4.5" data-track-index="1"><div class="grid"></div><div class="inner"><div class="segs"><div class="seg"><i class="g0"></i></div><div class="seg"><i class="g1"></i></div><div class="seg"><i class="g2"></i></div><div class="seg"><i class="g3"></i></div><div class="seg"><i class="g4"></i></div></div><div class="tiptag"><span class="chip mono">TIP 01</span><div class="of mono">DE 05</div></div><div class="tipnum">01</div><div class="tip-title"><span class="mask"><span class="ln">VENDÉ SOLO</span></span><span class="mask"><span class="ln"><span class="red">ORIGINALES</span></span></span><div class="mono">HOLOGRAMA, SELLO Y FILM INTACTO</div></div><div class="card tip"><div class="push"><video id="v1" class="clip" src="clips/jl_holo.mp4" muted playsinline data-start="3.5" data-duration="4.5" data-track-index="6" style="object-position:50% 55%"></video></div><div class="callout c0" style="left:40%;top:24%;width:32%;height:46%"><i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br brr"></i><span class="lab chip mono">HOLOGRAMA</span></div></div></div></div>
+      <div id="s3" class="clip scene" data-start="8.0" data-duration="5.0" data-track-index="2"><div class="grid"></div><div class="inner"><div class="segs"><div class="seg"><i class="g0"></i></div><div class="seg"><i class="g1"></i></div><div class="seg"><i class="g2"></i></div><div class="seg"><i class="g3"></i></div><div class="seg"><i class="g4"></i></div></div><div class="tiptag"><span class="chip mono">TIP 02</span><div class="of mono">DE 05</div></div><div class="tipnum">02</div><div class="tip-title"><span class="mask"><span class="ln">VENDÉ EN</span></span><span class="mask"><span class="ln"><span class="red">DECANTS</span></span></span><div class="mono">UN FRASCO TE RINDE MUCHO MÁS</div></div><div class="calc"><div class="eq"><span class="chip w mono">1 FRASCO · 100 ML</span><span class="is">=</span></div><div class="tot"><div class="n">0</div><div class="u"><span class="red">DECANTS</span><div class="mono">DE 5 ML CADA UNO</div></div></div><div class="vials"><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div><div class="vial"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg></div></div></div></div></div>
+      <div id="s4" class="clip scene" data-start="13.0" data-duration="4.0" data-track-index="1"><div class="grid"></div><div class="inner"><div class="segs"><div class="seg"><i class="g0"></i></div><div class="seg"><i class="g1"></i></div><div class="seg"><i class="g2"></i></div><div class="seg"><i class="g3"></i></div><div class="seg"><i class="g4"></i></div></div><div class="tiptag"><span class="chip mono">TIP 03</span><div class="of mono">DE 05</div></div><div class="tipnum">03</div><div class="tip-title"><span class="mask"><span class="ln">MOSTRÁ EL</span></span><span class="mask"><span class="ln"><span class="red">PRODUCTO</span></span></span><div class="mono">GRABÁ EL UNBOXING: GENERA CONFIANZA</div></div><div class="card tip"><div class="push"><video id="v2" class="clip" src="clips/jl_peel.mp4" muted playsinline data-start="13.0" data-duration="4.0" data-track-index="6"></video></div><div class="rec mono"><i></i>REC</div></div></div></div>
+      <div id="s5" class="clip scene" data-start="17.0" data-duration="4.0" data-track-index="2"><div class="grid"></div><div class="inner"><div class="segs"><div class="seg"><i class="g0"></i></div><div class="seg"><i class="g1"></i></div><div class="seg"><i class="g2"></i></div><div class="seg"><i class="g3"></i></div><div class="seg"><i class="g4"></i></div></div><div class="tiptag"><span class="chip mono">TIP 04</span><div class="of mono">DE 05</div></div><div class="tipnum">04</div><div class="tip-title"><span class="mask"><span class="ln">ARMÁ <span class="red">KITS</span></span></span><span class="mask"><span class="ln">DE PRUEBA</span></span><div class="mono">QUE PRUEBEN VARIOS AROMAS</div></div><div class="kit"><div class="khead"><span class="chip mono">KIT DE PRUEBA</span><span class="ml">3 × <span class="red">5</span> ML</span></div><div class="slots"><div class="slot s0"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#E0201B"/></svg><span class="lab chip w mono">AROMA 01</span></div><div class="slot s1"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#F5A623"/></svg><span class="lab chip w mono">AROMA 02</span></div><div class="slot s2"><svg viewBox="0 0 20 36"><rect x="7" y="0" width="6" height="5" rx="1" fill="#FFFFFF"/><rect x="8.5" y="5" width="3" height="3" fill="#8c8c8c"/><rect x="3.5" y="8" width="13" height="27" rx="3" fill="none" stroke="#FFFFFF" stroke-width="1.6"/><rect x="6" y="15" width="8" height="17.5" rx="1.5" fill="#D9D9D9"/></svg><span class="lab chip w mono">AROMA 03</span></div></div><div class="tray"></div></div></div></div>
+      <div id="s6" class="clip scene" data-start="21.0" data-duration="4.5" data-track-index="1"><div class=""></div><div class="inner"><div class="tipdm"><div class="bgclip"><video id="v3" class="clip" src="clips/bh_spray.mp4" muted playsinline data-start="21.0" data-duration="4.5" data-track-index="6"></video></div><div class="scrim"></div><div class="segs"><div class="seg"><i class="g0"></i></div><div class="seg"><i class="g1"></i></div><div class="seg"><i class="g2"></i></div><div class="seg"><i class="g3"></i></div><div class="seg"><i class="g4"></i></div></div><div class="tiptag"><span class="chip mono">TIP 05</span><div class="of mono">DE 05</div></div><div class="pov"><span class="mask"><span class="ln">RESPONDÉ</span></span><span class="mask"><span class="ln"><span class="red">RÁPIDO</span></span></span><div class="mono">CADA MENSAJE ES UNA VENTA</div></div><div class="notifs"><div class="notif n0"><div class="app dm"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v11.5H10l-6 4.5z" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round"/></svg></div><div class="body"><div class="top mono"><span>MENSAJE NUEVO</span><span>AHORA</span></div><div class="t">¿TENÉS BHARARA KING?</div><div class="d mono">CLIENTE NUEVO</div></div></div><div class="notif n1"><div class="app dm"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v11.5H10l-6 4.5z" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round"/></svg></div><div class="body"><div class="top mono"><span>MENSAJE NUEVO</span><span>AHORA</span></div><div class="t">¿CUÁNTO SALE EL DECANT?</div><div class="d mono">CONSULTA DE PRECIO</div></div></div><div class="notif n2"><div class="app dm"><svg viewBox="0 0 24 24"><path d="M4 4.5h16v11.5H10l-6 4.5z" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linejoin="round"/></svg></div><div class="body"><div class="top mono"><span>MENSAJE NUEVO</span><span>AHORA</span></div><div class="t">¿HACÉS ENVÍOS?</div><div class="d mono">LISTO PARA COMPRAR</div></div></div></div></div></div></div>
+      <div id="s7" class="clip scene" data-start="25.5" data-duration="3.0" data-track-index="2"><div class="grid"></div><div class="inner"><div class="logo"><span>SH</span></div><div class="word"><span class="L">S</span><span class="L">A</span><span class="L">V</span><span class="L">I</span><span class="L">N</span><span class="L">G</span><span class="L">&nbsp;</span><span class="L red">H</span><span class="L red">U</span><span class="L red">B</span></div><div class="endtag mono">TIPS PARA REVENDEDORES</div><div class="cta"><span>SEGUINOS PARA MÁS</span></div></div></div>
+      <div class="hud mono"><span><i class="dot"></i>SAVING HUB</span><span>TIPS PARA REVENDEDORES</span></div><div class="prog"></div><div class="wipe2"></div><div class="wipe"></div>
+      <audio id="master" class="clip" src="master.m4a" data-start="0" data-duration="28.5" data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+            tl.set(".wipe, .wipe2", { yPercent: 100 }, 0);
+      tl.fromTo("#s1 .chip", { x: -60, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 0.05);
+      tl.fromTo("#s1 .title .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 0.10);
+      tl.fromTo("#s1 .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.inOut", immediateRender: true }, 0.45);
+      tl.fromTo("#s1 .sub", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "steps(24)", immediateRender: true }, 0.70);
+      tl.fromTo("#s1 .title", { scale: 1 }, { scale: 1.05, duration: 3.5, ease: "none", immediateRender: true }, 0.0);
+      tl.fromTo("#s2 .g0", { scaleX: 0 }, { scaleX: 1, duration: 4.30, ease: "none", immediateRender: true }, 3.5);
+      tl.set("#s2 .g1", { scaleX: 0 }, 3.5);
+      tl.set("#s2 .g2", { scaleX: 0 }, 3.5);
+      tl.set("#s2 .g3", { scaleX: 0 }, 3.5);
+      tl.set("#s2 .g4", { scaleX: 0 }, 3.5);
+      tl.fromTo("#s2 .tiptag .chip", { x: 120, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 3.65);
+      tl.fromTo("#s2 .tiptag .of", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "steps(6)", immediateRender: true }, 3.90);
+      tl.fromTo("#s2 .tipnum", { x: -500, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power4.out", immediateRender: true }, 3.55);
+      tl.fromTo("#s2 .tip-title .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 3.70);
+      tl.fromTo("#s2 .tip-title .mono", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "steps(22)", immediateRender: true }, 4.05);
+      tl.fromTo("#s2 .card", { y: 700, rotation: 4 }, { y: 0, rotation: 0, duration: 0.6, ease: "power4.out", immediateRender: true }, 3.80);
+      tl.fromTo("#s2 .push", { scale: 1.0 }, { scale: 1.1, duration: 4.5, ease: "power1.inOut", immediateRender: true }, 3.5);
+      tl.fromTo("#s2 .c0", { scale: 1.6, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.4, ease: "back.out(2)", immediateRender: true }, 4.60);
+      tl.set("#s3 .g0", { scaleX: 1 }, 8.0);
+      tl.fromTo("#s3 .g1", { scaleX: 0 }, { scaleX: 1, duration: 4.80, ease: "none", immediateRender: true }, 8.0);
+      tl.set("#s3 .g2", { scaleX: 0 }, 8.0);
+      tl.set("#s3 .g3", { scaleX: 0 }, 8.0);
+      tl.set("#s3 .g4", { scaleX: 0 }, 8.0);
+      tl.fromTo("#s3 .tiptag .chip", { x: 120, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 8.15);
+      tl.fromTo("#s3 .tiptag .of", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "steps(6)", immediateRender: true }, 8.40);
+      tl.fromTo("#s3 .tipnum", { x: -500, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power4.out", immediateRender: true }, 8.05);
+      tl.fromTo("#s3 .tip-title .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 8.20);
+      tl.fromTo("#s3 .tip-title .mono", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "steps(22)", immediateRender: true }, 8.55);
+      tl.fromTo("#s3 .calc", { y: 700 }, { y: 0, duration: 0.55, ease: "power4.out", immediateRender: true }, 8.30);
+      tl.fromTo("#s3 .eq .chip", { x: -80, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 8.70);
+      tl.fromTo("#s3 .eq .is", { scale: 0, rotation: -90, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 8.85);
+      tl.fromTo("#s3 .u", { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out", immediateRender: true }, 9.00);
+      (() => { const o = { v: 0 }; const el = document.querySelector("#s3 .n"); tl.fromTo(o, { v: 0 }, { v: 20, duration: 1.4, ease: "none", immediateRender: true, onUpdate: () => { el.textContent = Math.round(o.v); } }, 8.95); })();
+      tl.fromTo("#s3 .vial", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.22, ease: "back.out(2.4)", stagger: 0.070, immediateRender: true }, 8.95);
+      tl.to("#s3 .n", { scale: 1.12, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 1 }, 10.35);
+      tl.set("#s4 .g0", { scaleX: 1 }, 13.0);
+      tl.set("#s4 .g1", { scaleX: 1 }, 13.0);
+      tl.fromTo("#s4 .g2", { scaleX: 0 }, { scaleX: 1, duration: 3.80, ease: "none", immediateRender: true }, 13.0);
+      tl.set("#s4 .g3", { scaleX: 0 }, 13.0);
+      tl.set("#s4 .g4", { scaleX: 0 }, 13.0);
+      tl.fromTo("#s4 .tiptag .chip", { x: 120, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 13.15);
+      tl.fromTo("#s4 .tiptag .of", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "steps(6)", immediateRender: true }, 13.40);
+      tl.fromTo("#s4 .tipnum", { x: -500, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power4.out", immediateRender: true }, 13.05);
+      tl.fromTo("#s4 .tip-title .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 13.20);
+      tl.fromTo("#s4 .tip-title .mono", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "steps(22)", immediateRender: true }, 13.55);
+      tl.fromTo("#s4 .card", { y: 700, rotation: 4 }, { y: 0, rotation: 0, duration: 0.6, ease: "power4.out", immediateRender: true }, 13.30);
+      tl.fromTo("#s4 .push", { scale: 1.0 }, { scale: 1.1, duration: 4.0, ease: "power1.inOut", immediateRender: true }, 13.0);
+      tl.fromTo("#s4 .rec", { x: -60, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 13.80);
+      tl.fromTo("#s4 .rec i", { opacity: 1 }, { opacity: 0.15, duration: 0.3, ease: "steps(1)", yoyo: true, repeat: 9, immediateRender: true }, 14.00);
+      tl.set("#s5 .g0", { scaleX: 1 }, 17.0);
+      tl.set("#s5 .g1", { scaleX: 1 }, 17.0);
+      tl.set("#s5 .g2", { scaleX: 1 }, 17.0);
+      tl.fromTo("#s5 .g3", { scaleX: 0 }, { scaleX: 1, duration: 3.80, ease: "none", immediateRender: true }, 17.0);
+      tl.set("#s5 .g4", { scaleX: 0 }, 17.0);
+      tl.fromTo("#s5 .tiptag .chip", { x: 120, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 17.15);
+      tl.fromTo("#s5 .tiptag .of", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "steps(6)", immediateRender: true }, 17.40);
+      tl.fromTo("#s5 .tipnum", { x: -500, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power4.out", immediateRender: true }, 17.05);
+      tl.fromTo("#s5 .tip-title .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 17.20);
+      tl.fromTo("#s5 .tip-title .mono", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "steps(22)", immediateRender: true }, 17.55);
+      tl.fromTo("#s5 .kit", { y: 700 }, { y: 0, duration: 0.55, ease: "power4.out", immediateRender: true }, 17.30);
+      tl.fromTo("#s5 .tray", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.inOut", immediateRender: true }, 17.70);
+      tl.fromTo("#s5 .s0 svg", { y: -520, opacity: 0, rotation: -12 }, { y: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "bounce.out", immediateRender: true }, 17.90);
+      tl.fromTo("#s5 .s0 .lab", { scale: 0, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 18.30);
+      tl.fromTo("#s5 .s1 svg", { y: -520, opacity: 0, rotation: -12 }, { y: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "bounce.out", immediateRender: true }, 18.25);
+      tl.fromTo("#s5 .s1 .lab", { scale: 0, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 18.65);
+      tl.fromTo("#s5 .s2 svg", { y: -520, opacity: 0, rotation: -12 }, { y: 0, opacity: 1, rotation: 0, duration: 0.5, ease: "bounce.out", immediateRender: true }, 18.60);
+      tl.fromTo("#s5 .s2 .lab", { scale: 0, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 19.00);
+      tl.fromTo("#s5 .khead .chip", { x: -80, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 19.25);
+      tl.fromTo("#s5 .khead .ml", { scale: 1.8, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 19.35);
+      tl.set("#s6 .g0", { scaleX: 1 }, 21.0);
+      tl.set("#s6 .g1", { scaleX: 1 }, 21.0);
+      tl.set("#s6 .g2", { scaleX: 1 }, 21.0);
+      tl.set("#s6 .g3", { scaleX: 1 }, 21.0);
+      tl.fromTo("#s6 .g4", { scaleX: 0 }, { scaleX: 1, duration: 4.30, ease: "none", immediateRender: true }, 21.0);
+      tl.fromTo("#s6 .tiptag .chip", { x: 120, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 21.15);
+      tl.fromTo("#s6 .tiptag .of", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "steps(6)", immediateRender: true }, 21.40);
+      tl.fromTo("#s6 .pov .ln", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.09, immediateRender: true }, 21.15);
+      tl.fromTo("#s6 .pov .mono", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "steps(25)", immediateRender: true }, 21.50);
+      tl.fromTo("#s6 .n0", { y: -700, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)", immediateRender: true }, 21.90);
+      tl.fromTo("#s6 .n1", { y: -700, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)", immediateRender: true }, 22.80);
+      tl.fromTo("#s6 .n2", { y: -700, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)", immediateRender: true }, 23.70);
+      tl.fromTo("#s7 .logo", { scale: 0, rotation: -120 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(1.6)", immediateRender: true }, 25.55);
+      tl.fromTo("#s7 .word .L", { yPercent: 120, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: "power4.out", stagger: 0.04, immediateRender: true }, 25.90);
+      tl.fromTo("#s7 .endtag", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "steps(22)", immediateRender: true }, 26.40);
+      tl.fromTo("#s7 .cta", { scale: 0, opacity: 0 }, { scale: 1, x: 0, y: 0, rotation: 0, opacity: 1, duration: 0.35, ease: "back.out(2)", immediateRender: true }, 26.80);
+      tl.fromTo("#s7 .cta span", { scale: 1 }, { scale: 1.07, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 3, immediateRender: true }, 27.30);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 3.26);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 3.30);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 7.76);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 7.80);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 12.76);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 12.80);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 16.76);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 16.80);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 20.76);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 20.80);
+      tl.fromTo(".wipe2", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 25.26);
+      tl.fromTo(".wipe", { yPercent: 100 }, { yPercent: -100, duration: 0.42, ease: "power3.inOut", immediateRender: true }, 25.30);
+      tl.fromTo(".prog", { scaleX: 0 }, { scaleX: 1, duration: 28.5, ease: "none", immediateRender: true }, 0);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

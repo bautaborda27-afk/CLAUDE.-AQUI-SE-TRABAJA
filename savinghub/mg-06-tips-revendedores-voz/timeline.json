@@ -1,0 +1,42 @@
+{
+ "duration": 28.5,
+ "bounds": [
+  3.5,
+  8.0,
+  13.0,
+  17.0,
+  21.0,
+  25.5,
+  28.5
+ ],
+ "vo": [
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08__Revend\u00e9s_perfumes__Cinco_tips_para_vender_m\u00e1s_.wav",
+   0.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Uno__vend\u00e9_solo_originales__Fijate_el_holograma__el_sello_y_el_film_.wav",
+   3.65
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Dos__vend\u00e9_en_dec\u00e1nts__Un_frasco_de_cien_mililitros_te_rinde_veinte_dec\u00e1nts_de_c.wav",
+   8.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Tres__mostr\u00e1_el_producto__Grab\u00e1_el_anb\u00f3xing__genera_confianza_.wav",
+   13.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Cuatro__arm\u00e1_kits_de_prueba__para_que_prueben_varios_aromas_.wav",
+   17.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_Cinco__respond\u00e9_r\u00e1pido__Cada_mensaje_es_una_venta_.wav",
+   21.15
+  ],
+  [
+   "/home/user/CLAUDE.-AQUI-SE-TRABAJA/savinghub/work/tts/ef_dora_1.08_S\u00e9iving_Jab__Seguinos_para_m\u00e1s_tips_.wav",
+   25.95
+  ]
+ ]
+}
