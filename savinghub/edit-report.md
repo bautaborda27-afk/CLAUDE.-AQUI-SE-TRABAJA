@@ -343,3 +343,5 @@ títulos fuera de cuadro y re-titular en el estilo de la marca.
 - Cuadros a lo largo del video: `work/SavingsHub_V6_ResumenDelMes_VozIA_midshots.png`.
 - Memoria: no había memoria guardada en el entorno; se creó `CLAUDE.md` (raíz del repo) con las reglas de Saving y el
   video se contrastó contra ellas.
+- V5 (`SavingsHub_V5_CajaDePerfumes_VozIA.mp4`) re-renderizado con la corrección de entradas: GATE PASS (16.10 s),
+  `check_vo.py` PASS; cuadros 0–2 y entrada del cierre revisados (`work/v5_fixcheck.png`), sin destellos.
