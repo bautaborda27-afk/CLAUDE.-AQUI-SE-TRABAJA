@@ -304,7 +304,7 @@ acento, JetBrains Mono espaciada para los pills. Imagen limpia (sin grano), grad
 # Ronda 6 — "Así venimos este mes" (resumen del mes, estilo savings.hub)
 
 **Disposition:** in_review
-**Output:** `output/SavingsHub_V6_ResumenDelMes_VozIA.mp4`
+**Output:** `output/SavingsHub_V6_ResumenDelMes_VozIA.mp4` — 1080x1920, 19.5 s, h264/yuv420p 30 fps, AAC, -14 LUFS, sin grano
 **Material:** el cliente pasó 6 videos. Los 4 que ya habíamos editado (V5 caja, V4 mayorista, V2 decant hooks A/B) se
 reconstruyeron desde sus **originales sin texto** (`source/vid_caja.mp4`, `vid_pedido.mp4`, `vid31.mp4`) para no
 apilar textos ni estilos viejos. Los 2 nuevos son reels propios de la cuenta, ya editados y con títulos quemados:
@@ -334,3 +334,12 @@ títulos fuera de cuadro y re-titular en el estilo de la marca.
 ## A confirmar
 - "$30.000" se toma tal cual del título del video del revendedor (la voz dice "treinta mil", sin moneda).
 - Velvet Oud: la etiqueta solo dice "VELVET OUD · eau de parfum"; no se nombra la casa.
+
+## Verification
+- `hyperframes lint`: 0 errores (advertencias de estructura). Snapshots revisados, incluido el cuadro 0 y los
+  instantes donde antes había destellos (2ª línea de subtítulo, cierre).
+- `verify-render.mjs`: GATE PASS (19.50 s). `check_vo.py`: L/R 1,000, 7 frases en su lugar. -14.1 LUFS, pico -3.0 dBFS.
+- Fonemas de las 7 frases revisados: ninguna con θ.
+- Cuadros a lo largo del video: `work/SavingsHub_V6_ResumenDelMes_VozIA_midshots.png`.
+- Memoria: no había memoria guardada en el entorno; se creó `CLAUDE.md` (raíz del repo) con las reglas de Saving y el
+  video se contrastó contra ellas.
