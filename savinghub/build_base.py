@@ -6,6 +6,9 @@ scaled/cropped to 9:16, lightly graded, and concatenated with their original
 (ASMR) audio. The first shot gets a pixelated -> sharp reveal (hook).
 source_start may also be a [from, to] range: that stretch of the source is
 retimed to fill the shot (fast-forward, or a rewind when to < from).
+A shot may also be a dict {"src": file, "at": start-or-[from, to], "zoom": z, "fy": f}
+to pull it from another video; zoom > 1 punches in (fy = vertical focus, 0 top .. 1
+bottom), e.g. to keep a source's burned-in titles out of frame.
 Optional cfg keys: "grade" (ffmpeg eq chain), "pixel_reveal" (default True) and
 "basename" (default "base"; e.g. "base_b" for a second, split-screen video).
 Writes <reel>/base.mp4 and <reel>/shots.json (edit timeline for the composition).
@@ -67,17 +70,26 @@ def build(name, cfg):
     # ffmpeg buffer every decoded frame between them
     inputs, parts, labels, timeline, t = [], [], [], [], 0.0
     for i, (ss, dur) in enumerate(cfg["shots"]):
+        shot_src, fit = src, FIT
+        if isinstance(ss, dict):
+            shot_src = str(ROOT / ss["src"])
+            z = ss.get("zoom", 1.0)
+            if z != 1.0:
+                w, h = round(1080 * z / 2) * 2, round(1936 * z / 2) * 2
+                fit = (f"scale={w}:{h}:flags=lanczos,"
+                       f"crop=1080:1920:(iw-1080)/2:(ih-1920)*{ss.get('fy', 0.5)},setsar=1,fps=30")
+            ss = ss["at"]
         if isinstance(ss, (list, tuple)):
             a, b = ss
             lo, span = min(a, b), abs(b - a)
             # drop to 30 fps before reversing so `reverse` only buffers this shot's frames
             v = (f"[{i}:v]trim=duration={span},setpts=(PTS-STARTPTS)*{dur / span:.6f},"
                  f"fps=30{',reverse' if b < a else ''},tpad=stop_mode=clone:stop_duration=0.2,"
-                 f"trim=duration={dur},{FIT},{grade}")
+                 f"trim=duration={dur},{fit},{grade}")
         else:
             lo, span = ss, dur
-            v = (f"[{i}:v]trim=duration={dur},setpts=PTS-STARTPTS,{FIT},{grade}")
-        inputs += ["-ss", f"{lo}", "-t", f"{max(span, dur) + 0.3:.3f}", "-i", src]
+            v = (f"[{i}:v]trim=duration={dur},setpts=PTS-STARTPTS,{fit},{grade}")
+        inputs += ["-ss", f"{lo}", "-t", f"{max(span, dur) + 0.3:.3f}", "-i", shot_src]
         if i == 0 and cfg.get("pixel_reveal", True):
             # pixelated -> sharp reveal over the first 0.5s, three block sizes
             v += ",split=4[s0][p1][p2][p3];"
@@ -94,7 +106,7 @@ def build(name, cfg):
              f"afade=t=in:d=0.03,afade=t=out:st={dur - 0.04:.2f}:d=0.04[a{i}]")
         parts += [v, a]
         labels.append(f"[v{i}][a{i}]")
-        timeline.append({"start": round(t, 3), "duration": dur, "src": ss})
+        timeline.append({"start": round(t, 3), "duration": dur, "src": cfg["shots"][i][0]})
         t += dur
     n = len(cfg["shots"])
     fc = ";".join(parts) + ";" + "".join(labels) + f"concat=n={n}:v=1:a=1[v][a]"

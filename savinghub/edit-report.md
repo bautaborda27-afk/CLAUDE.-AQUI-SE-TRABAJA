@@ -298,3 +298,39 @@ acento, JetBrains Mono espaciada para los pills. Imagen limpia (sin grano), grad
 - Cuadros a mitad de cada plano (`work/SavingsHub_V5_CajaDePerfumes_VozIA_midshots.png`): producto, texto y layout
   coinciden en todos.
 - El cliente confirmó el estilo ("Ese es el estilo").
+
+---
+
+# Ronda 6 — "Así venimos este mes" (resumen del mes, estilo savings.hub)
+
+**Disposition:** in_review
+**Output:** `output/SavingsHub_V6_ResumenDelMes_VozIA.mp4`
+**Material:** el cliente pasó 6 videos. Los 4 que ya habíamos editado (V5 caja, V4 mayorista, V2 decant hooks A/B) se
+reconstruyeron desde sus **originales sin texto** (`source/vid_caja.mp4`, `vid_pedido.mp4`, `vid31.mp4`) para no
+apilar textos ni estilos viejos. Los 2 nuevos son reels propios de la cuenta, ya editados y con títulos quemados:
+`source/revendedor_30000.mp4` ("PEDIDO · Revendedor: $30.000", bolsa kraft con sticker SH) y
+`source/velvet_oud.mp4` ("Unboxing · VELVET OUD"). En esos se hace zoom (1,15–1,5x, foco abajo) para dejar los
+títulos fuera de cuadro y re-titular en el estilo de la marca.
+
+| ts | Layout | Voz / texto | Planos |
+|----|--------|-------------|--------|
+| 0.00–2.28 | tarjeta + pill **RESUMEN DEL MES** → crece a pantalla completa | Así venimos este *mes* · en Savings *Hub.* | adelanto de 6 planos de 0,38 s: caja llena, Velvet Oud, jeringa, caja mayorista, pedido revendedor, Le Male |
+| 2.28–5.15 | tarjeta + pill **LLEGÓ MERCADERÍA** → crece | Llegó *mercadería:* · Yara, Hawas, y hasta Le Male *Elixir.* | bolsa negra, Yara, Hawas, Le Male (vid_caja) |
+| 5.15–7.65 | split + pill **FRASCO + DECANT** | Armamos *decants,* · directo del frasco *original.* | arriba jeringa en el original (vid31 57) / abajo llenando el atomizador (vid31 76) |
+| 7.65–9.99 | tarjeta + pill **UNBOXING** | Abrimos el *Velvet Oud...* · y mirá ese *color.* | tubo, botella saliendo, jugo dorado (velvet_oud) |
+| 9.99–12.64 | pantalla completa | Armamos un pedido *mayorista,* · lleno hasta *arriba.* | armado rápido, relleno, caja llena (vid_pedido) |
+| 12.64–15.29 | tarjeta + pill **REVENDEDORES** → crece | Y pedidos de *revendedores,* · como este de *$30.000.* | revendedor_30000 |
+| 15.29–19.41 | cierre en papel | "Y el mes recién empieza. Savings Hub. ¿Qué traemos ahora?" · ¿Qué *traemos?* · [ESCRIBINOS · SAVINGS.HUB] | bolsa kraft con el sticker SH |
+
+## Cambios en el pipeline
+- `build_base.py`: un plano puede venir de otro video (`{"src", "at", "zoom", "fy"}`), con zoom para sacar títulos
+  quemados.
+- `build_sh.py`: config `RESUMEN`; la geometría sigue al estado real (una tarjeta que creció ya está a pantalla
+  completa); la marca de palabra clave acepta `*palabra*`.
+- **Corrección de animación (afecta también al V5):** los elementos con entrada demorada (2ª línea de subtítulo,
+  pills, texto del cierre) se veían completos uno o más cuadros antes de su animación y después "saltaban". Ahora
+  arrancan ocultos desde el CSS. El V5 se volvió a renderizar con la corrección.
+
+## A confirmar
+- "$30.000" se toma tal cual del título del video del revendedor (la voz dice "treinta mil", sin moneda).
+- Velvet Oud: la etiqueta solo dice "VELVET OUD · eau de parfum"; no se nombra la casa.

@@ -1,0 +1,239 @@
+{
+  "duration": 19.412,
+  "shots": [
+    {
+      "start": 0.0,
+      "duration": 0.38,
+      "src": {
+        "src": "source/vid_caja.mp4",
+        "at": 20.2,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 0.38,
+      "duration": 0.38,
+      "src": {
+        "src": "source/velvet_oud.mp4",
+        "at": 14.3,
+        "zoom": 1.5,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 0.76,
+      "duration": 0.38,
+      "src": {
+        "src": "source/vid31.mp4",
+        "at": 64.0,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 1.14,
+      "duration": 0.38,
+      "src": {
+        "src": "source/vid_pedido.mp4",
+        "at": 75.6,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 1.52,
+      "duration": 0.38,
+      "src": {
+        "src": "source/revendedor_30000.mp4",
+        "at": 4.2,
+        "zoom": 1.4,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 1.9,
+      "duration": 0.38,
+      "src": {
+        "src": "source/vid_caja.mp4",
+        "at": 61.0,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 2.28,
+      "duration": 0.717,
+      "src": {
+        "src": "source/vid_caja.mp4",
+        "at": [
+          2.2,
+          4.8
+        ],
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 2.997,
+      "duration": 0.717,
+      "src": {
+        "src": "source/vid_caja.mp4",
+        "at": 10.0,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 3.714,
+      "duration": 0.717,
+      "src": {
+        "src": "source/vid_caja.mp4",
+        "at": 130.9,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 4.431,
+      "duration": 0.717,
+      "src": {
+        "src": "source/vid_caja.mp4",
+        "at": 60.9,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 5.148,
+      "duration": 2.5,
+      "src": {
+        "src": "source/vid31.mp4",
+        "at": 76.0,
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 7.648,
+      "duration": 0.78,
+      "src": {
+        "src": "source/velvet_oud.mp4",
+        "at": [
+          4.0,
+          6.5
+        ],
+        "zoom": 1.2,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 8.428,
+      "duration": 0.78,
+      "src": {
+        "src": "source/velvet_oud.mp4",
+        "at": 14.0,
+        "zoom": 1.2,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 9.208,
+      "duration": 0.78,
+      "src": {
+        "src": "source/velvet_oud.mp4",
+        "at": 21.0,
+        "zoom": 1.2,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 9.988,
+      "duration": 0.884,
+      "src": {
+        "src": "source/vid_pedido.mp4",
+        "at": [
+          15.5,
+          19.5
+        ],
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 10.872,
+      "duration": 0.884,
+      "src": {
+        "src": "source/vid_pedido.mp4",
+        "at": [
+          85.0,
+          90.0
+        ],
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 11.756,
+      "duration": 0.884,
+      "src": {
+        "src": "source/vid_pedido.mp4",
+        "at": [
+          75.4,
+          77.3
+        ],
+        "zoom": 1.0,
+        "fy": 0.5
+      }
+    },
+    {
+      "start": 12.64,
+      "duration": 0.884,
+      "src": {
+        "src": "source/revendedor_30000.mp4",
+        "at": [
+          0.5,
+          3.5
+        ],
+        "zoom": 1.4,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 13.524,
+      "duration": 0.884,
+      "src": {
+        "src": "source/revendedor_30000.mp4",
+        "at": 4.2,
+        "zoom": 1.4,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 14.408,
+      "duration": 0.884,
+      "src": {
+        "src": "source/revendedor_30000.mp4",
+        "at": [
+          17.0,
+          24.0
+        ],
+        "zoom": 1.4,
+        "fy": 1.0
+      }
+    },
+    {
+      "start": 15.292,
+      "duration": 4.12,
+      "src": {
+        "src": "source/revendedor_30000.mp4",
+        "at": [
+          28.95,
+          29.45
+        ],
+        "zoom": 1.15,
+        "fy": 1.0
+      }
+    }
+  ]
+}

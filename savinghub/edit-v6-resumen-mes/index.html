@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "SG"; src: url("fonts/SpaceGrotesk-500.woff2") format("woff2"); font-weight: 500; font-display: block; }
+@font-face { font-family: "SG"; src: url("fonts/SpaceGrotesk-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "IS"; src: url("fonts/InstrumentSerif-Italic.woff2") format("woff2"); font-style: italic; font-display: block; }
+@font-face { font-family: "JBM"; src: url("fonts/JetBrainsMono-500.woff2") format("woff2"); font-weight: 500; font-display: block; }
+@font-face { font-family: "JBM"; src: url("fonts/JetBrainsMono-Bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+:root { --ink: #110f0d; --paper: #f2ece0; --cream: #f1ede5; --pill: #f6efe7; --pill-ink: #2a2622;
+  --gold: #e1b857; --burg: #842a36; --seam: #8e1a2e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; container-type: size;
+  font-family: "SG"; background: var(--ink); }
+.ground { position: absolute; inset: 0; }
+#gd { background:
+    linear-gradient(rgba(241,237,229,.055) 1px, transparent 1px) 0 0 / 5.5cqw 5.5cqw,
+    linear-gradient(90deg, rgba(241,237,229,.055) 1px, transparent 1px) 0 0 / 5.5cqw 5.5cqw, var(--ink); }
+#gp { background:
+    linear-gradient(rgba(17,15,13,.07) 1px, transparent 1px) 0 0 / 5.5cqw 5.5cqw,
+    linear-gradient(90deg, rgba(17,15,13,.07) 1px, transparent 1px) 0 0 / 5.5cqw 5.5cqw, var(--paper); }
+.frame { position: absolute; overflow: hidden; border-style: solid; border-color: var(--ink);
+  background: var(--ink); will-change: transform; backface-visibility: hidden; }
+.cam { position: absolute; inset: 0; will-change: transform; backface-visibility: hidden;
+  transform: translateZ(0); }
+.cam video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ov { position: absolute; inset: 0; pointer-events: none; }
+.cap { position: absolute; left: 5cqw; right: 5cqw; text-align: center; }
+.cap .ln { display: block; }
+.cap.bars { top: 15cqh; }
+.cap.bars.low { top: 66cqh; }
+.bar { display: inline-block; margin: 0.3cqw 0; padding: 0.7cqw 2.4cqw 1.1cqw; border-radius: 1cqw;
+  background: rgba(17,15,13,.93); color: var(--cream); font: 700 7cqw/1.1 "SG"; letter-spacing: -0.15cqw; }
+.cap.plain { top: 65.5cqh; }
+.cap.plain .ln { color: var(--cream); font: 700 6.6cqw/1.14 "SG"; letter-spacing: -0.15cqw; }
+.kw { color: var(--gold); }
+.cap.head { top: 64.6cqh; color: var(--cream); font-size: 9.6cqw; }
+.cap.head .sans { font: 700 9.6cqw/1 "SG"; letter-spacing: -0.3cqw; }
+.cap.head .serif { display: inline-block; font: italic 400 12.4cqw/1 "IS"; color: var(--gold); }
+.ul { display: block; height: 0.8cqw; margin: 1.3cqw auto 0; border-radius: 999px; transform-origin: left center; }
+.cap.head .ul { width: 46cqw; background: var(--gold); }
+.pill { position: absolute; left: 0; right: 0; top: 8.4cqh; text-align: center; }
+.pill span { display: inline-block; padding: 1.3cqw 2.6cqw 1.3cqw 4cqw; border-radius: 999px;
+  background: var(--pill); color: var(--pill-ink); border: 0.3cqw solid var(--ink);
+  font: 500 3.5cqw/1 "JBM"; letter-spacing: 0.42em; box-shadow: 0 0.5cqw 0 rgba(0,0,0,.4); }
+.seam { position: absolute; left: 0; right: 0; top: calc(920px - 3.3cqw); text-align: center; }
+.seam > span { display: inline-block; padding: 1.3cqw 2.8cqw 1.3cqw 3.8cqw; border-radius: 999px;
+  background: var(--seam); color: var(--cream); border: 0.45cqw solid var(--ink);
+  font: 700 3.5cqw/1 "JBM"; letter-spacing: 0.3em; }
+.seam .g { color: var(--gold); }
+.endhead { position: absolute; left: 0; right: 0; top: 57.4cqh; text-align: center; color: var(--ink); font-size: 10cqw; }
+.endhead .sans { display: inline-block; font: 700 10cqw/1 "SG"; letter-spacing: -0.35cqw; }
+.endhead .serif { display: inline-block; font: italic 400 12.6cqw/1 "IS"; color: var(--burg); }
+.endhead .ul { width: 44cqw; background: var(--burg); }
+.cta { position: absolute; left: 0; right: 0; top: 67.8cqh; text-align: center; }
+/* entrance start states: every animated entrance begins hidden (no flash before its tween) */
+.bar, .cap.plain .ln, .cap.head .sans, .cap.head .serif, .endhead .sans, .endhead .serif { opacity: 0; }
+.ul { transform: scaleX(0); }
+.pill span, .seam > span, .cta span { transform: scale(0); }
+#fb, #gp { visibility: hidden; opacity: 0; }
+.cta span { display: inline-block; padding: 1.5cqw 3cqw 1.5cqw 4.1cqw; border-radius: 999px;
+  background: #faf3ec; color: var(--pill-ink); border: 0.35cqw solid var(--ink);
+  font: 500 3.4cqw/1 "JBM"; letter-spacing: 0.32em; box-shadow: 0.55cqw 0.55cqw 0 var(--ink); }
+</style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="19.412"
+         data-width="1080" data-height="1920">
+      <div id="gd" class="ground"></div>
+      <div id="gp" class="ground"></div>
+      <div id="fb" class="frame" style="left:0;top:920px;width:1080px;height:1000px;border-width:0">
+        <div class="cam">
+          <video id="vb" class="clip" src="base_b.mp4" muted playsinline
+                 data-start="0" data-duration="19.412" data-track-index="1"></video>
+        </div>
+      </div>
+      <div id="fa" class="frame" style="left:38px;top:250px;width:1004px;height:940px;border-radius:36px;border-width:0px;box-shadow:0px 24px 48px rgba(0,0,0,0.55)">
+        <div class="cam">
+          <video id="va" class="clip" src="base.mp4" muted playsinline
+                 data-start="0" data-duration="19.412" data-track-index="0"></video>
+        </div>
+      </div>
+            <div id="pill0" class="clip ov" data-start="0.000" data-duration="1.165" data-track-index="4"><div class="pill"><span>RESUMEN DEL MES</span></div></div>
+      <div id="pill1" class="clip ov" data-start="2.277" data-duration="0.892" data-track-index="4"><div class="pill"><span>LLEGÓ MERCADERÍA</span></div></div>
+      <div id="seam2" class="clip ov" data-start="5.145" data-duration="2.480" data-track-index="5"><div class="seam"><span>FRASCO + <span class="g">DECANT</span></span></div></div>
+      <div id="pill3" class="clip ov" data-start="7.645" data-duration="2.320" data-track-index="4"><div class="pill"><span>UNBOXING</span></div></div>
+      <div id="pill5" class="clip ov" data-start="12.638" data-duration="1.307" data-track-index="4"><div class="pill"><span>REVENDEDORES</span></div></div>
+      <div id="endtxt" class="clip ov" data-start="15.291" data-duration="4.121" data-track-index="6"><div class="endhead"><span class="sans">¿Qué</span> <span class="serif">traemos?</span><span class="ul"></span></div><div class="cta"><span>ESCRIBINOS · SAVINGS.HUB</span></div></div>
+      <div id="c0" class="clip ov" data-start="0.000" data-duration="1.165" data-track-index="2"><div class="cap plain"><span class="ln">Así venimos</span><span class="ln">este <span class="kw">mes</span></span></div></div>
+      <div id="c1" class="clip ov" data-start="1.185" data-duration="1.072" data-track-index="3"><div class="cap bars"><span class="ln"><span class="bar">en Savings <span class="kw">Hub.</span></span></span></div></div>
+      <div id="c2" class="clip ov" data-start="2.277" data-duration="0.892" data-track-index="2"><div class="cap plain"><span class="ln">Llegó <span class="kw">mercadería:</span></span></div></div>
+      <div id="c3" class="clip ov" data-start="3.189" data-duration="1.936" data-track-index="3"><div class="cap bars"><span class="ln"><span class="bar">Yara, Hawas,</span></span><span class="ln"><span class="bar">y hasta Le Male <span class="kw">Elixir.</span></span></span></div></div>
+      <div id="c4" class="clip ov" data-start="5.145" data-duration="0.877" data-track-index="2"><div class="cap bars low"><span class="ln"><span class="bar">Armamos <span class="kw">decants,</span></span></span></div></div>
+      <div id="c5" class="clip ov" data-start="6.042" data-duration="1.583" data-track-index="3"><div class="cap bars low"><span class="ln"><span class="bar">directo del frasco</span></span><span class="ln"><span class="bar"><span class="kw">original.</span></span></span></div></div>
+      <div id="c6" class="clip ov" data-start="7.645" data-duration="1.243" data-track-index="2"><div class="cap plain"><span class="ln">Abrimos el</span><span class="ln"><span class="kw">Velvet</span> <span class="kw">Oud...</span></span></div></div>
+      <div id="c7" class="clip ov" data-start="8.908" data-duration="1.057" data-track-index="3"><div class="cap plain"><span class="ln">y mirá ese <span class="kw">color.</span></span></div></div>
+      <div id="c8" class="clip ov" data-start="9.985" data-duration="1.493" data-track-index="2"><div class="cap bars"><span class="ln"><span class="bar">Armamos un pedido</span></span><span class="ln"><span class="bar"><span class="kw">mayorista,</span></span></span></div></div>
+      <div id="c9" class="clip ov" data-start="11.498" data-duration="1.120" data-track-index="3"><div class="cap bars"><span class="ln"><span class="bar">lleno hasta <span class="kw">arriba.</span></span></span></div></div>
+      <div id="c10" class="clip ov" data-start="12.638" data-duration="1.307" data-track-index="2"><div class="cap plain"><span class="ln">Y pedidos de</span><span class="ln"><span class="kw">revendedores,</span></span></div></div>
+      <div id="c11" class="clip ov" data-start="13.965" data-duration="1.306" data-track-index="3"><div class="cap bars"><span class="ln"><span class="bar">como este de</span></span><span class="ln"><span class="bar"><span class="kw">$30.000.</span></span></span></div></div>
+      <audio id="master" class="clip" src="master.m4a" data-start="0" data-duration="19.412"
+             data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+            tl.set(["#fa .cam", "#fb .cam"], { force3D: true }, 0);
+      tl.set("#fb", { autoAlpha: 0 }, 0.000);
+      tl.to("#fa", { ...{ left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, rotation: 0, borderWidth: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" }, duration: 0.55, ease: "power3.inOut" }, 1.185);
+      tl.fromTo("#pill0 .pill span", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 0.050);
+      tl.set("#fa", { left: 38, top: 250, width: 1004, height: 940, borderRadius: 36, rotation: 0, borderWidth: 0, boxShadow: "0px 24px 48px rgba(0,0,0,0.55)" }, 2.277);
+      tl.set("#fb", { autoAlpha: 0 }, 2.277);
+      tl.to("#fa", { ...{ left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, rotation: 0, borderWidth: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" }, duration: 0.55, ease: "power3.inOut" }, 3.189);
+      tl.fromTo("#pill1 .pill span", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 2.327);
+      tl.set("#fa", { left: 0, top: 0, width: 1080, height: 920, borderRadius: 0, rotation: 0, borderWidth: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" }, 5.145);
+      tl.set("#fb", { autoAlpha: 1 }, 5.145);
+      tl.fromTo("#seam2 .seam > span", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 5.225);
+      tl.set("#fa", { left: 38, top: 250, width: 1004, height: 940, borderRadius: 36, rotation: 0, borderWidth: 0, boxShadow: "0px 24px 48px rgba(0,0,0,0.55)" }, 7.645);
+      tl.set("#fb", { autoAlpha: 0 }, 7.645);
+      tl.fromTo("#pill3 .pill span", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 7.695);
+      tl.set("#fa", { left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, rotation: 0, borderWidth: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" }, 9.985);
+      tl.set("#fb", { autoAlpha: 0 }, 9.985);
+      tl.set("#fa", { left: 38, top: 250, width: 1004, height: 940, borderRadius: 36, rotation: 0, borderWidth: 0, boxShadow: "0px 24px 48px rgba(0,0,0,0.55)" }, 12.638);
+      tl.set("#fb", { autoAlpha: 0 }, 12.638);
+      tl.to("#fa", { ...{ left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, rotation: 0, borderWidth: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" }, duration: 0.55, ease: "power3.inOut" }, 13.965);
+      tl.fromTo("#pill5 .pill span", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 12.688);
+      tl.set("#gp", { autoAlpha: 1 }, 15.291);
+      tl.set("#fb", { autoAlpha: 0 }, 15.291);
+      tl.set("#fa", { left: 151, top: 204, width: 788, height: 846, borderRadius: 22, rotation: -1.4, borderWidth: 5, boxShadow: "14px 14px 0px #110f0d" }, 15.291);
+      tl.fromTo("#fa", { y: 160, rotation: -7, autoAlpha: 0 }, { y: 0, rotation: -1.4, autoAlpha: 1, duration: 0.6, ease: "back.out(1.3)", immediateRender: false }, 15.291);
+      tl.fromTo("#endtxt .sans", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, 15.741);
+      tl.fromTo("#endtxt .serif", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, 15.941);
+      tl.fromTo("#endtxt .ul", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out", immediateRender: false }, 16.241);
+      tl.fromTo("#endtxt .cta span", { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(2)", immediateRender: false }, 16.591);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 0.000);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 0.380);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 0.760);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 1.140);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 1.520);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 1.900);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 2.280);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 2.997);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 3.714);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 4.431);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 2.480, ease: "power1.inOut", immediateRender: false }, 5.148);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.760, ease: "power1.inOut", immediateRender: false }, 7.648);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.760, ease: "power1.inOut", immediateRender: false }, 8.428);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.760, ease: "power1.inOut", immediateRender: false }, 9.208);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 9.988);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 10.872);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 11.756);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 12.640);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 13.524);
+      tl.fromTo("#fa .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 14.408);
+      tl.fromTo("#fa .cam", { scale: 1.0 }, { scale: 1.05, duration: 4.100, ease: "power1.inOut", immediateRender: false }, 15.292);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 0.000);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 0.380);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 0.760);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 1.140);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 1.520);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.360, ease: "power1.inOut", immediateRender: false }, 1.900);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 2.280);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 2.997);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 3.714);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.697, ease: "power1.inOut", immediateRender: false }, 4.431);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 2.480, ease: "power1.inOut", immediateRender: false }, 5.148);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.760, ease: "power1.inOut", immediateRender: false }, 7.648);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.760, ease: "power1.inOut", immediateRender: false }, 8.428);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.760, ease: "power1.inOut", immediateRender: false }, 9.208);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 9.988);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 10.872);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 11.756);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 12.640);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 13.524);
+      tl.fromTo("#fb .cam", { scale: 1.05 }, { scale: 1.01, duration: 0.864, ease: "power1.inOut", immediateRender: false }, 14.408);
+      tl.fromTo("#fb .cam", { scale: 1.0 }, { scale: 1.05, duration: 4.100, ease: "power1.inOut", immediateRender: false }, 15.292);
+      tl.fromTo("#c0 .ln", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 0.000);
+      tl.fromTo("#c1 .bar", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 1.185);
+      tl.fromTo("#c2 .ln", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 2.277);
+      tl.fromTo("#c3 .bar", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 3.189);
+      tl.fromTo("#c4 .bar", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 5.145);
+      tl.fromTo("#c5 .bar", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 6.042);
+      tl.fromTo("#c6 .ln", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 7.645);
+      tl.fromTo("#c7 .ln", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 8.908);
+      tl.fromTo("#c8 .bar", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 9.985);
+      tl.fromTo("#c9 .bar", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 11.498);
+      tl.fromTo("#c10 .ln", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 12.638);
+      tl.fromTo("#c11 .bar", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power3.out", stagger: 0.09, immediateRender: false }, 13.965);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

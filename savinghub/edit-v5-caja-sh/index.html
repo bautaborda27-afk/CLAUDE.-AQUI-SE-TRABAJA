@@ -57,6 +57,11 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .endhead .serif { display: inline-block; font: italic 400 12.6cqw/1 "IS"; color: var(--burg); }
 .endhead .ul { width: 44cqw; background: var(--burg); }
 .cta { position: absolute; left: 0; right: 0; top: 67.8cqh; text-align: center; }
+/* entrance start states: every animated entrance begins hidden (no flash before its tween) */
+.bar, .cap.plain .ln, .cap.head .sans, .cap.head .serif, .endhead .sans, .endhead .serif { opacity: 0; }
+.ul { transform: scaleX(0); }
+.pill span, .seam > span, .cta span { transform: scale(0); }
+#fb, #gp { visibility: hidden; opacity: 0; }
 .cta span { display: inline-block; padding: 1.5cqw 3cqw 1.5cqw 4.1cqw; border-radius: 999px;
   background: #faf3ec; color: var(--pill-ink); border: 0.35cqw solid var(--ink);
   font: 500 3.4cqw/1 "JBM"; letter-spacing: 0.32em; box-shadow: 0.55cqw 0.55cqw 0 var(--ink); }
@@ -73,7 +78,7 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
                  data-start="0" data-duration="16.085" data-track-index="1"></video>
         </div>
       </div>
-      <div id="fa" class="frame">
+      <div id="fa" class="frame" style="left:38px;top:250px;width:1004px;height:940px;border-radius:36px;border-width:0px;box-shadow:0px 24px 48px rgba(0,0,0,0.55)">
         <div class="cam">
           <video id="va" class="clip" src="base.mp4" muted playsinline
                  data-start="0" data-duration="16.085" data-track-index="0"></video>
@@ -100,13 +105,9 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
     <script>
       const tl = gsap.timeline({ paused: true });
             tl.set(["#fa .cam", "#fb .cam"], { force3D: true }, 0);
-      tl.set("#fa", { left: 38, top: 250, width: 1004, height: 940, borderRadius: 36, rotation: 0, borderWidth: 0, boxShadow: "0px 24px 48px rgba(0,0,0,0.55)" }, 0);
-      tl.set("#fb", { autoAlpha: 0 }, 0);
-      tl.set("#gp", { autoAlpha: 0 }, 0);
       tl.set("#fb", { autoAlpha: 0 }, 0.000);
       tl.to("#fa", { ...{ left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, rotation: 0, borderWidth: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" }, duration: 0.55, ease: "power3.inOut" }, 1.638);
       tl.fromTo("#pill0 .pill span", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 0.050);
-      tl.set("#fa", { left: 0, top: 0, width: 1080, height: 1920, borderRadius: 0, rotation: 0, borderWidth: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" }, 3.246);
       tl.set("#fb", { autoAlpha: 0 }, 3.246);
       tl.set("#fb", { autoAlpha: 0 }, 4.375);
       tl.set("#fb", { autoAlpha: 0 }, 5.450);

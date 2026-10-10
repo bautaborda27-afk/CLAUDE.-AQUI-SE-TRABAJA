@@ -71,7 +71,59 @@ CAJA = {
     ],
 }
 
-VIDEOS = {"edit-v5-caja-sh": CAJA}
+# ---- Round 6: "así venimos este mes" — monthly recap stitched from several sources
+CAJA_SRC, PEDIDO_SRC, DECANT_SRC = "source/vid_caja.mp4", "source/vid_pedido.mp4", "source/vid31.mp4"
+REV_SRC, VELVET_SRC = "source/revendedor_30000.mp4", "source/velvet_oud.mp4"
+
+
+def at(src, t, zoom=1.0, fy=0.5):
+    """A shot from another source; zoom/fy punch in (keeps burned-in titles out)."""
+    return {"src": src, "at": t, "zoom": zoom, "fy": fy}
+
+
+def rev(t, zoom=1.4):     # revendedor reel: "PEDIDO / Revendedor: $30.000" burned in at the top
+    return at(REV_SRC, t, zoom, 1.0)
+
+
+def vel(t, zoom=1.5):     # velvet oud reel: "Unboxing / VELVET OUD" burned in at the top
+    return at(VELVET_SRC, t, zoom, 1.0)
+
+
+RESUMEN = {
+    "src": CAJA_SRC,
+    "end": {"head": "¿Qué _traemos?", "cta": "ESCRIBINOS · SAVINGS.HUB"},
+    "lines": [
+        {"vo": "Así venimos este mes en Séivings Jab.",
+         "cap": "Así venimos / este *mes* | en Savings *Hub.*",
+         "shots": [at(CAJA_SRC, 20.2), vel(14.3), at(DECANT_SRC, 64.0), at(PEDIDO_SRC, 75.6),
+                   rev(4.2), at(CAJA_SRC, 61.0)],
+         "layout": "card", "pill": "RESUMEN DEL MES", "grow": True},
+        {"vo": "Llegó mercadería: Yara, Jauás, y hasta Le Mal Elixír.",
+         "cap": "Llegó *mercadería:* | Yara, Hawas, / y hasta Le Male *Elixir.*",
+         "shots": [at(CAJA_SRC, [2.2, 4.8]), at(CAJA_SRC, 10.0), at(CAJA_SRC, 130.9), at(CAJA_SRC, 60.9)],
+         "layout": "card", "pill": "LLEGÓ MERCADERÍA", "grow": True},
+        {"vo": "Armamos decánts, directo del frasco original.",
+         "cap": "Armamos *decants,* | directo del frasco / *original.*",
+         "shots": [at(DECANT_SRC, 57.0)], "b_shots": [at(DECANT_SRC, 76.0)],
+         "layout": "split", "seam": ["FRASCO", "DECANT"]},
+        {"vo": "Abrimos el Vélvet Úd... y mirá ese color.",
+         "cap": "Abrimos el / *Velvet *Oud... | y mirá ese *color.*",
+         "shots": [vel([4.0, 6.5], 1.2), vel(14.0, 1.2), vel(21.0, 1.2)],
+         "layout": "card", "pill": "UNBOXING"},
+        {"vo": "Armamos un pedido mayorista, lleno hasta arriba.",
+         "cap": "Armamos un pedido / *mayorista,* | lleno hasta *arriba.*",
+         "shots": [at(PEDIDO_SRC, [15.5, 19.5]), at(PEDIDO_SRC, [85.0, 90.0]), at(PEDIDO_SRC, [75.4, 77.3])],
+         "layout": "full"},
+        {"vo": "Y pedidos de revendedores, como este de treinta-mil.",
+         "cap": "Y pedidos de / *revendedores,* | como este de / *$30.000.*",
+         "shots": [rev([0.5, 3.5]), rev(4.2), rev([17.0, 24.0])],
+         "layout": "card", "pill": "REVENDEDORES", "grow": True},
+        {"vo": "Y el mes resién empiesa. Séivings Jab. ¿Qué traemos ahora?", "cap": None,
+         "shots": [rev([28.95, 29.45], 1.15)], "layout": "end"},   # keeps the SH sticker on the bag
+    ],
+}
+
+VIDEOS = {"edit-v5-caja-sh": CAJA, "edit-v6-resumen-mes": RESUMEN}
 
 CSS = """
 @font-face { font-family: "SG"; src: url("fonts/SpaceGrotesk-500.woff2") format("woff2"); font-weight: 500; font-display: block; }
@@ -126,6 +178,11 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .endhead .serif { display: inline-block; font: italic 400 12.6cqw/1 "IS"; color: var(--burg); }
 .endhead .ul { width: 44cqw; background: var(--burg); }
 .cta { position: absolute; left: 0; right: 0; top: 67.8cqh; text-align: center; }
+/* entrance start states: every animated entrance begins hidden (no flash before its tween) */
+.bar, .cap.plain .ln, .cap.head .sans, .cap.head .serif, .endhead .sans, .endhead .serif { opacity: 0; }
+.ul { transform: scaleX(0); }
+.pill span, .seam > span, .cta span { transform: scale(0); }
+#fb, #gp { visibility: hidden; opacity: 0; }
 .cta span { display: inline-block; padding: 1.5cqw 3cqw 1.5cqw 4.1cqw; border-radius: 999px;
   background: #faf3ec; color: var(--pill-ink); border: 0.35cqw solid var(--ink);
   font: 500 3.4cqw/1 "JBM"; letter-spacing: 0.32em; box-shadow: 0.55cqw 0.55cqw 0 var(--ink); }
@@ -147,7 +204,7 @@ def parse_cap(cap):
 
 def word_html(w):
     if w.startswith("*"):
-        return f'<span class="kw">{esc(w[1:])}</span>'
+        return f'<span class="kw">{esc(w.strip("*"))}</span>'
     return esc(w)
 
 
@@ -205,17 +262,17 @@ def build_html(name, cfg, segs, caps, shots_a, shots_b, dur):
     out = ROOT / name
     body, js = [], []
     js.append('tl.set(["#fa .cam", "#fb .cam"], { force3D: true }, 0);')
-    js.append(f'tl.set("#fa", {geom_js(segs[0]["layout"] if segs[0]["layout"] != "split" else "split")}, 0);')
-    js.append('tl.set("#fb", { autoAlpha: 0 }, 0);')
-    js.append('tl.set("#gp", { autoAlpha: 0 }, 0);')
+    g0 = GEOM[segs[0]["layout"]]
+    fa_style = (f'left:{g0["left"]}px;top:{g0["top"]}px;width:{g0["width"]}px;height:{g0["height"]}px;'
+                f'border-radius:{g0["borderRadius"]}px;border-width:{g0["borderWidth"]}px;box-shadow:{g0["boxShadow"]}')
 
     # --- layout segments
-    prev = None
+    cur = None   # geometry #fa is in (a grown card is "full")
     track_pill = 4
     for i, s in enumerate(segs):
         lay, t0, t1 = s["layout"], s["t"], s["end"]
         if lay != "end":
-            if prev is not None and lay != prev:
+            if cur is not None and lay != cur:
                 js.append(f'tl.set("#fa", {geom_js(lay)}, {t0:.3f});')
             js.append(f'tl.set("#fb", {{ autoAlpha: {1 if lay == "split" else 0} }}, {t0:.3f});')
         if s["grow"]:
@@ -257,7 +314,7 @@ def build_html(name, cfg, segs, caps, shots_a, shots_b, dur):
                       f'ease: "power3.out", immediateRender: false }}, {t0 + 0.95:.3f});')
             js.append(f'tl.fromTo("#endtxt .cta span", {{ scale: 0 }}, {{ scale: 1, duration: 0.4, '
                       f'ease: "back.out(2)", immediateRender: false }}, {t0 + 1.3:.3f});')
-        prev = lay
+        cur = "full" if s["grow"] else lay
 
     # --- slow, eased push on every shot (alternating), main and bottom clip
     for sel, shots in (("#fa .cam", shots_a), ("#fb .cam", shots_b)):
@@ -316,7 +373,7 @@ def build_html(name, cfg, segs, caps, shots_a, shots_b, dur):
                  data-start="0" data-duration="{dur:.3f}" data-track-index="1"></video>
         </div>
       </div>
-      <div id="fa" class="frame">
+      <div id="fa" class="frame" style="{fa_style}">
         <div class="cam">
           <video id="va" class="clip" src="base.mp4" muted playsinline
                  data-start="0" data-duration="{dur:.3f}" data-track-index="0"></video>
