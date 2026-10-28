@@ -1,0 +1,166 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: var(--papel, #d8ccbe);
+    }
+    #dibujo-camara {
+      position: absolute;
+      inset: 0;
+      transform-origin: 50% 47%;
+    }
+    #dibujo-hoja {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #dibujo-fuentes {
+      display: none;
+    }
+  </style>
+  <div id="root" data-composition-id="dibujo" data-width="1080" data-height="1920">
+    <!-- The poster, painted pixel by pixel from the time maps built by build/build_assets.py -->
+    <div id="dibujo-camara">
+      <canvas id="dibujo-hoja" width="1080" height="1920"></canvas>
+    </div>
+    <div id="dibujo-fuentes" aria-hidden="true">
+      <img id="dibujo-placa" src="assets/placa.jpg" alt="" />
+      <img id="dibujo-papel" src="assets/papel.jpg" alt="" />
+      <img id="dibujo-violeta" src="assets/violeta.jpg" alt="" />
+      <img id="dibujo-tiempo" src="assets/tiempo.png" alt="" />
+      <img id="dibujo-tiempo-rojo" src="assets/tiempo-rojo.png" alt="" />
+      <img id="dibujo-mascara" src="assets/mascara.png" alt="" />
+    </div>
+  </div>
+  <script>
+    (function () {
+      const DUR = 10;
+      const W = 1080;
+      const H = 1920;
+      const T_MAX = 12.0; // seconds spanned by the 16-bit code in tiempo*.png
+      const RAMP_UNIT = 0.005; // seconds per step of the B channel
+      const ADELANTO = 0.2; // frame 0 already shows the first lines starting
+      const FILO = 0.35; // fresh strokes land a touch darker, like wet ink
+
+      const canvas = document.getElementById("dibujo-hoja");
+      const ctx = canvas.getContext("2d");
+      const tl = gsap.timeline({ paused: true });
+
+      function whenLoaded(img) {
+        if (img.complete && img.naturalWidth) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", reject, { once: true });
+        });
+      }
+
+      function pixels(id) {
+        const c = document.createElement("canvas");
+        c.width = W;
+        c.height = H;
+        const g = c.getContext("2d", { willReadFrequently: true });
+        g.drawImage(document.getElementById(id), 0, 0, W, H);
+        return g.getImageData(0, 0, W, H).data;
+      }
+
+      const luma = (d, o) => 0.299 * d[o] + 0.587 * d[o + 1] + 0.114 * d[o + 2];
+
+      const ids = ["placa", "papel", "violeta", "tiempo", "tiempo-rojo", "mascara"].map((s) => "dibujo-" + s);
+      const ready = Promise.all(ids.map((id) => whenLoaded(document.getElementById(id)))).then(() => {
+        const placa = pixels("dibujo-placa");
+        const papel = pixels("dibujo-papel");
+        const violeta = pixels("dibujo-violeta");
+        const tiempo = pixels("dibujo-tiempo");
+        const tiempoRojo = pixels("dibujo-tiempo-rojo");
+        const mascara = pixels("dibujo-mascara");
+
+        // Only the pixels that change over time are touched every frame.
+        let n = 0;
+        for (let p = 0; p < W * H; p++) if (mascara[p * 4] > 127) n++;
+        const idx = new Uint32Array(n);
+        const t1 = new Float32Array(n);
+        const k1 = new Float32Array(n);
+        const t2 = new Float32Array(n);
+        const k2 = new Float32Array(n);
+        const rojo = new Uint8Array(n);
+        const humedo = new Uint8Array(n); // bit 1: purple pass darkens, bit 2: red pass darkens
+        let j = 0;
+        for (let p = 0; p < W * H; p++) {
+          const o = p * 4;
+          if (mascara[o] <= 127) continue;
+          idx[j] = o;
+          t1[j] = ((tiempo[o] * 256 + tiempo[o + 1]) / 65535) * T_MAX;
+          k1[j] = 1 / Math.max(tiempo[o + 2] * RAMP_UNIT, 0.005);
+          const isRed = mascara[o + 1] > 127;
+          const top = isRed ? violeta : placa;
+          // wet ink only on real strokes (short ramps, clearly darker than the paper)
+          if (k1[j] > 10 && luma(top, o) < luma(papel, o) - 25) humedo[j] |= 1;
+          if (isRed) {
+            rojo[j] = 1;
+            t2[j] = ((tiempoRojo[o] * 256 + tiempoRojo[o + 1]) / 65535) * T_MAX;
+            k2[j] = 1 / Math.max(tiempoRojo[o + 2] * RAMP_UNIT, 0.005);
+            if (luma(placa, o) < luma(violeta, o) - 25) humedo[j] |= 2;
+          }
+          j++;
+        }
+
+        const frame = ctx.createImageData(W, H);
+        const out = frame.data;
+        out.set(placa);
+
+        function amount(t, start, k) {
+          const a = (t - start) * k;
+          if (a <= 0) return 0;
+          if (a >= 1) return 1;
+          return a * a * (3 - 2 * a);
+        }
+
+        let lastT = -1;
+        function draw(time) {
+          const t = time + ADELANTO;
+          if (t === lastT) return;
+          lastT = t;
+          for (let i = 0; i < n; i++) {
+            const o = idx[i];
+            const a = amount(t, t1[i], k1[i]);
+            const f = humedo[i] & 1 ? a + FILO * 4 * a * (1 - a) : a;
+            const top = rojo[i] ? violeta : placa;
+            let r = papel[o] + (top[o] - papel[o]) * f;
+            let g = papel[o + 1] + (top[o + 1] - papel[o + 1]) * f;
+            let b = papel[o + 2] + (top[o + 2] - papel[o + 2]) * f;
+            if (rojo[i]) {
+              const a2 = amount(t, t2[i], k2[i]);
+              const f2 = humedo[i] & 2 ? a2 + FILO * 4 * a2 * (1 - a2) : a2;
+              r += (placa[o] - r) * f2;
+              g += (placa[o + 1] - g) * f2;
+              b += (placa[o + 2] - b) * f2;
+            }
+            out[o] = r;
+            out[o + 1] = g;
+            out[o + 2] = b;
+          }
+          ctx.putImageData(frame, 0, 0);
+        }
+
+        // The pencil's clock: one linear tween whose value is the drawing time.
+        const reloj = { t: 0 };
+        tl.to(reloj, { t: DUR, duration: DUR, ease: "none", onUpdate: () => draw(reloj.t) }, 0);
+        // A slow pull back that settles on the full poster once the ink is down.
+        tl.fromTo("#dibujo-camara", { scale: 1.045 }, { scale: 1, duration: 7.9, ease: "power2.inOut" }, 0);
+
+        window.addEventListener("hf-seek", (e) => draw(tl.time()));
+        draw(0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["dibujo"] = tl;
+      });
+
+      window.__hf = window.__hf || {};
+      window.__hf.buildReady = window.__hf.buildReady || {};
+      window.__hf.buildReady["dibujo"] = ready;
+    })();
+  </script>
+</template>

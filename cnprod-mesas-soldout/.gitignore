@@ -1,0 +1,6 @@
+# local HyperFrames state, snapshots and scratch renders (regenerable)
+.hyperframes/
+renders/
+snapshots/
+node_modules/
+__pycache__/
