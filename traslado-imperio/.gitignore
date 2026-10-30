@@ -1,0 +1,7 @@
+# regenerable: build_plate.py / build_layers.py / build_comp.py + hyperframes render
+work/
+__pycache__/
+edit/vendor/
+edit/renders/
+edit/snapshots/
+edit/.hyperframes/

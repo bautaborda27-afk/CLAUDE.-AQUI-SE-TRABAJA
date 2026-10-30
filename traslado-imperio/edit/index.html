@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #ddcdc4; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #ddcdc4; }
+.layer { position: absolute; display: block; }
+.stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+#frame {
+  --p: -14%;
+  -webkit-mask-image: linear-gradient(125deg, #000 var(--p), transparent calc(var(--p) + 14%));
+  mask-image: linear-gradient(125deg, #000 var(--p), transparent calc(var(--p) + 14%));
+}
+#oval {
+  --sweep: 0deg;
+  -webkit-mask-image: conic-gradient(from 235deg at 538px 200px, #000 0deg, #000 calc(var(--sweep) - 12deg), transparent var(--sweep));
+  mask-image: conic-gradient(from 235deg at 538px 200px, #000 0deg, #000 calc(var(--sweep) - 12deg), transparent var(--sweep));
+}
+#road {
+  --rx: -311px;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--rx) - 90px), transparent var(--rx));
+  mask-image: linear-gradient(90deg, #000 calc(var(--rx) - 90px), transparent var(--rx));
+}
+#final { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 40; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10.0" data-width="1080" data-height="1920">
+      <img id="plate" class="layer" src="assets/plate.png" alt="" style="left:0;top:0;width:1080px;height:1920px;z-index:1">
+      <img id="frame" class="layer" src="assets/frame.png" alt="" style="left:0px;top:0px;width:1080px;height:1920px;z-index:2">
+      <img id="road" class="layer" src="assets/road.png" alt="" style="left:51px;top:1166px;width:977px;height:517px;z-index:3">
+      <div id="bus-move" class="stage" style="z-index:4"><div id="bus-pitch" class="stage" style="transform-origin:520px 1590px"><div id="bus-jit" class="stage"><img id="bus" class="layer" src="assets/bus.png" alt="" style="left:228px;top:1235px;width:620px;height:374px"><img id="bus-blur" class="layer" src="assets/bus-blur.png" alt="" style="left:198px;top:1235px;width:680px;height:374px"></div></div></div>
+      <img id="oval" class="layer" src="assets/oval.png" alt="" style="left:12px;top:455px;width:1068px;height:393px;z-index:5">
+      <img id="l-T" class="layer" src="assets/l-T.png" alt="" style="left:138px;top:610px;width:132px;height:206px;z-index:6">
+      <img id="l-R" class="layer" src="assets/l-R.png" alt="" style="left:254px;top:596px;width:150px;height:207px;z-index:7">
+      <img id="l-A1" class="layer" src="assets/l-A1.png" alt="" style="left:375px;top:578px;width:114px;height:193px;z-index:8">
+      <img id="l-S" class="layer" src="assets/l-S.png" alt="" style="left:467px;top:561px;width:104px;height:199px;z-index:9">
+      <img id="l-L" class="layer" src="assets/l-L.png" alt="" style="left:550px;top:550px;width:109px;height:200px;z-index:10">
+      <img id="l-A2" class="layer" src="assets/l-A2.png" alt="" style="left:640px;top:532px;width:121px;height:204px;z-index:11">
+      <img id="l-D" class="layer" src="assets/l-D.png" alt="" style="left:738px;top:517px;width:124px;height:202px;z-index:12">
+      <img id="l-O" class="layer" src="assets/l-O.png" alt="" style="left:847px;top:498px;width:133px;height:198px;z-index:13">
+      <img id="logo" class="layer" src="assets/logo.png" alt="" style="left:424px;top:64px;width:243px;height:117px;z-index:14">
+      <img id="victoria" class="layer" src="assets/victoria.png" alt="" style="left:206px;top:184px;width:701px;height:114px;z-index:15">
+      <img id="whynot" class="layer" src="assets/whynot.png" alt="" style="left:206px;top:286px;width:709px;height:107px;z-index:16">
+      <img id="date-sab" class="layer" src="assets/date-sab.png" alt="" style="left:230px;top:390px;width:229px;height:40px;z-index:17">
+      <img id="date-rule" class="layer" src="assets/date-rule.png" alt="" style="left:447px;top:397px;width:218px;height:21px;z-index:18">
+      <img id="date-imperio" class="layer" src="assets/date-imperio.png" alt="" style="left:679px;top:390px;width:180px;height:51px;z-index:19">
+      <img id="arrow1" class="layer" src="assets/arrow1.png" alt="" style="left:396px;top:912px;width:327px;height:147px;z-index:20">
+      <img id="arrow2" class="layer" src="assets/arrow2.png" alt="" style="left:395px;top:1047px;width:263px;height:130px;z-index:21">
+      <img id="rays" class="layer" src="assets/rays.png" alt="" style="left:716px;top:939px;width:259px;height:115px;z-index:22">
+      <img id="tag-raf" class="layer" src="assets/tag-raf.png" alt="" style="left:80px;top:897px;width:328px;height:157px;z-index:23">
+      <img id="tag-sun" class="layer" src="assets/tag-sun.png" alt="" style="left:84px;top:1124px;width:329px;height:156px;z-index:24">
+      <img id="tag-sf" class="layer" src="assets/tag-sf.png" alt="" style="left:646px;top:1042px;width:382px;height:189px;z-index:25">
+      <img id="pin-raf" class="layer" src="assets/pin-raf.png" alt="" style="left:208px;top:856px;width:87px;height:104px;z-index:26">
+      <img id="pin-sun" class="layer" src="assets/pin-sun.png" alt="" style="left:208px;top:1086px;width:87px;height:114px;z-index:27">
+      <img id="pin-sf" class="layer" src="assets/pin-sf.png" alt="" style="left:794px;top:988px;width:101px;height:129px;z-index:28">
+      <img id="rule" class="layer" src="assets/rule.png" alt="" style="left:162px;top:1670px;width:793px;height:57px;z-index:29">
+      <img id="sp1" class="layer" src="assets/sp1.png" alt="" style="left:207px;top:1718px;width:109px;height:102px;z-index:30">
+      <img id="sp2" class="layer" src="assets/sp2.png" alt="" style="left:343px;top:1726px;width:181px;height:99px;z-index:31">
+      <img id="sp3" class="layer" src="assets/sp3.png" alt="" style="left:555px;top:1736px;width:177px;height:100px;z-index:32">
+      <img id="sp4" class="layer" src="assets/sp4.png" alt="" style="left:739px;top:1715px;width:138px;height:136px;z-index:33">
+      <img id="star-tl" class="layer" src="assets/star-tl.png" alt="" style="left:475px;top:431px;width:129px;height:127px;z-index:34">
+      <img id="star-tb" class="layer" src="assets/star-tb.png" alt="" style="left:481px;top:740px;width:119px;height:137px;z-index:35">
+      <img id="star-r1" class="layer" src="assets/star-r1.png" alt="" style="left:753px;top:849px;width:117px;height:123px;z-index:36">
+      <img id="star-r2" class="layer" src="assets/star-r2.png" alt="" style="left:886px;top:829px;width:123px;height:129px;z-index:37">
+      <img id="star-bus" class="layer" src="assets/star-bus.png" alt="" style="left:901px;top:1209px;width:87px;height:129px;z-index:38">
+      <img id="star-bl" class="layer" src="assets/star-bl.png" alt="" style="left:81px;top:1597px;width:117px;height:135px;z-index:39">
+      <img id="final" class="clip" src="assets/poster.png" alt="" data-start="6.85" data-duration="3.15" data-track-index="2">
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#frame", {"--p": "-14%"}, {"--p": "104%", duration: 0.85, ease: "power2.inOut"}, 0);
+      tl.fromTo("#logo", {opacity: 0, scale: 0.82, filter: "blur(8px)"}, {opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out"}, 0.15);
+      tl.fromTo("#victoria", {clipPath: "inset(0% 100% 0% 0%)", x: -40}, {clipPath: "inset(0% 0% 0% 0%)", x: 0, duration: 0.6, ease: "power3.out"}, 0.35);
+      tl.fromTo("#whynot", {clipPath: "inset(0% 0% 0% 100%)", x: 40}, {clipPath: "inset(0% 0% 0% 0%)", x: 0, duration: 0.6, ease: "power3.out"}, 0.5);
+      tl.fromTo("#date-sab", {opacity: 0, x: -24, filter: "blur(6px)"}, {opacity: 1, x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out"}, 0.85);
+      tl.fromTo("#date-imperio", {opacity: 0, x: 24, filter: "blur(6px)"}, {opacity: 1, x: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out"}, 0.9);
+      tl.fromTo("#date-rule", {scaleX: 0}, {scaleX: 1, duration: 0.5, ease: "power2.inOut"}, 0.95);
+      tl.fromTo("#l-T", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.15);
+      tl.fromTo("#l-R", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.22);
+      tl.fromTo("#l-A1", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.29);
+      tl.fromTo("#l-S", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.36);
+      tl.fromTo("#l-L", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.43);
+      tl.fromTo("#l-A2", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.50);
+      tl.fromTo("#l-D", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.57);
+      tl.fromTo("#l-O", {opacity: 0, scale: 1.7, rotation: -6, filter: "blur(10px)"}, {opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.42, ease: "power4.out"}, 1.64);
+      tl.fromTo("#oval", {"--sweep": "0deg"}, {"--sweep": "372deg", duration: 0.9, ease: "power2.inOut"}, 1.45);
+      tl.fromTo("#star-tl", {opacity: 0, scale: 0, rotation: -90}, {opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.2)"}, 1.90);
+      tl.fromTo("#star-tb", {opacity: 0, scale: 0, rotation: -90}, {opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.2)"}, 2.00);
+      tl.fromTo("#pin-raf", {opacity: 0, y: -70}, {opacity: 1, y: 0, duration: 0.5, ease: "back.out(2.2)"}, 2.25);
+      tl.fromTo("#tag-raf", {clipPath: "inset(0% 100% 0% 0%)"}, {clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power3.out"}, 2.35);
+      tl.fromTo("#pin-sun", {opacity: 0, y: -70}, {opacity: 1, y: 0, duration: 0.5, ease: "back.out(2.2)"}, 2.45);
+      tl.fromTo("#tag-sun", {clipPath: "inset(0% 100% 0% 0%)"}, {clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power3.out"}, 2.55);
+      tl.fromTo("#arrow1", {clipPath: "inset(0% 100% 0% 0%)"}, {clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power2.inOut"}, 2.70);
+      tl.fromTo("#arrow2", {clipPath: "inset(0% 100% 0% 0%)"}, {clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power2.inOut"}, 2.80);
+      tl.fromTo("#pin-sf", {opacity: 0, y: -90}, {opacity: 1, y: 0, duration: 0.5, ease: "back.out(2.2)"}, 3.15);
+      tl.fromTo("#tag-sf", {clipPath: "inset(0% 50% 0% 50%)"}, {clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power3.out"}, 3.30);
+      tl.fromTo("#rays", {clipPath: "circle(0px at 129px 113px)", opacity: 0}, {clipPath: "circle(190px at 129px 113px)", opacity: 1, duration: 0.55, ease: "power3.out"}, 3.4);
+      tl.fromTo("#star-r1", {opacity: 0, scale: 0, rotation: -90}, {opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.2)"}, 3.50);
+      tl.fromTo("#star-r2", {opacity: 0, scale: 0, rotation: -90}, {opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.2)"}, 3.62);
+      tl.fromTo("#bus-move", {x: -1060, y: -18}, {x: 0, y: 0, duration: 2.1, ease: "power3.out"}, 3.55);
+      tl.fromTo("#road", {"--rx": "-311px"}, {"--rx": "749px", duration: 2.1, ease: "power3.out"}, 3.55);
+      tl.fromTo("#road", {"--rx": "749px"}, {"--rx": "1117px", duration: 0.6, ease: "power2.out", immediateRender: false}, 5.65);
+      tl.fromTo("#bus-blur", {opacity: 0.95}, {opacity: 0, duration: 1.1, ease: "power2.out"}, 3.55);
+      tl.fromTo("#bus-jit", {y: 0.00}, {y: -2.00, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 3.550);
+      tl.fromTo("#bus-jit", {y: -2.00}, {y: 1.91, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 3.620);
+      tl.fromTo("#bus-jit", {y: 1.91}, {y: -1.82, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 3.690);
+      tl.fromTo("#bus-jit", {y: -1.82}, {y: 1.74, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 3.760);
+      tl.fromTo("#bus-jit", {y: 1.74}, {y: -1.65, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 3.830);
+      tl.fromTo("#bus-jit", {y: -1.65}, {y: 1.57, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 3.900);
+      tl.fromTo("#bus-jit", {y: 1.57}, {y: -1.49, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 3.970);
+      tl.fromTo("#bus-jit", {y: -1.49}, {y: 1.41, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.040);
+      tl.fromTo("#bus-jit", {y: 1.41}, {y: -1.33, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.110);
+      tl.fromTo("#bus-jit", {y: -1.33}, {y: 1.25, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.180);
+      tl.fromTo("#bus-jit", {y: 1.25}, {y: -1.18, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.250);
+      tl.fromTo("#bus-jit", {y: -1.18}, {y: 1.11, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.320);
+      tl.fromTo("#bus-jit", {y: 1.11}, {y: -1.04, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.390);
+      tl.fromTo("#bus-jit", {y: -1.04}, {y: 0.97, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.460);
+      tl.fromTo("#bus-jit", {y: 0.97}, {y: -0.90, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.530);
+      tl.fromTo("#bus-jit", {y: -0.90}, {y: 0.84, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.600);
+      tl.fromTo("#bus-jit", {y: 0.84}, {y: -0.77, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.670);
+      tl.fromTo("#bus-jit", {y: -0.77}, {y: 0.71, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.740);
+      tl.fromTo("#bus-jit", {y: 0.71}, {y: -0.66, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.810);
+      tl.fromTo("#bus-jit", {y: -0.66}, {y: 0.60, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.880);
+      tl.fromTo("#bus-jit", {y: 0.60}, {y: -0.55, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 4.950);
+      tl.fromTo("#bus-jit", {y: -0.55}, {y: 0.50, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.020);
+      tl.fromTo("#bus-jit", {y: 0.50}, {y: -0.45, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.090);
+      tl.fromTo("#bus-jit", {y: -0.45}, {y: 0.40, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.160);
+      tl.fromTo("#bus-jit", {y: 0.40}, {y: -0.36, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.230);
+      tl.fromTo("#bus-jit", {y: -0.36}, {y: 0.32, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.300);
+      tl.fromTo("#bus-jit", {y: 0.32}, {y: -0.29, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.370);
+      tl.fromTo("#bus-jit", {y: -0.29}, {y: 0.26, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.440);
+      tl.fromTo("#bus-jit", {y: 0.26}, {y: -0.23, duration: 0.07, ease: "sine.inOut", immediateRender: false}, 5.510);
+      tl.fromTo("#bus-jit", {y: -0.23}, {y: 0, duration: 0.1, ease: "sine.out", immediateRender: false}, 5.580);
+      tl.fromTo("#bus-pitch", {rotation: 0}, {rotation: 0.7, duration: 0.9, ease: "sine.inOut"}, 4.75);
+      tl.fromTo("#bus-pitch", {rotation: 0.7}, {rotation: -0.35, duration: 0.22, ease: "power2.out", immediateRender: false}, 5.65);
+      tl.fromTo("#bus-pitch", {rotation: -0.35}, {rotation: 0.12, duration: 0.2, ease: "sine.inOut", immediateRender: false}, 5.87);
+      tl.fromTo("#bus-pitch", {rotation: 0.12}, {rotation: 0, duration: 0.25, ease: "sine.out", immediateRender: false}, 6.07);
+      tl.fromTo("#star-bus", {opacity: 0, scale: 0, rotation: -90}, {opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.2)"}, 5.80);
+      tl.fromTo("#rule", {clipPath: "inset(0% 100% 0% 0%)"}, {clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power2.inOut"}, 5.95);
+      tl.fromTo("#star-bl", {opacity: 0, scale: 0, rotation: -90}, {opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(2.2)"}, 6.05);
+      tl.fromTo("#sp1", {opacity: 0, y: 26}, {opacity: 1, y: 0, duration: 0.5, ease: "power3.out"}, 6.15);
+      tl.fromTo("#sp2", {opacity: 0, y: 26}, {opacity: 1, y: 0, duration: 0.5, ease: "power3.out"}, 6.24);
+      tl.fromTo("#sp3", {opacity: 0, y: 26}, {opacity: 1, y: 0, duration: 0.5, ease: "power3.out"}, 6.33);
+      tl.fromTo("#sp4", {opacity: 0, y: 26}, {opacity: 1, y: 0, duration: 0.5, ease: "power3.out"}, 6.42);
+      tl.fromTo("#final", {opacity: 0}, {opacity: 1, duration: 0.3, ease: "none"}, 6.85);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
