@@ -1,13 +1,15 @@
 """Write edit/index.html: the poster building itself layer by layer.
 
 Positions come from work/layers.json (build_layers.py); the motion is below.
-The bus drives in from the left and brakes; the road is drawn behind it.
+Everything is drawn first, the empty road included; then the bus comes up
+the road from the far left (it scales about the road's vanishing point, so it
+travels along the road and grows as it nears), brakes and stays.
 """
 import json
 
 L = json.load(open("work/layers.json"))
 letters = L.pop("letters")
-DUR = 10.0
+DUR = 11.0
 FPS = 30
 
 
@@ -21,20 +23,27 @@ def img(n, z, extra=""):
 
 
 # ---------------------------------------------------------------- timing
-BUS_IN, BUS_DUR = 3.55, 2.1          # drive-in, power3.out
+ROAD_IN, ROAD_DUR = 2.9, 1.1         # road scene drawn left to right
+BUS_IN, BUS_DUR = 4.3, 2.7           # the bus comes up the road
 BUS_STOP = BUS_IN + BUS_DUR
-BUS_DX, BUS_DY = -1060, -18          # start offset (off-screen left)
-FRONT = 800                          # bus nose x in the final frame
-FINAL_IN = 6.85                      # cross to the untouched poster
+VP = (-20, 1532)                     # road vanishing point (far left, on the road)
+S0 = 0.08                            # bus scale at the start (hidden behind the frame line)
+FINAL_IN = 7.85                      # cross to the untouched poster
 
 rb = L["road"]
-rx_end = FRONT - rb["x"]
-rx_start = rx_end + BUS_DX
+sb = L["speed"]
 oval = L["oval"]
 ocx, ocy = 550 - oval["x"], 655 - oval["y"]
 rays = L["rays"]
 rcx, rcy = 845 - rays["x"], 1052 - rays["y"]
-PIVOT = (520, 1590)                  # braking pitch pivot (canvas px)
+PIVOT = (520, 1600)                  # braking pitch pivot (canvas px)
+
+
+def bus_scale(u):
+    """Scale at progress u: distance eases out (power3), scale = 1 / distance."""
+    z0 = 1 / S0
+    return 1 / (z0 - (z0 - 1) * (1 - (1 - u) ** 3))
+
 
 tw = []  # timeline lines
 
@@ -91,15 +100,25 @@ add(f'tl.fromTo("#rays", {{clipPath: "circle(0px at {rcx}px {rcy}px)", opacity: 
 star("star-r1", 3.5)
 star("star-r2", 3.62)
 
-# the bus: drives in from the left, the road is drawn behind its nose
-add(f'tl.fromTo("#bus-move", {{x: {BUS_DX}, y: {BUS_DY}}}, {{x: 0, y: 0, duration: {BUS_DUR}, ease: "power3.out"}}, {BUS_IN});')
-add(f'tl.fromTo("#road", {{"--rx": "{rx_start}px"}}, {{"--rx": "{rx_end}px", duration: {BUS_DUR}, ease: "power3.out"}}, {BUS_IN});')
-add(f'tl.fromTo("#road", {{"--rx": "{rx_end}px"}}, {{"--rx": "{rb["w"] + 140}px", duration: 0.6, ease: "power2.out", immediateRender: false}}, {BUS_STOP:.2f});')
-add(f'tl.fromTo("#bus-blur", {{opacity: 0.95}}, {{opacity: 0, duration: 1.1, ease: "power2.out"}}, {BUS_IN});')
+# the road scene, then the footer: everything is on the page before the bus
+add(f'tl.fromTo("#road", {{"--rx": "-40px"}}, {{"--rx": "{rb["w"] + 120}px", duration: {ROAD_DUR}, ease: "power2.inOut"}}, {ROAD_IN});')
+star("star-bus", 3.85)
+unroll("rule", 3.7, dur=0.55, ease="power2.inOut")
+star("star-bl", 3.8)
+for i in range(4):
+    add(f'tl.fromTo("#sp{i + 1}", {{opacity: 0, y: 26}}, {{opacity: 1, y: 0, duration: 0.5, ease: "power3.out"}}, {3.9 + i * 0.09:.2f});')
+
+# the bus comes up the road from the far left and stops in its place
+n = round(BUS_DUR * FPS)
+scales = ", ".join(f"{bus_scale(k / n):.4f}" for k in range(n + 1))
+add(f'tl.set("#bus-move", {{scale: {S0}}}, 0);')
+add(f'tl.to("#bus-move", {{keyframes: {{scale: [{scales}], easeEach: "none"}}, duration: {BUS_DUR}}}, {BUS_IN});')
+# speed lines trail in while it is fastest
+add(f'tl.fromTo("#speed", {{"--sx": "-40px"}}, {{"--sx": "{sb["w"] + 120}px", duration: 1.0, ease: "power1.inOut"}}, {BUS_IN + 1.15:.2f});')
 # road rumble while moving, fading out as it brakes
 t, i, prev = BUS_IN, 0, 0.0
 while t < BUS_STOP - 0.1:
-    amp = 1.8 * (1 - (t - BUS_IN) / BUS_DUR) ** 1.5 + 0.2
+    amp = 1.6 * (1 - (t - BUS_IN) / BUS_DUR) ** 1.2 + 0.2
     y = amp if i % 2 else -amp
     add(f'tl.fromTo("#bus-jit", {{y: {prev:.2f}}}, {{y: {y:.2f}, duration: 0.07, ease: "sine.inOut", immediateRender: false}}, {t:.3f});')
     t, i, prev = t + 0.07, i + 1, y
@@ -108,13 +127,6 @@ add(f'tl.fromTo("#bus-jit", {{y: {prev:.2f}}}, {{y: 0, duration: 0.1, ease: "sin
 add(f'tl.fromTo("#bus-pitch", {{rotation: 0}}, {{rotation: 0.7, duration: 0.9, ease: "sine.inOut"}}, {BUS_STOP - 0.9:.2f});')
 for a, b, d, e, t0 in [(0.7, -0.35, 0.22, "power2.out", 0), (-0.35, 0.12, 0.2, "sine.inOut", 0.22), (0.12, 0, 0.25, "sine.out", 0.42)]:
     add(f'tl.fromTo("#bus-pitch", {{rotation: {a}}}, {{rotation: {b}, duration: {d}, ease: "{e}", immediateRender: false}}, {BUS_STOP + t0:.2f});')
-star("star-bus", 5.8)
-
-# footer
-unroll("rule", 5.95, dur=0.55, ease="power2.inOut")
-star("star-bl", 6.05)
-for i in range(4):
-    add(f'tl.fromTo("#sp{i + 1}", {{opacity: 0, y: 26}}, {{opacity: 1, y: 0, duration: 0.5, ease: "power3.out"}}, {6.15 + i * 0.09:.2f});')
 add(f'tl.fromTo("#final", {{opacity: 0}}, {{opacity: 1, duration: 0.3, ease: "none"}}, {FINAL_IN});')
 
 # ---------------------------------------------------------------- markup
@@ -123,15 +135,14 @@ body = [f'<img id="plate" class="layer" src="assets/plate.png" alt="" style="lef
 z += 1
 body.append(img("frame", z)); z += 1
 body.append(img("road", z)); z += 1
-bus = L["bus"]
-blur = L["bus-blur"]
+body.append(img("speed", z)); z += 1
 body.append(
-    f'<div id="bus-move" class="stage" style="z-index:{z}">'
+    f'<div id="bus-clip" class="stage" style="z-index:{z}">'
+    f'<div id="bus-move" class="stage" style="transform-origin:{VP[0]}px {VP[1]}px">'
     f'<div id="bus-pitch" class="stage" style="transform-origin:{PIVOT[0]}px {PIVOT[1]}px">'
     f'<div id="bus-jit" class="stage">'
     f'<img id="bus" class="layer" src="assets/bus.png" alt="" style="{box("bus")}">'
-    f'<img id="bus-blur" class="layer" src="assets/bus-blur.png" alt="" style="{box("bus-blur")}">'
-    f'</div></div></div>')
+    f'</div></div></div></div>')
 z += 1
 for n in ["oval"] + [f"l-{x}" for x in letters] + ["logo", "victoria", "whynot", "date-sab", "date-rule", "date-imperio",
                                                    "arrow1", "arrow2", "rays", "tag-raf", "tag-sun", "tag-sf",
@@ -163,10 +174,16 @@ html, body {{ width: 1080px; height: 1920px; overflow: hidden; background: #ddcd
   mask-image: conic-gradient(from 235deg at {ocx}px {ocy}px, #000 0deg, #000 calc(var(--sweep) - 12deg), transparent var(--sweep));
 }}
 #road {{
-  --rx: {rx_start}px;
-  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--rx) - 90px), transparent var(--rx));
-  mask-image: linear-gradient(90deg, #000 calc(var(--rx) - 90px), transparent var(--rx));
+  --rx: -40px;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--rx) - 110px), transparent var(--rx));
+  mask-image: linear-gradient(90deg, #000 calc(var(--rx) - 110px), transparent var(--rx));
 }}
+#speed {{
+  --sx: -40px;
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--sx) - 120px), transparent var(--sx));
+  mask-image: linear-gradient(90deg, #000 calc(var(--sx) - 120px), transparent var(--sx));
+}}
+#bus-clip {{ clip-path: inset(0px 0px 0px 56px); }}
 #final {{ position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: {z}; }}
     </style>
   </head>

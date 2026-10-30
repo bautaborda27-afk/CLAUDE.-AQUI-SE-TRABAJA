@@ -78,13 +78,9 @@ bus_rgba = np.dstack([poster[by0:by1, bx0:bx1], bus_a[by0:by1, bx0:bx1]])
 cv2.imwrite(f"{OUT}/bus.png", (bus_rgba * 255).round().astype(np.uint8))
 layout["bus"] = dict(x=int(bx0), y=int(by0), w=int(bx1 - bx0), h=int(by1 - by0))
 
-# Road under the bus: inpainted, so the few pixels the moving bus uncovers
-# continue the sky and road around it.
-hole = cv2.dilate(bus_hard, np.ones((7, 7), np.uint8))
-road_img = poster.copy()
-p8 = (poster * 255).round().astype(np.uint8)
-inp = cv2.inpaint(p8, hole, 9, cv2.INPAINT_TELEA).astype(np.float32) / 255
-road_img[hole > 0] = inp[hole > 0]
+# The empty road (bus, its shadow and the speed lines taken out): build_road.py
+road_img = cv2.imread("work/road_clean.png").astype(np.float32) / 255
+speed_mask = (cv2.imread("work/speed_mask.png", 0) > 0).astype(np.uint8)
 
 f_all, a_all = unmix(poster, plate)
 f_road, a_road = unmix(road_img, plate)
@@ -169,6 +165,7 @@ oval[:, 43:58] = 0
 oval[:, 1021:1036] = 0
 claim("oval", oval)
 
+claim("speed", speed_mask)
 claim("road", poly([(57, 1270), (406, 1270), (406, 1172), (652, 1172), (652, 1226), (1021, 1226),
                     (1021, 1676), (57, 1676)]), src="road")
 claim("frame", np.ones((H, W), np.uint8))
@@ -186,18 +183,3 @@ for name, m, src in regions:
 layout["letters"] = letters
 json.dump(layout, open("work/layers.json", "w"), indent=1)
 print("layers:", len(layout) - 1)
-
-# Motion-blurred bus for the fast first half of the drive-in (premultiplied).
-k = np.ones((1, 41), np.float32) / 41
-pm = bus_rgba[:, :, :3] * bus_rgba[:, :, 3:]
-pad = 30
-pm = cv2.copyMakeBorder(pm, 0, 0, pad, pad, cv2.BORDER_CONSTANT, value=0)
-al = cv2.copyMakeBorder(bus_rgba[:, :, 3], 0, 0, pad, pad, cv2.BORDER_CONSTANT, value=0)
-pm_b = cv2.filter2D(pm, -1, k)
-al_b = cv2.filter2D(al, -1, k)
-col = pm_b / np.maximum(al_b[..., None], 1e-4)
-blur = np.dstack([np.clip(col, 0, 1), al_b])
-cv2.imwrite(f"{OUT}/bus-blur.png", (blur * 255).round().astype(np.uint8))
-b = layout["bus"]
-json.dump(dict(layout, **{"bus-blur": dict(x=b["x"] - pad, y=b["y"], w=b["w"] + 2 * pad, h=b["h"])}),
-          open("work/layers.json", "w"), indent=1)

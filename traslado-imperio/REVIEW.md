@@ -2,42 +2,36 @@
 
 ## Qué se hizo
 
-La placa se separó en 38 capas (texto, estrellas, pines, carteles, flechas, óvalo,
-ruta, colectivo, logos) sobre un fondo de papel sin tinta. Cada capa es un recorte
-RGBA "desmezclado" contra ese papel, así que todas juntas devuelven la placa tal
-cual. A los 6,85 s el video pasa a la placa original (`assets/poster.png`) con un
-fundido invisible, y queda quieta hasta los 10 s.
+La placa se separó en 39 capas (texto, estrellas, pines, carteles, flechas, óvalo,
+ruta, líneas de velocidad, colectivo, logos) sobre un fondo de papel sin tinta.
+Cada capa es un recorte RGBA "desmezclado" contra ese papel, así que todas juntas
+devuelven la placa. La ruta que tapa el colectivo se reconstruyó (`build_road.py`):
+el guardarraíl se continúa a lo largo de su línea, el asfalto se rellena con
+parches reales de la ruta (tono suavizado aparte para que no queden bloques) y
+los árboles de la derecha crecen una copa hacia el hueco. A los 7,85 s el video
+pasa a la placa original (`assets/poster.png`) con un fundido invisible.
 
 | Tiempo | Qué pasa |
 | --- | --- |
 | 0–0,85 s | marco y rayado de los bordes entran en diagonal |
 | 0,15–1,45 s | logo CN Prod., VICTORIA / WHYNOT (barridos opuestos), SAB 07 NOV — IMPERIO |
 | 1,15–2,55 s | TRASLADO letra por letra (sello), el óvalo se dibuja alrededor, estrellas |
-| 2,25–4,2 s | pines caen con rebote, carteles se despliegan, flechas se dibujan hacia San Francisco, rayos |
-| **3,55–6,3 s** | **el colectivo entra desde la izquierda con desenfoque de movimiento y traqueteo, frena (power3.out, 2,1 s), cabecea al frenar y se asienta; la ruta se dibuja detrás de él y los árboles de la derecha al frenar** |
-| 5,8–6,65 s | estrella, línea inferior y logos de sponsors |
-| 6,85–10 s | placa original estática |
-
-## Decisiones
-
-- La ruta se dibuja detrás del colectivo (no está antes): así nunca se ve el hueco
-  donde estaba el colectivo en la placa, y encaja con el estilo boceto.
-- El colectivo pasa por detrás del cartel de Sunchales (queda debajo en el orden de capas).
-- Sin sonido: es una historia corta y la música se suele poner en la app. Si se
-  quiere un tema, se agrega al `index.html` como `<audio>`.
+| 2,25–4,2 s | pines con rebote, carteles, flechas hacia San Francisco, rayos |
+| 2,9–4,0 s | la ruta vacía se dibuja de izquierda a derecha |
+| 3,7–4,65 s | línea inferior, estrellas y sponsors: la placa completa, sin colectivo |
+| **4,3–7,7 s** | **el colectivo aparece en el fondo de la ruta (detrás del marco, a la izquierda), viene por la ruta creciendo en perspectiva (escala desde el punto de fuga), frena, cabecea y queda; las líneas de velocidad aparecen detrás mientras va más rápido** |
+| 7,85–11 s | placa original estática |
 
 ## Medido / mirado
 
-- `hyperframes check`: sin errores. Queda un aviso informativo `canvas_covered`
-  sobre `#plate` que es falso: se comprobó que la placa final se pinta encima.
-- Recomposición de capas vs. placa: idéntica salvo un anillo de 2–3 px alrededor
-  del colectivo (relleno del hueco), cubierto por el pase a la placa original.
+- `hyperframes check`: sin errores. Aviso informativo `canvas_covered` sobre
+  `#plate`: falso, se comprobó que la placa final se pinta encima.
 - Último cuadro del MP4 vs. placa: diferencia media 1,9/255 (solo compresión).
-- Cuadros revisados: entrada (3,62–4,2 s), frenado (5,6–6,0 s), corte a la placa.
+- Cuadros revisados: ruta vacía (4,6 s), recorrido del colectivo (4,6–7,6 s), corte a la placa.
+- Sin sonido (para poner la música en Instagram).
 
 ## Lo más débil
 
-- Los primeros cuadros del colectivo pasan sobre papel vacío (la ruta todavía no
-  está). Con más tiempo: reconstruir la ruta completa bajo el colectivo para que
-  pueda llegar por una ruta ya dibujada.
+- La ruta reconstruida bajo el colectivo: a tamaño celular se lee como asfalto
+  con sombra, pero a tamaño completo el centro queda algo más liso que el resto.
 - El cuadro 0 es solo papel (el marco entra enseguida).
