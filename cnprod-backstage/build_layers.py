@@ -1,13 +1,9 @@
 """Split the flat BACKSTAGE / SOLD OUT flyer into animatable layers.
 
 Outputs (1080x1920) into fx/assets/:
-  paper.png     paper only, ink removed (faint pencil may remain)
   plan.png      paper + blueprint linework, without BACKSTAGE and SOLD OUT
   backstage.png BACKSTAGE letters only (RGBA)
   soldout.png   red SOLD OUT ink incl. scribbles and splatter (RGBA)
-  soldout-cyan.png / soldout-violet.png  tinted copies for the RGB split
-  exit.png      the EXIT sign ink only (RGBA), for the neon flicker
-  grain.png     grayscale noise tile for the animated film grain
 
 Layers are unmixed against the inpainted base, so plan + backstage + soldout
 recomposes to the original flyer.
@@ -124,16 +120,21 @@ def main():
     tex = rng.normal(0, 3.2, (H, W, 1)).astype(np.float32)
     bg_fill = np.clip(bg_fill + tex, 0, 255)
 
+    # Under SOLD OUT the paper is plain: fill it wide and neutral so no
+    # pink ghost of the letters shows before the stamp lands.
+    plain = behind & (redness < 27)
+    red_fill = normconv(img, plain, 40)
+    rl = red_fill.mean(axis=2, keepdims=True)
+    red_fill = 0.15 * red_fill + 0.85 * paper_ref * (rl / paper_ref.mean())
+    red_fill = np.clip(red_fill + tex, 0, 255)
+    red_zone = cv2.GaussianBlur(
+        cv2.dilate(red_mask, np.ones((9, 9), np.uint8)).astype(np.float32), (0, 0), 4
+    )[..., None]
+    bg_fill = bg_fill * (1 - red_zone) + red_fill * red_zone
+
     hole = ((red_mask > 0) | (letters > 0)).astype(np.float32)
     hole = np.clip(cv2.GaussianBlur(hole, (0, 0), 1.2) * 1.5, 0, 1)[..., None]
     plan_rgb = img * (1 - hole) + bg_fill * hole
-
-    # Blank paper for the scan-in: smooth, no ghost of the linework.
-    blank = (dark < 22) & (red_mask == 0) & (redness < 30)
-    tmp = img.copy()
-    tmp[~blank] = paper_ref
-    paper_fill = cv2.GaussianBlur(tmp, (0, 0), 60)
-    paper_rgb = np.clip(paper_fill + tex * 1.4, 0, 255).astype(np.uint8)
 
     # --- RGBA layers, unmixed against the plan base ------------------------
     # SOLD OUT: alpha from how far the pixel moved toward red ink.
@@ -152,28 +153,9 @@ def main():
     let_alpha *= (letters > 0)
     let_rgb = unmix(img, plan_rgb, let_alpha, purple_ink)
 
-    # EXIT sign ink (box + word + arrow).
-    ex = np.zeros((H, W), np.float32)
-    y0, y1, x0, x1 = 150, 262, 780, 1000
-    ex_dark = np.clip((paper_l - luma) / 150.0, 0, 1)
-    ex[y0:y1, x0:x1] = ex_dark[y0:y1, x0:x1]
-    ex[ex < 0.12] = 0
-
-    Image.fromarray(paper_rgb).save(os.path.join(OUT, "paper.png"), optimize=True)
     Image.fromarray(plan_rgb.astype(np.uint8)).save(os.path.join(OUT, "plan.png"), optimize=True)
     save_rgba(os.path.join(OUT, "soldout.png"), red_rgb, red_alpha)
     save_rgba(os.path.join(OUT, "backstage.png"), let_rgb, let_alpha)
-    save_rgba(os.path.join(OUT, "soldout-cyan.png"), np.full((H, W, 3), (0, 205, 235), np.float32), red_alpha)
-    save_rgba(os.path.join(OUT, "soldout-violet.png"), np.full((H, W, 3), (88, 40, 255), np.float32), red_alpha)
-    save_rgba(os.path.join(OUT, "exit.png"), np.full((H, W, 3), 255, np.float32), ex)
-
-    # Film grain tile (seeded).
-    rng = np.random.default_rng(7)
-    g = rng.normal(128, 38, (720, 720)).astype(np.float32)
-    g = cv2.GaussianBlur(g, (0, 0), 0.7)
-    Image.fromarray(np.clip(g, 0, 255).astype(np.uint8), "L").save(
-        os.path.join(OUT, "grain.png"), optimize=True
-    )
 
     # Debug: recomposite and diff against the source.
     a1 = let_alpha[..., None]
