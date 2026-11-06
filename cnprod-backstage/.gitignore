@@ -1,0 +1,7 @@
+# regenerable / local only
+source/debug/
+fx/.hyperframes/
+fx/renders/
+fx/snapshots/
+fx/node_modules/
+__pycache__/

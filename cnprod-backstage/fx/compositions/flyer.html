@@ -1,0 +1,487 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #e4d9d3;
+    }
+    #root .fl-full {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #root img.fl-full {
+      display: block;
+    }
+    #root .fl-bg {
+      background-size: 1080px 1920px;
+      background-repeat: no-repeat;
+    }
+    #fl-cam,
+    #fl-shake {
+      position: absolute;
+      inset: 0;
+      transform-origin: 540px 900px;
+    }
+    #fl-under {
+      opacity: 0.16;
+    }
+    #fl-plan {
+      clip-path: inset(0% 0% 62% 0%);
+    }
+    #fl-scan {
+      position: absolute;
+      left: -40px;
+      top: -150px;
+      width: 1160px;
+      height: 160px;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 250, 246, 0.22) 70%,
+        rgba(255, 255, 255, 0.95) 96%,
+        rgba(255, 70, 80, 0.9) 98%,
+        rgba(90, 50, 255, 0) 100%
+      );
+      box-shadow: 0 0 34px 6px rgba(255, 60, 70, 0.35);
+      mix-blend-mode: screen;
+    }
+    #fl-bs {
+      clip-path: polygon(0% 0%, 0% 0%, -8% 100%, 0% 100%);
+    }
+    #fl-so-wrap {
+      position: absolute;
+      inset: 0;
+      transform-origin: 543px 1123px;
+    }
+    #fl-so-shadow {
+      transform-origin: 543px 1123px;
+      filter: brightness(0) blur(14px);
+      opacity: 0;
+    }
+    #fl-so-cyan,
+    #fl-so-violet {
+      mix-blend-mode: multiply;
+      opacity: 0;
+    }
+    .fl-slice {
+      opacity: 0;
+    }
+    #fl-so-s1 {
+      clip-path: inset(46% 0% 49% 0%);
+    }
+    #fl-so-s2 {
+      clip-path: inset(55% 0% 41% 0%);
+    }
+    #fl-so-s3 {
+      clip-path: inset(61% 0% 36.5% 0%);
+    }
+    .fl-sheen {
+      background: linear-gradient(
+        100deg,
+        rgba(255, 255, 255, 0) 42%,
+        rgba(255, 246, 240, 0.95) 50%,
+        rgba(255, 255, 255, 0) 58%
+      );
+      background-size: 300% 100%;
+      background-position: 100% 0%;
+      -webkit-mask-size: 1080px 1920px;
+      mask-size: 1080px 1920px;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      mix-blend-mode: screen;
+    }
+    #fl-so-sheen {
+      -webkit-mask-image: url(assets/soldout.png);
+      mask-image: url(assets/soldout.png);
+    }
+    #fl-bs-sheen {
+      -webkit-mask-image: url(assets/backstage.png);
+      mask-image: url(assets/backstage.png);
+      background: linear-gradient(
+        100deg,
+        rgba(160, 120, 255, 0) 42%,
+        rgba(190, 160, 255, 0.85) 50%,
+        rgba(160, 120, 255, 0) 58%
+      );
+      background-size: 300% 100%;
+      background-position: 100% 0%;
+    }
+    #fl-exit-glow {
+      position: absolute;
+      left: 760px;
+      top: 120px;
+      width: 260px;
+      height: 170px;
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(255, 40, 50, 0.38), rgba(255, 40, 50, 0));
+      mix-blend-mode: multiply;
+      opacity: 0;
+    }
+    #fl-exit {
+      filter: drop-shadow(0 0 3px #ff3b3b) drop-shadow(0 0 10px #ff2230)
+        drop-shadow(0 0 26px #ff1028);
+      opacity: 0;
+    }
+    .fl-ring {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+    }
+    #fl-ring-stamp {
+      left: 543px;
+      top: 1123px;
+      width: 400px;
+      height: 400px;
+      margin: -200px 0 0 -200px;
+      border: 10px solid rgba(214, 26, 28, 0.85);
+      filter: blur(1px);
+    }
+    #fl-ring-dust {
+      left: 543px;
+      top: 1123px;
+      width: 520px;
+      height: 520px;
+      margin: -260px 0 0 -260px;
+      border: 46px solid rgba(255, 248, 242, 0.7);
+      filter: blur(16px);
+    }
+    .fl-spot {
+      width: 96px;
+      height: 96px;
+      margin: -48px 0 0 -48px;
+      border: 5px solid rgba(225, 30, 40, 0.9);
+      box-shadow: 0 0 18px rgba(255, 40, 60, 0.6);
+    }
+    .fl-drop {
+      position: absolute;
+      left: 543px;
+      top: 1123px;
+      border-radius: 50%;
+      background: #d41a1e;
+      opacity: 0;
+    }
+    .fl-star {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      margin: -60px 0 0 -60px;
+      opacity: 0;
+    }
+    #fl-flash {
+      background: radial-gradient(
+        circle at 543px 1123px,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 236, 232, 0.9) 35%,
+        rgba(255, 80, 90, 0.35) 100%
+      );
+      opacity: 0;
+    }
+    #fl-leak {
+      background:
+        radial-gradient(
+          circle at 12% 18%,
+          rgba(255, 120, 60, 0.75) 0%,
+          rgba(255, 60, 120, 0.35) 22%,
+          rgba(255, 60, 120, 0) 45%
+        ),
+        radial-gradient(
+          circle at 92% 82%,
+          rgba(120, 60, 255, 0.6) 0%,
+          rgba(255, 40, 90, 0.25) 25%,
+          rgba(255, 40, 90, 0) 48%
+        );
+      mix-blend-mode: screen;
+      opacity: 0.55;
+    }
+    #fl-vignette {
+      background: radial-gradient(
+        ellipse 78% 62% at 50% 48%,
+        rgba(40, 20, 70, 0) 55%,
+        rgba(40, 20, 70, 0.26) 100%
+      );
+      mix-blend-mode: multiply;
+    }
+    #fl-grain {
+      background-image: url(assets/grain.png);
+      background-size: 720px 720px;
+      mix-blend-mode: overlay;
+      opacity: 0.32;
+    }
+    #fl-flicker {
+      background: #1a0f2a;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="flyer" data-width="1080" data-height="1920">
+    <div id="fl-cam">
+      <div id="fl-shake">
+        <img id="fl-paper" class="fl-full" src="assets/paper.png" alt="" />
+        <div id="fl-under" class="fl-full fl-bg" style="background-image: url(assets/plan.png)"></div>
+        <img id="fl-plan" class="fl-full" src="assets/plan.png" alt="" />
+        <div id="fl-scan"></div>
+
+        <div id="fl-exit-glow"></div>
+        <img id="fl-exit" class="fl-full" src="assets/exit.png" alt="" />
+
+        <i id="fl-spot-1" class="fl-ring fl-spot" style="left: 387px; top: 413px"></i>
+        <i id="fl-spot-2" class="fl-ring fl-spot" style="left: 594px; top: 413px"></i>
+        <i id="fl-spot-3" class="fl-ring fl-spot" style="left: 820px; top: 592px"></i>
+        <i id="fl-spot-4" class="fl-ring fl-spot" style="left: 839px; top: 1316px"></i>
+
+        <img id="fl-bs" class="fl-full" src="assets/backstage.png" alt="BACKSTAGE" />
+        <div id="fl-bs-sheen" class="fl-full fl-sheen"></div>
+
+        <div id="fl-so-shadow" class="fl-full fl-bg" style="background-image: url(assets/soldout.png)"></div>
+        <div id="fl-ring-dust" class="fl-ring"></div>
+        <div id="fl-so-wrap">
+          <img id="fl-so-cyan" class="fl-full" src="assets/soldout-cyan.png" alt="" />
+          <img id="fl-so-violet" class="fl-full" src="assets/soldout-violet.png" alt="" />
+          <img id="fl-so" class="fl-full" src="assets/soldout.png" alt="SOLD OUT" />
+          <div id="fl-so-s1" class="fl-full fl-bg fl-slice" style="background-image: url(assets/soldout.png)"></div>
+          <div id="fl-so-s2" class="fl-full fl-bg fl-slice" style="background-image: url(assets/soldout.png)"></div>
+          <div id="fl-so-s3" class="fl-full fl-bg fl-slice" style="background-image: url(assets/soldout.png)"></div>
+          <div id="fl-so-sheen" class="fl-full fl-sheen"></div>
+        </div>
+        <div id="fl-ring-stamp" class="fl-ring"></div>
+
+        <i id="fl-drop-1" class="fl-drop" data-dx="-505" data-dy="115" style="width: 22px; height: 22px; margin: -11px 0 0 -11px"></i>
+        <i id="fl-drop-2" class="fl-drop" data-dx="492" data-dy="80" style="width: 14px; height: 14px; margin: -7px 0 0 -7px"></i>
+        <i id="fl-drop-3" class="fl-drop" data-dx="237" data-dy="442" style="width: 12px; height: 12px; margin: -6px 0 0 -6px"></i>
+        <i id="fl-drop-4" class="fl-drop" data-dx="-437" data-dy="-344" style="width: 6px; height: 6px; margin: -3px 0 0 -3px"></i>
+        <i id="fl-drop-5" class="fl-drop" data-dx="313" data-dy="81" style="width: 14px; height: 14px; margin: -7px 0 0 -7px"></i>
+        <i id="fl-drop-6" class="fl-drop" data-dx="217" data-dy="-407" style="width: 6px; height: 6px; margin: -3px 0 0 -3px"></i>
+        <i id="fl-drop-7" class="fl-drop" data-dx="373" data-dy="-188" style="width: 12px; height: 12px; margin: -6px 0 0 -6px"></i>
+        <i id="fl-drop-8" class="fl-drop" data-dx="-315" data-dy="-338" style="width: 8px; height: 8px; margin: -4px 0 0 -4px"></i>
+        <i id="fl-drop-9" class="fl-drop" data-dx="-470" data-dy="-339" style="width: 6px; height: 6px; margin: -3px 0 0 -3px"></i>
+        <i id="fl-drop-10" class="fl-drop" data-dx="330" data-dy="96" style="width: 8px; height: 8px; margin: -4px 0 0 -4px"></i>
+        <i id="fl-drop-11" class="fl-drop" data-dx="512" data-dy="-273" style="width: 10px; height: 10px; margin: -5px 0 0 -5px"></i>
+        <i id="fl-drop-12" class="fl-drop" data-dx="516" data-dy="179" style="width: 14px; height: 14px; margin: -7px 0 0 -7px"></i>
+        <i id="fl-drop-13" class="fl-drop" data-dx="41" data-dy="296" style="width: 6px; height: 6px; margin: -3px 0 0 -3px"></i>
+        <i id="fl-drop-14" class="fl-drop" data-dx="-251" data-dy="-303" style="width: 10px; height: 10px; margin: -5px 0 0 -5px"></i>
+        <i id="fl-drop-15" class="fl-drop" data-dx="-437" data-dy="214" style="width: 22px; height: 22px; margin: -11px 0 0 -11px"></i>
+        <i id="fl-drop-16" class="fl-drop" data-dx="333" data-dy="142" style="width: 22px; height: 22px; margin: -11px 0 0 -11px"></i>
+        <i id="fl-drop-17" class="fl-drop" data-dx="-151" data-dy="294" style="width: 6px; height: 6px; margin: -3px 0 0 -3px"></i>
+        <i id="fl-drop-18" class="fl-drop" data-dx="-291" data-dy="-90" style="width: 6px; height: 6px; margin: -3px 0 0 -3px"></i>
+        <i id="fl-drop-19" class="fl-drop" data-dx="255" data-dy="-271" style="width: 6px; height: 6px; margin: -3px 0 0 -3px"></i>
+        <i id="fl-drop-20" class="fl-drop" data-dx="152" data-dy="-160" style="width: 8px; height: 8px; margin: -4px 0 0 -4px"></i>
+
+        <svg id="fl-star-a" class="fl-star" style="left: 539px; top: 218px" viewBox="-60 -60 120 120">
+          <path d="M0 -58 C4 -10 10 -4 58 0 C10 4 4 10 0 58 C-4 10 -10 4 -58 0 C-10 -4 -4 -10 0 -58Z" fill="#fff" style="filter: drop-shadow(0 0 6px #b48cff) drop-shadow(0 0 16px #7a4dff)" />
+        </svg>
+        <svg id="fl-star-b" class="fl-star" style="left: 294px; top: 716px" viewBox="-60 -60 120 120">
+          <path d="M0 -58 C4 -10 10 -4 58 0 C10 4 4 10 0 58 C-4 10 -10 4 -58 0 C-10 -4 -4 -10 0 -58Z" fill="#fff" style="filter: drop-shadow(0 0 6px #b48cff) drop-shadow(0 0 16px #7a4dff)" />
+        </svg>
+        <svg id="fl-star-c" class="fl-star" style="left: 938px; top: 650px" viewBox="-60 -60 120 120">
+          <path d="M0 -58 C4 -10 10 -4 58 0 C10 4 4 10 0 58 C-4 10 -10 4 -58 0 C-10 -4 -4 -10 0 -58Z" fill="#fff" style="filter: drop-shadow(0 0 6px #b48cff) drop-shadow(0 0 16px #7a4dff)" />
+        </svg>
+        <svg id="fl-star-d" class="fl-star" style="left: 625px; top: 1262px" viewBox="-60 -60 120 120">
+          <path d="M0 -58 C4 -10 10 -4 58 0 C10 4 4 10 0 58 C-4 10 -10 4 -58 0 C-10 -4 -4 -10 0 -58Z" fill="#fff" style="filter: drop-shadow(0 0 6px #ff6a6a) drop-shadow(0 0 16px #ff1e2e)" />
+        </svg>
+      </div>
+    </div>
+
+    <div id="fl-leak" class="fl-full"></div>
+    <div id="fl-vignette" class="fl-full"></div>
+    <div id="fl-flash" class="fl-full"></div>
+    <div id="fl-flicker" class="fl-full"></div>
+    <div id="fl-grain" class="fl-full"></div>
+  </div>
+
+  <script>
+    (function () {
+      const FPS = 30;
+      const DUR = 9;
+      const IMPACT = 1.45; // SOLD OUT hits the paper
+
+      // Seeded PRNG: every frame is a pure function of time.
+      function rng(seed) {
+        let a = seed >>> 0;
+        return function () {
+          a = (a + 0x6d2b79f5) >>> 0;
+          let t = a;
+          t = Math.imul(t ^ (t >>> 15), t | 1);
+          t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      const tl = gsap.timeline({ paused: true });
+
+      // ---- 1. Camera settles from a tight framing -------------------------
+      tl.fromTo("#fl-cam", { scale: 1.14, y: 70 }, { scale: 1, y: 0, duration: 1.3, ease: "expo.out" }, 0);
+
+      // ---- 2. Blueprint scans in top to bottom -----------------------------
+      tl.fromTo(
+        "#fl-plan",
+        { clipPath: "inset(0% 0% 62% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.85, ease: "sine.out" },
+        0,
+      );
+      tl.fromTo("#fl-scan", { y: 730, opacity: 1 }, { y: 1990, duration: 0.85, ease: "sine.out" }, 0);
+      tl.to("#fl-scan", { opacity: 0, duration: 0.12 }, 0.76);
+      tl.to("#fl-under", { opacity: 0, duration: 0.2 }, 0.85);
+
+      // ---- 3. BACKSTAGE inks on, left to right -----------------------------
+      tl.fromTo(
+        "#fl-bs",
+        { clipPath: "polygon(0% 0%, 0% 0%, -8% 100%, 0% 100%)", filter: "blur(5px)" },
+        {
+          clipPath: "polygon(0% 0%, 112% 0%, 104% 100%, 0% 100%)",
+          filter: "blur(0px)",
+          duration: 0.62,
+          ease: "power2.inOut",
+        },
+        0.38,
+      );
+
+      // ---- 4. SOLD OUT stamp ------------------------------------------------
+      const fall = 0.24;
+      tl.fromTo(
+        "#fl-so-wrap",
+        { scale: 2.7, rotation: -13, opacity: 0, filter: "blur(9px)" },
+        { scale: 0.965, rotation: 0, opacity: 1, filter: "blur(0px)", duration: fall, ease: "power4.in" },
+        IMPACT - fall,
+      );
+      tl.to("#fl-so-wrap", { scale: 1, duration: 0.42, ease: "elastic.out(1, 0.45)" }, IMPACT);
+      // Shadow closes in under the falling stamp.
+      tl.fromTo(
+        "#fl-so-shadow",
+        { scale: 1.35, opacity: 0, x: 30, y: 40 },
+        { scale: 1, opacity: 0.32, x: 0, y: 0, duration: fall, ease: "power4.in" },
+        IMPACT - fall,
+      );
+      tl.to("#fl-so-shadow", { opacity: 0, duration: 0.18, ease: "power2.out" }, IMPACT);
+
+      // Impact: flash, rings, camera kick, RGB split, splatter.
+      // Pulses use set() + to(): a set reverts cleanly on any seek order,
+      // where a fromTo would leave its "from" state behind before it starts.
+      tl.set("#fl-flash", { opacity: 0.5 }, IMPACT);
+      tl.to("#fl-flash", { opacity: 0, duration: 0.24, ease: "expo.out" }, IMPACT);
+      tl.set("#fl-ring-stamp", { scale: 0.35, opacity: 0.9 }, IMPACT);
+      tl.to("#fl-ring-stamp", { scale: 3.4, opacity: 0, duration: 0.6, ease: "expo.out" }, IMPACT);
+      tl.set("#fl-ring-dust", { scale: 0.5, opacity: 0.85 }, IMPACT);
+      tl.to("#fl-ring-dust", { scale: 2.6, opacity: 0, duration: 0.8, ease: "expo.out" }, IMPACT);
+      tl.set("#fl-cam", { scale: 1.045 }, IMPACT);
+      tl.to("#fl-cam", { scale: 1, duration: 0.55, ease: "expo.out" }, IMPACT);
+      tl.set("#fl-so-cyan", { x: -30, y: 6, opacity: 0.9 }, IMPACT);
+      tl.to("#fl-so-cyan", { x: 0, y: 0, opacity: 0, duration: 0.36, ease: "expo.out" }, IMPACT);
+      tl.set("#fl-so-violet", { x: 26, y: -5, opacity: 0.85 }, IMPACT);
+      tl.to("#fl-so-violet", { x: 0, y: 0, opacity: 0, duration: 0.36, ease: "expo.out" }, IMPACT);
+      document.querySelectorAll("#root .fl-drop").forEach(function (el, i) {
+        const dx = parseFloat(el.dataset.dx);
+        const dy = parseFloat(el.dataset.dy);
+        tl.set(el, { x: 0, y: 0, scale: 0.4, opacity: 1 }, IMPACT);
+        tl.to(el, { x: dx, y: dy, scale: 1, duration: 0.5 + (i % 4) * 0.06, ease: "expo.out" }, IMPACT);
+        tl.to(el, { opacity: 0, scale: 0.6, duration: 0.5, ease: "power2.in" }, IMPACT + 0.9 + (i % 5) * 0.08);
+      });
+
+      // Screen shake: decaying, per frame.
+      (function () {
+        const r = rng(42);
+        const frames = Math.round(0.5 * FPS);
+        for (let f = 0; f <= frames; f++) {
+          const t = f / FPS;
+          const k = Math.exp(-7 * t);
+          tl.set(
+            "#fl-shake",
+            {
+              x: (r() * 2 - 1) * 26 * k,
+              y: (r() * 2 - 1) * 20 * k,
+              rotation: (r() * 2 - 1) * 1.1 * k,
+            },
+            IMPACT + t,
+          );
+        }
+        tl.set("#fl-shake", { x: 0, y: 0, rotation: 0 }, IMPACT + (frames + 1) / FPS);
+      })();
+
+      // ---- 5. Living details ----------------------------------------------
+      // Stars twinkle.
+      [
+        ["#fl-star-a", 2.05],
+        ["#fl-star-c", 2.25],
+        ["#fl-star-b", 2.45],
+        ["#fl-star-d", 3.2],
+        ["#fl-star-c", 5.35],
+        ["#fl-star-a", 5.55],
+        ["#fl-star-d", 6.75],
+        ["#fl-star-b", 7.55],
+      ].forEach(function (s) {
+        tl.set(s[0], { scale: 0, rotation: -45, opacity: 1 }, s[1]);
+        tl.to(s[0], { scale: 1, rotation: 0, duration: 0.22, ease: "power3.out" }, s[1]);
+        tl.to(s[0], { scale: 0, rotation: 45, duration: 0.3, ease: "power2.in" }, s[1] + 0.22);
+      });
+
+      // EXIT neon stutters on, then stays lit with two later flickers.
+      (function () {
+        const on = function (t, v) {
+          tl.set(["#fl-exit", "#fl-exit-glow"], { opacity: v }, t);
+        };
+        const seq = [
+          [1.9, 0.9], [1.97, 0], [2.03, 1], [2.1, 0.15], [2.17, 0], [2.27, 1],
+          [4.6, 0.2], [4.65, 1], [4.73, 0], [4.8, 1],
+          [7.25, 0], [7.32, 1], [7.36, 0.3], [7.42, 1],
+        ];
+        seq.forEach(function (s) { on(s[0], s[1]); });
+      })();
+
+      // Sheen sweeps.
+      tl.fromTo("#fl-so-sheen", { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: 0.75, ease: "power2.inOut" }, 2.55);
+      tl.fromTo("#fl-bs-sheen", { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: 0.8, ease: "power2.inOut" }, 5.2);
+      tl.fromTo("#fl-so-sheen", { backgroundPosition: "100% 0%" }, { backgroundPosition: "0% 0%", duration: 0.75, ease: "power2.inOut", immediateRender: false }, 7.0);
+
+      // Stage spots fire in order, like lights on a beat.
+      [["#fl-spot-1", 4.85], ["#fl-spot-2", 5.05], ["#fl-spot-3", 5.25], ["#fl-spot-4", 5.45]].forEach(function (s) {
+        tl.set(s[0], { scale: 0.7, opacity: 1 }, s[1]);
+        tl.to(s[0], { scale: 2.3, opacity: 0, duration: 0.6, ease: "expo.out" }, s[1]);
+      });
+
+      // Glitch hits on SOLD OUT.
+      function glitch(t0, len, seed, amp) {
+        const r = rng(seed);
+        const frames = Math.round(len * FPS);
+        for (let f = 0; f < frames; f++) {
+          const t = t0 + f / FPS;
+          const live = r() > 0.25;
+          tl.set("#fl-so-s1", { x: live ? (r() * 2 - 1) * amp : 0, opacity: live ? 1 : 0 }, t);
+          tl.set("#fl-so-s2", { x: live ? (r() * 2 - 1) * amp * 1.4 : 0, opacity: live ? 1 : 0 }, t);
+          tl.set("#fl-so-s3", { x: (r() * 2 - 1) * amp * 0.8, opacity: r() > 0.4 ? 1 : 0 }, t);
+          tl.set("#fl-so-cyan", { x: -(4 + r() * 16), y: 0, opacity: 0.85 }, t);
+          tl.set("#fl-so-violet", { x: 4 + r() * 14, y: 0, opacity: 0.8 }, t);
+          tl.set("#fl-so", { opacity: r() > 0.3 ? 1 : 0.55, x: (r() * 2 - 1) * 5 }, t);
+          tl.set("#fl-shake", { x: (r() * 2 - 1) * 4 }, t);
+        }
+        const end = t0 + frames / FPS;
+        tl.set([".fl-slice"], { x: 0, opacity: 0 }, end);
+        tl.set(["#fl-so-cyan", "#fl-so-violet"], { x: 0, y: 0, opacity: 0 }, end);
+        tl.set("#fl-so", { opacity: 1, x: 0 }, end);
+        tl.set("#fl-shake", { x: 0 }, end);
+      }
+      glitch(3.9, 0.27, 7, 46);
+      glitch(6.15, 0.33, 19, 64);
+      glitch(8.05, 0.23, 31, 40);
+
+      // Light leak drifts slowly across the page.
+      tl.fromTo("#fl-leak", { opacity: 0.6, x: -60 }, { opacity: 0.28, x: 60, duration: DUR, ease: "none" }, 0);
+
+      // ---- 6. Film grain + projector flicker, per frame -----------------------
+      (function () {
+        const r = rng(1234);
+        const total = Math.round(DUR * FPS);
+        for (let f = 0; f < total; f++) {
+          const t = f / FPS;
+          tl.set("#fl-grain", { backgroundPosition: Math.floor(r() * 720) + "px " + Math.floor(r() * 720) + "px" }, t);
+          tl.set("#fl-flicker", { opacity: r() * 0.045 }, t);
+        }
+      })();
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["flyer"] = tl;
+    })();
+  </script>
+</template>
