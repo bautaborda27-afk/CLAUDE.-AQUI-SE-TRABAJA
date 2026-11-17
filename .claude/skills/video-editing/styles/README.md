@@ -23,6 +23,7 @@ defaults to `vibe-life`.
 | Style        | Path                          | Use                                            |
 |--------------|-------------------------------|------------------------------------------------|
 | `vibe-life`  | `styles/vibe-life/FRAME.md`   | Worked example: warm editorial — cream paper, ink outline, one italic-serif accent word, peach/butter accents. |
+| `ingles-reel` | `styles/ingles-reel/FRAME.md` | English-lesson talking-head reels (Spanish-speaking audience): tight jump cuts + punch-ins, Poppins with heavy black outline, cream accent for the English expression, B&W "common mistake" gag, white-line transition. Builder + example project in `ingles/`. |
 | `_template`  | `styles/_template/FRAME.md`   | Starting point for your own style — copy it and fill in your tokens. |
 
 ## Add your own style

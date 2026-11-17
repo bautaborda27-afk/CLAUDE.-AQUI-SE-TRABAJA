@@ -1,0 +1,90 @@
+{
+  "name": "reel-no-te-soporto",
+  "output": "Ingles_NoTeSoporto",
+  "style": "ingles-reel",
+  "sources": {
+    "B": "source/VID-20261117-WA0088.mp4",
+    "A": "source/VID-20261117-WA0089.mp4"
+  },
+  "face_origin": "50% 45%",
+  "band_top": 49,
+  "cuts": [
+    ["B", 0.86, 4.30, 1.00, 0.03],
+    ["B", 5.19, 8.12, 1.08, 0.06],
+    ["B", 8.53, 8.86, 1.22],
+    ["B", 9.31, 11.47, 1.00, 0.03],
+    ["B", 11.57, 12.59, 1.10],
+    ["B", 12.73, 13.56, 1.20],
+    ["B", 14.53, 16.44, 1.00, 0.03],
+    ["B", 16.69, 17.35, 1.10],
+    ["B", 18.24, 22.13, 1.00, 0.04],
+    ["B", 22.32, 25.69, 1.06, 0.04],
+    ["B", 25.87, 26.62, 1.20],
+    ["B", 26.96, 30.45, 1.00, 0.04],
+    ["B", 31.07, 32.27, 1.10],
+    ["B", 32.52, 33.34, 1.20],
+    ["B", 33.56, 34.38, 1.06],
+    ["B", 35.70, 39.52, 1.00, 0.04],
+    ["B", 39.70, 42.37, 1.10, 0.03],
+    ["A", 1.19, 8.15, 1.00, 0.03],
+    ["A", 8.42, 10.32, 1.10],
+    ["A", 10.74, 12.45, 1.20, 0.03]
+  ],
+  "punch": [
+    {"at": "B:3.20", "scale": 1.2},
+    {"at": "A:3.29", "scale": 1.12},
+    {"at": "A:4.25", "scale": 1.0, "push": 0.03}
+  ],
+  "bw": [["B:6.33", "B:8.12"]],
+  "transitions": ["B:18.24", "B:26.96", "B:35.70"],
+  "beats": [
+    {"type": "title", "from": 0, "to": "B:3.16", "l1": "¡No te soporto!", "l2": "In English"},
+    {"type": "big", "from": "B:3.20", "to": "B:4.30", "lines": ["¡No te", "soporto!"], "span": 0.5},
+
+    {"type": "caption", "to": "B:6.31", "words": [["Si", "B:5.25"], ["pensaste", "B:5.40"], ["en…", "B:5.93"]]},
+    {"type": "wrong", "from": "B:6.33", "to": "B:8.86", "text": "I don’t support you?", "strike": "B:8.55"},
+
+    {"type": "caption", "to": "B:11.47", "words": [["Te", "B:9.37"], ["voy", "B:9.57"], ["a", "B:9.81"], ["dejar", "B:9.97"],
+      ["3", "B:10.29", 1], ["maneras", "B:10.53", 1], ["de", "B:10.93"], ["decirlo", "B:11.09"]]},
+
+    {"type": "caption", "to": "B:12.59", "words": [["La", "B:11.63"], ["primera", "B:11.83"], ["es…", "B:12.31"]]},
+    {"type": "keyword", "from": "B:12.77", "to": "B:17.35", "text": "Can’t stand",
+      "meaning": [["No", "B:15.11"], ["soportar", "B:15.27"], ["hacer", "B:15.91"], ["algo", "B:16.23"]]},
+    {"type": "example", "to": "B:22.13",
+      "en": [["I", "B:18.58"], ["can’t", "B:18.90", 1], ["stand", "B:19.38", 1], ["waiting", "B:19.94"], ["in", "B:20.42"], ["line", "B:20.58"]],
+      "es": [["No", "B:20.98"], ["soporto", "B:21.14"], ["hacer", "B:21.62"], ["fila", "B:21.86"]]},
+
+    {"type": "caption", "to": "B:23.42", "words": [["La", "B:22.42"], ["segunda", "B:22.74"]]},
+    {"type": "caption", "to": "B:25.02", "words": [["tiene", "B:23.46"], ["que", "B:23.70"], ["ver", "B:23.86"], ["con", "B:23.94"],
+      ["algo", "B:24.10"], ["más", "B:24.34"], ["emocional", "B:24.50", 1]]},
+    {"type": "caption", "to": "B:25.69", "words": [["cuando", "B:25.06"], ["vos", "B:25.30"], ["decís…", "B:25.46"]]},
+    {"type": "sticker", "to": "B:26.62", "seq": [["pleading", "B:24.50"]]},
+    {"type": "keyword", "from": "B:25.91", "to": "B:26.62", "text": "Can’t bear"},
+    {"type": "example", "to": "B:30.45", "size": 5.5, "emoji": "cry", "emoji_at": "B:30.18",
+      "en": [["I", "B:27.04"], ["can’t", "B:27.22", 1], ["bear", "B:27.54", 1], ["seeing", "B:27.94"], ["her", "B:28.26"], ["crying", "B:28.50"]],
+      "es": [["No", "B:29.14"], ["soporto", "B:29.30"], ["verla", "B:29.78"], ["llorar", "B:30.18"]]},
+
+    {"type": "caption", "to": "B:32.27", "words": [["Y", "B:31.13"], ["la", "B:31.25"], ["tercera", "B:31.41"], ["es…", "B:31.97"]]},
+    {"type": "keyword", "from": "B:32.56", "to": "B:34.38", "text": "Can’t take",
+      "meaning_lines": ["No soportar más", "Llegar al límite"], "meaning_at": ["B:32.85", "B:33.12"]},
+    {"type": "sticker", "to": "B:34.38", "grow": 0.12, "seq": [["angry", "B:32.70"], ["rage", "B:33.12"], ["cursing", "B:33.62"]]},
+    {"type": "example", "to": "B:42.37", "size": 5.1,
+      "en": [["This", "B:35.76"], ["noise", "B:36.20"], ["is", "B:36.68"], ["driving", "B:36.84"], ["me", "B:37.40"], ["crazy!", "B:37.56"],
+        ["\n", "B:38.20"], ["I", "B:38.20"], ["can’t", "B:38.36", 1], ["take", "B:38.68", 1], ["it", "B:38.92"], ["anymore!", "B:39.08"]],
+      "es": [["Este", "B:39.76"], ["ruido", "B:39.96"], ["me", "B:40.28"], ["está", "B:40.44"], ["volviendo", "B:40.60"], ["loca.", "B:41.08"],
+        ["\n", "B:41.56"], ["¡No", "B:41.56"], ["lo", "B:41.72"], ["soporto", "B:41.80"], ["más!", "B:42.28"]]},
+
+    {"type": "caption", "to": "A:3.25", "words": [["Bueno,", "A:1.25"], ["si", "A:1.53"], ["te", "A:1.69"], ["gustaron", "A:1.85"],
+      ["estas", "A:2.33"], ["3", "A:2.57", 1], ["frases,", "A:2.81", 1]]},
+    {"type": "caption", "to": "A:4.23", "words": [["guardá", "A:3.29", 1], ["el", "A:3.77", 1], ["video", "A:3.93", 1]]},
+    {"type": "sticker", "to": "A:4.23", "seq": [["bookmark", "A:3.29"]]},
+    {"type": "caption", "to": "A:5.35", "words": [["y", "A:4.25"], ["si", "A:4.41"], ["querés", "A:4.57"], ["saber", "A:4.89"], ["más", "A:5.13"]]},
+    {"type": "caption", "to": "A:6.55", "words": [["sobre", "A:5.37"], ["cómo", "A:5.61"], ["son", "A:5.85"], ["mis", "A:6.01"], ["clases", "A:6.17"]]},
+    {"type": "caption", "to": "A:8.15", "words": [["y", "A:6.57"], ["aprender", "A:6.73"], ["un", "A:7.21"], ["inglés", "A:7.37", 1], ["real,", "A:7.77", 1]]},
+    {"type": "caption", "to": "A:10.32", "words": [["escribime", "A:8.48", 1], ["\n", "A:9.08"], ["y", "A:9.08"], ["te", "A:9.24"], ["cuento", "A:9.32"],
+      ["cómo", "A:9.56"], ["son", "A:9.80"], ["mis", "A:9.96"], ["clases", "A:10.12"]]},
+    {"type": "sticker", "to": "A:10.32", "seq": [["speech", "A:8.48"]]},
+    {"type": "big", "from": "A:10.84", "to": "A:12.45", "lines": ["Bye!"], "span": 0.2},
+    {"type": "sticker", "to": "A:12.45", "seq": [["wave", "A:10.90"]]}
+  ]
+}

@@ -1,0 +1,13 @@
+# regenerable with build_reel.py + hyperframes render + finalize.sh
+*/base.mp4
+*/master.wav
+*/master.m4a
+*/fonts/
+*/stickers/
+*/vendor/
+*/renders/
+*/snapshots/
+*/work/
+*/.hyperframes/
+*/node_modules/
+work_render.log

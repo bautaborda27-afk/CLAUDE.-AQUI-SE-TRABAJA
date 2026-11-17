@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-ExtraBold.woff2") format("woff2"); font-weight: 800; font-display: block; }
+@font-face { font-family: "Poppins"; src: url("fonts/Poppins-Bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "Roboto"; src: url("fonts/Roboto-Medium.woff2") format("woff2"); font-weight: 500; font-display: block; }
+:root { --ink: #111111; --white: #ffffff; --cream: #FADEB2; --wrong: #E3262E; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; container-type: size;
+  background: #000; font-family: "Poppins", sans-serif; color: var(--white); }
+#blur, #bw, #cam { position: absolute; inset: 0; }
+#cam { transform-origin: 50% 45%; will-change: transform; backface-visibility: hidden; }
+#cam video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.band { position: absolute; left: 6cqw; right: 6cqw; top: 49cqh; text-align: center; }
+.inner { position: relative; }
+.t { paint-order: stroke fill; -webkit-text-stroke: var(--sw) var(--ink);
+  text-shadow: 0 0.5cqw 1.2cqw rgba(0,0,0,.35); }
+.w { display: inline-block; opacity: 0; margin: 0 0.04em; }
+.acc { color: var(--cream); }
+/* title card */
+.title .inner { display: flex; justify-content: center; }
+.card { display: inline-block; background: rgba(255,255,255,.94); border-radius: 4.4cqw;
+  padding: 2.6cqw 5.2cqw 3cqw; box-shadow: 0 1cqw 3cqw rgba(0,0,0,.25); transform-origin: 50% 50%; }
+.card .t { --sw: 1.3cqw; font-weight: 800; font-size: 8.6cqw; line-height: 1.08; letter-spacing: -0.01em;
+  white-space: nowrap; text-shadow: none; }
+.card .l1 { color: var(--cream); }
+/* giant phrase */
+.big { top: calc(49cqh - 1.5cqh); }
+.big .bl { --sw: 2.1cqw; font-weight: 800; font-size: 16cqw; line-height: 0.98; letter-spacing: -0.02em; white-space: nowrap; }
+.big .ch { display: inline-block; opacity: 0; transform-origin: 50% 80%; }
+/* captions */
+.cap { --sw: 1.2cqw; font-weight: 700; font-size: 8.2cqw; line-height: 1.04; letter-spacing: -0.04em; }
+/* keyword + meaning */
+.kw { --sw: 1.7cqw; font-weight: 800; font-size: 11.5cqw; line-height: 1.0; letter-spacing: -0.02em;
+  color: var(--cream); white-space: nowrap; }
+.mean { --sw: 1.1cqw; font-family: "Roboto", sans-serif; font-weight: 500; font-size: 7cqw; line-height: 1.06;
+  letter-spacing: -0.01em; margin-top: 0.6cqh; }
+.mean.ml { opacity: 0; }
+/* example pair */
+.ex { --sw: 1.0cqw; font-weight: 700; font-size: 6cqw; line-height: 1.14; letter-spacing: -0.045em; }
+.ex.es { margin-top: 0.8cqh; }
+.emo { height: 1.25em; vertical-align: -0.28em; margin-left: 0.2em; -webkit-text-stroke: 0; }
+/* wrong answer */
+.wr .inner { display: flex; justify-content: center; }
+.wrong { --sw: 1.0cqw; position: relative; display: inline-block; font-weight: 800; font-size: 7.8cqw; line-height: 1.04;
+  letter-spacing: -0.03em; color: var(--wrong); -webkit-text-stroke: var(--sw) #fff; }
+.strike { position: absolute; left: -2%; right: -2%; top: 52%; height: 1.1cqw; background: var(--wrong);
+  border: 0.35cqw solid #fff; border-radius: 1cqw; transform-origin: 0 50%; }
+/* stickers */
+.stk { position: absolute; width: 23cqw; }
+.stk.left { left: 3cqw; top: calc(49cqh - 13.5cqh); }
+.stk.right { right: 7cqw; top: calc(49cqh - 13.5cqh); }
+.stk.xmark { right: 8cqw; top: calc(49cqh - 12cqh); width: 17cqw; }
+.stk img { position: absolute; left: 0; top: 0; width: 100%; filter: drop-shadow(0 1cqw 1.4cqw rgba(0,0,0,.35)); }
+.xmark img { opacity: 1; }
+.stk.left img, .stk.right img { opacity: 0; }
+/* white-line transition */
+.tl-wrap { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.tline { position: absolute; left: 0; top: -40cqh; width: 1.1cqw; height: 180cqh; background: #fff;
+  box-shadow: 0 0 2.4cqw 0.6cqw rgba(255,255,255,.85); transform: rotate(-24deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="44.680"
+         data-width="1080" data-height="1920">
+      <div id="blur"><div id="bw"><div id="cam">
+        <video id="base" class="clip" src="base.mp4" muted playsinline
+               data-start="0" data-duration="44.680" data-track-index="0"></video>
+      </div></div></div>
+      <div id="c1" class="clip tl-wrap" data-start="13.140" data-duration="0.300" data-track-index="20"><div class="inner"><div class="tline"></div></div></div>
+      <div id="c2" class="clip tl-wrap" data-start="21.150" data-duration="0.300" data-track-index="20"><div class="inner"><div class="tline"></div></div></div>
+      <div id="c3" class="clip tl-wrap" data-start="27.480" data-duration="0.300" data-track-index="20"><div class="inner"><div class="tline"></div></div></div>
+      <div id="c4" class="clip band title" data-start="0.000" data-duration="2.300" data-track-index="2"><div class="inner"><div class="card"><div class="l1 t">¡No te soporto!</div><div class="l2 t">In English</div></div></div></div>
+      <div id="c5" class="clip band big" data-start="2.340" data-duration="1.100" data-track-index="2"><div class="inner"><div class="bl t"><span class="ch" data-k="0">¡</span><span class="ch" data-k="1">N</span><span class="ch" data-k="2">o</span><span class="sp"> </span><span class="ch" data-k="3">t</span><span class="ch" data-k="4">e</span></div><div class="bl t"><span class="ch" data-k="5">s</span><span class="ch" data-k="6">o</span><span class="ch" data-k="7">p</span><span class="ch" data-k="8">o</span><span class="ch" data-k="9">r</span><span class="ch" data-k="10">t</span><span class="ch" data-k="11">o</span><span class="ch" data-k="12">!</span></div></div></div>
+      <div id="c6" class="clip band cap" data-start="3.500" data-duration="1.060" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">Si</span> <span class="w" data-i="1">pensaste</span> <span class="w" data-i="2">en…</span></div></div></div>
+      <div id="c7" class="clip band wr" data-start="4.580" data-duration="2.120" data-track-index="6"><div class="inner"><div class="wrong t">I don’t support you?<div class="strike"></div></div></div></div>
+      <div id="c8" class="clip stk xmark" data-start="6.390" data-duration="0.310" data-track-index="12"><div class="inner"><img src="stickers/x.png" alt=""></div></div>
+      <div id="c9" class="clip band cap" data-start="6.760" data-duration="2.100" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">Te</span> <span class="w" data-i="1">voy</span> <span class="w" data-i="2">a</span> <span class="w" data-i="3">dejar</span> <span class="w acc" data-i="4">3</span> <span class="w acc" data-i="5">maneras</span> <span class="w" data-i="6">de</span> <span class="w" data-i="7">decirlo</span></div></div></div>
+      <div id="c10" class="clip band cap" data-start="8.920" data-duration="0.960" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">La</span> <span class="w" data-i="1">primera</span> <span class="w" data-i="2">es…</span></div></div></div>
+      <div id="c11" class="clip band key" data-start="9.920" data-duration="3.360" data-track-index="8"><div class="inner"><div class="kw t">Can’t stand</div><div class="mean t"><span class="w m" data-i="m0">No</span> <span class="w m" data-i="m1">soportar</span> <span class="w m" data-i="m2">hacer</span> <span class="w m" data-i="m3">algo</span></div></div></div>
+      <div id="c12" class="clip band exm" data-start="13.620" data-duration="3.550" data-track-index="10"><div class="inner"><div class="ex en t"><span class="w" data-i="n0">“I</span> <span class="w acc" data-i="n1">can’t</span> <span class="w acc" data-i="n2">stand</span> <span class="w" data-i="n3">waiting</span> <span class="w" data-i="n4">in</span> <span class="w" data-i="n5">line”</span></div><div class="ex es t"><span class="w e" data-i="s0">“No</span> <span class="w e" data-i="s1">soporto</span> <span class="w e" data-i="s2">hacer</span> <span class="w e" data-i="s3">fila”</span></div></div></div>
+      <div id="c13" class="clip band cap" data-start="17.270" data-duration="1.000" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">La</span> <span class="w" data-i="1">segunda</span></div></div></div>
+      <div id="c14" class="clip band cap" data-start="18.310" data-duration="1.560" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">tiene</span> <span class="w" data-i="1">que</span> <span class="w" data-i="2">ver</span> <span class="w" data-i="3">con</span> <span class="w" data-i="4">algo</span> <span class="w" data-i="5">más</span> <span class="w acc" data-i="6">emocional</span></div></div></div>
+      <div id="c15" class="clip band cap" data-start="19.910" data-duration="0.630" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">cuando</span> <span class="w" data-i="1">vos</span> <span class="w" data-i="2">decís…</span></div></div></div>
+      <div id="c16" class="clip stk left" data-start="19.350" data-duration="1.940" data-track-index="12"><div class="inner"><img data-s="0" src="stickers/pleading.png" alt=""></div></div>
+      <div id="c17" class="clip band key" data-start="20.580" data-duration="0.710" data-track-index="8"><div class="inner"><div class="kw t">Can’t bear</div></div></div>
+      <div id="c18" class="clip band exm" data-start="21.370" data-duration="3.410" data-track-index="10"><div class="inner"><div class="ex en t" style="font-size:5.5cqw"><span class="w" data-i="n0">“I</span> <span class="w acc" data-i="n1">can’t</span> <span class="w acc" data-i="n2">bear</span> <span class="w" data-i="n3">seeing</span> <span class="w" data-i="n4">her</span> <span class="w" data-i="n5">crying”</span></div><div class="ex es t" style="font-size:5.5cqw"><span class="w e" data-i="s0">“No</span> <span class="w e" data-i="s1">soporto</span> <span class="w e" data-i="s2">verla</span> <span class="w e" data-i="s3">llorar”</span> <img class="w emo" data-i="emo" src="stickers/cry.png" alt=""></div></div></div>
+      <div id="c19" class="clip band cap" data-start="24.840" data-duration="1.140" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">Y</span> <span class="w" data-i="1">la</span> <span class="w" data-i="2">tercera</span> <span class="w" data-i="3">es…</span></div></div></div>
+      <div id="c20" class="clip band key" data-start="26.020" data-duration="1.600" data-track-index="8"><div class="inner"><div class="kw t">Can’t take</div><div class="mean t ml" data-ml="0">No soportar más</div><div class="mean t ml" data-ml="1">Llegar al límite</div></div></div>
+      <div id="c21" class="clip stk left" data-start="26.160" data-duration="1.460" data-track-index="12"><div class="inner"><img data-s="0" src="stickers/angry.png" alt=""><img data-s="1" src="stickers/rage.png" alt=""><img data-s="2" src="stickers/cursing.png" alt=""></div></div>
+      <div id="c22" class="clip band exm" data-start="27.680" data-duration="6.430" data-track-index="10"><div class="inner"><div class="ex en t" style="font-size:5.1cqw"><span class="w" data-i="n0">“This</span> <span class="w" data-i="n1">noise</span> <span class="w" data-i="n2">is</span> <span class="w" data-i="n3">driving</span> <span class="w" data-i="n4">me</span> <span class="w" data-i="n5">crazy!</span><br><span class="w" data-i="n7">I</span> <span class="w acc" data-i="n8">can’t</span> <span class="w acc" data-i="n9">take</span> <span class="w" data-i="n10">it</span> <span class="w" data-i="n11">anymore!”</span></div><div class="ex es t" style="font-size:5.1cqw"><span class="w e" data-i="s0">“Este</span> <span class="w e" data-i="s1">ruido</span> <span class="w e" data-i="s2">me</span> <span class="w e" data-i="s3">está</span> <span class="w e" data-i="s4">volviendo</span> <span class="w e" data-i="s5">loca.</span><br><span class="w e" data-i="s7">¡No</span> <span class="w e" data-i="s8">lo</span> <span class="w e" data-i="s9">soporto</span> <span class="w e" data-i="s10">más!”</span></div></div></div>
+      <div id="c23" class="clip band cap" data-start="34.170" data-duration="2.000" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">Bueno,</span> <span class="w" data-i="1">si</span> <span class="w" data-i="2">te</span> <span class="w" data-i="3">gustaron</span> <span class="w" data-i="4">estas</span> <span class="w acc" data-i="5">3</span> <span class="w acc" data-i="6">frases,</span></div></div></div>
+      <div id="c24" class="clip band cap" data-start="36.210" data-duration="0.940" data-track-index="4"><div class="inner"><div class="cap t"><span class="w acc" data-i="0">guardá</span> <span class="w acc" data-i="1">el</span> <span class="w acc" data-i="2">video</span></div></div></div>
+      <div id="c25" class="clip stk left" data-start="36.210" data-duration="0.940" data-track-index="12"><div class="inner"><img data-s="0" src="stickers/bookmark.png" alt=""></div></div>
+      <div id="c26" class="clip band cap" data-start="37.170" data-duration="1.100" data-track-index="5"><div class="inner"><div class="cap t"><span class="w" data-i="0">y</span> <span class="w" data-i="1">si</span> <span class="w" data-i="2">querés</span> <span class="w" data-i="3">saber</span> <span class="w" data-i="4">más</span></div></div></div>
+      <div id="c27" class="clip band cap" data-start="38.290" data-duration="1.180" data-track-index="4"><div class="inner"><div class="cap t"><span class="w" data-i="0">sobre</span> <span class="w" data-i="1">cómo</span> <span class="w" data-i="2">son</span> <span class="w" data-i="3">mis</span> <span class="w" data-i="4">clases</span></div></div></div>
+      <div id="c28" class="clip band cap" data-start="39.490" data-duration="1.580" data-track-index="5"><div class="inner"><div class="cap t"><span class="w" data-i="0">y</span> <span class="w" data-i="1">aprender</span> <span class="w" data-i="2">un</span> <span class="w acc" data-i="3">inglés</span> <span class="w acc" data-i="4">real,</span></div></div></div>
+      <div id="c29" class="clip band cap" data-start="41.130" data-duration="1.840" data-track-index="4"><div class="inner"><div class="cap t"><span class="w acc" data-i="0">escribime</span><br><span class="w" data-i="2">y</span> <span class="w" data-i="3">te</span> <span class="w" data-i="4">cuento</span> <span class="w" data-i="5">cómo</span> <span class="w" data-i="6">son</span> <span class="w" data-i="7">mis</span> <span class="w" data-i="8">clases</span></div></div></div>
+      <div id="c30" class="clip stk left" data-start="41.130" data-duration="1.840" data-track-index="12"><div class="inner"><img data-s="0" src="stickers/speech.png" alt=""></div></div>
+      <div id="c31" class="clip band big" data-start="43.070" data-duration="1.610" data-track-index="2"><div class="inner"><div class="bl t"><span class="ch" data-k="0">B</span><span class="ch" data-k="1">y</span><span class="ch" data-k="2">e</span><span class="ch" data-k="3">!</span></div></div></div>
+      <div id="c32" class="clip stk left" data-start="43.130" data-duration="1.550" data-track-index="12"><div class="inner"><img data-s="0" src="stickers/wave.png" alt=""></div></div>
+      <audio id="master" class="clip" src="master.m4a" data-start="0" data-duration="44.680"
+             data-track-index="30" data-volume="1"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#cam", { force3D: true, scale: 1 }, 0);
+      tl.set("#cam",{scale:1.0},0.000);
+      tl.to("#cam",{scale:1.030,duration:2.280,ease:"sine.inOut"},0.020);
+      tl.set("#cam",{scale:1.2},2.340);
+      tl.set("#cam",{scale:1.08},3.440);
+      tl.to("#cam",{scale:1.140,duration:2.870,ease:"sine.inOut"},3.460);
+      tl.set("#cam",{scale:1.22},6.370);
+      tl.set("#cam",{scale:1.0},6.700);
+      tl.to("#cam",{scale:1.030,duration:2.100,ease:"sine.inOut"},6.720);
+      tl.set("#cam",{scale:1.1},8.860);
+      tl.set("#cam",{scale:1.2},9.880);
+      tl.set("#cam",{scale:1.0},10.710);
+      tl.to("#cam",{scale:1.030,duration:1.850,ease:"sine.inOut"},10.730);
+      tl.set("#cam",{scale:1.1},12.620);
+      tl.set("#cam",{scale:1.0},13.280);
+      tl.to("#cam",{scale:1.040,duration:3.830,ease:"sine.inOut"},13.300);
+      tl.set("#cam",{scale:1.06},17.170);
+      tl.to("#cam",{scale:1.100,duration:3.310,ease:"sine.inOut"},17.190);
+      tl.set("#cam",{scale:1.2},20.540);
+      tl.set("#cam",{scale:1.0},21.290);
+      tl.to("#cam",{scale:1.040,duration:3.430,ease:"sine.inOut"},21.310);
+      tl.set("#cam",{scale:1.1},24.780);
+      tl.set("#cam",{scale:1.2},25.980);
+      tl.set("#cam",{scale:1.06},26.800);
+      tl.set("#cam",{scale:1.0},27.620);
+      tl.to("#cam",{scale:1.040,duration:3.760,ease:"sine.inOut"},27.640);
+      tl.set("#cam",{scale:1.1},31.440);
+      tl.to("#cam",{scale:1.130,duration:2.610,ease:"sine.inOut"},31.460);
+      tl.set("#cam",{scale:1.0},34.110);
+      tl.to("#cam",{scale:1.030,duration:2.040,ease:"sine.inOut"},34.130);
+      tl.set("#cam",{scale:1.12},36.210);
+      tl.set("#cam",{scale:1.0},37.170);
+      tl.to("#cam",{scale:1.030,duration:3.840,ease:"sine.inOut"},37.190);
+      tl.set("#cam",{scale:1.1},41.070);
+      tl.set("#cam",{scale:1.2},42.970);
+      tl.to("#cam",{scale:1.230,duration:1.650,ease:"sine.inOut"},42.990);
+      tl.set("#bw",{filter:"grayscale(1) contrast(1.12) brightness(1.04)"},4.580);
+      tl.set("#bw",{filter:"grayscale(0) contrast(1) brightness(1)"},6.370);
+      tl.fromTo("#c1 .tline",{x:"-30cqw"},{x:"125cqw",duration:.26,ease:"power2.inOut",immediateRender:false},13.140);
+      tl.fromTo("#blur",{filter:"blur(9px)"},{filter:"blur(0px)",duration:.16,ease:"power2.out",immediateRender:false},13.280);
+      tl.set("#blur",{filter:"blur(0px)"},13.450);
+      tl.fromTo("#c2 .tline",{x:"-30cqw"},{x:"125cqw",duration:.26,ease:"power2.inOut",immediateRender:false},21.150);
+      tl.fromTo("#blur",{filter:"blur(9px)"},{filter:"blur(0px)",duration:.16,ease:"power2.out",immediateRender:false},21.290);
+      tl.set("#blur",{filter:"blur(0px)"},21.460);
+      tl.fromTo("#c3 .tline",{x:"-30cqw"},{x:"125cqw",duration:.26,ease:"power2.inOut",immediateRender:false},27.480);
+      tl.fromTo("#blur",{filter:"blur(9px)"},{filter:"blur(0px)",duration:.16,ease:"power2.out",immediateRender:false},27.620);
+      tl.set("#blur",{filter:"blur(0px)"},27.790);
+      tl.fromTo("#c4 .card",{rotation:0},{rotation:-1.5,duration:2.150,ease:"sine.inOut",immediateRender:false},0.000);
+      tl.to("#c4 .inner",{scale:.7,opacity:0,duration:.12,ease:"power2.in"},2.180);
+      tl.fromTo("#c5 [data-k=\"0\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.340);
+      tl.fromTo("#c5 [data-k=\"1\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.382);
+      tl.fromTo("#c5 [data-k=\"2\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.423);
+      tl.fromTo("#c5 [data-k=\"3\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.465);
+      tl.fromTo("#c5 [data-k=\"4\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.507);
+      tl.fromTo("#c5 [data-k=\"5\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.548);
+      tl.fromTo("#c5 [data-k=\"6\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.590);
+      tl.fromTo("#c5 [data-k=\"7\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.632);
+      tl.fromTo("#c5 [data-k=\"8\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.673);
+      tl.fromTo("#c5 [data-k=\"9\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.715);
+      tl.fromTo("#c5 [data-k=\"10\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.757);
+      tl.fromTo("#c5 [data-k=\"11\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.798);
+      tl.fromTo("#c5 [data-k=\"12\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},2.840);
+      tl.to("#c5 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},3.320);
+      tl.fromTo("#c6 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},3.500);
+      tl.fromTo("#c6 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},3.650);
+      tl.fromTo("#c6 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},4.180);
+      tl.to("#c6 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},4.440);
+      tl.fromTo("#c7 .wrong",{scale:.5,opacity:0},{scale:1,opacity:1,duration:.2,ease:"back.out(2.5)",immediateRender:false},4.580);
+      tl.fromTo("#c7 .wrong",{x:0},{keyframes:[{x:"-1.4cqw",duration:.05},{x:"1.4cqw",duration:.06},{x:"-.8cqw",duration:.05},{x:0,duration:.05}],immediateRender:false},4.780);
+      tl.set("#c7 .strike",{scaleX:0,rotation:-3,transformOrigin:"0% 50%"},4.580);
+      tl.fromTo("#c7 .strike",{scaleX:0},{scaleX:1,duration:.14,ease:"power3.out",immediateRender:false},6.390);
+      tl.fromTo("#c8 img",{scale:0,rotation:-25},{scale:1,rotation:-6,duration:.2,ease:"back.out(2.4)",immediateRender:false},6.390);
+      tl.to("#c7 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},6.580);
+      tl.fromTo("#c9 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},6.760);
+      tl.fromTo("#c9 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},6.960);
+      tl.fromTo("#c9 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},7.200);
+      tl.fromTo("#c9 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},7.360);
+      tl.fromTo("#c9 [data-i=\"4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},7.680);
+      tl.fromTo("#c9 [data-i=\"5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},7.920);
+      tl.fromTo("#c9 [data-i=\"6\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},8.320);
+      tl.fromTo("#c9 [data-i=\"7\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},8.480);
+      tl.to("#c9 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},8.740);
+      tl.fromTo("#c10 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},8.920);
+      tl.fromTo("#c10 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},9.120);
+      tl.fromTo("#c10 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},9.600);
+      tl.to("#c10 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},9.760);
+      tl.fromTo("#c11 [data-i=\"m0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},11.290);
+      tl.fromTo("#c11 [data-i=\"m1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},11.450);
+      tl.fromTo("#c11 [data-i=\"m2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},12.090);
+      tl.fromTo("#c11 [data-i=\"m3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},12.410);
+      tl.fromTo("#c11 .kw",{scale:.45,opacity:0,y:"-4cqh"},{scale:1,opacity:1,y:0,duration:.24,ease:"back.out(2.4)",immediateRender:false},9.920);
+      tl.to("#c11 .inner",{opacity:0,y:"-4cqh",duration:.12,ease:"power2.in"},13.160);
+      tl.fromTo("#c12 [data-i=\"n0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},13.620);
+      tl.fromTo("#c12 [data-i=\"n1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},13.940);
+      tl.fromTo("#c12 [data-i=\"n2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},14.420);
+      tl.fromTo("#c12 [data-i=\"n3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},14.980);
+      tl.fromTo("#c12 [data-i=\"n4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},15.460);
+      tl.fromTo("#c12 [data-i=\"n5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},15.620);
+      tl.fromTo("#c12 [data-i=\"s0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},16.020);
+      tl.fromTo("#c12 [data-i=\"s1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},16.180);
+      tl.fromTo("#c12 [data-i=\"s2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},16.660);
+      tl.fromTo("#c12 [data-i=\"s3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},16.900);
+      tl.to("#c12 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},17.050);
+      tl.fromTo("#c13 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},17.270);
+      tl.fromTo("#c13 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},17.590);
+      tl.to("#c13 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},18.150);
+      tl.fromTo("#c14 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},18.310);
+      tl.fromTo("#c14 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},18.550);
+      tl.fromTo("#c14 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},18.710);
+      tl.fromTo("#c14 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},18.790);
+      tl.fromTo("#c14 [data-i=\"4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},18.950);
+      tl.fromTo("#c14 [data-i=\"5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},19.190);
+      tl.fromTo("#c14 [data-i=\"6\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},19.350);
+      tl.to("#c14 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},19.750);
+      tl.fromTo("#c15 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},19.910);
+      tl.fromTo("#c15 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},20.150);
+      tl.fromTo("#c15 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},20.310);
+      tl.to("#c15 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},20.420);
+      tl.fromTo("#c16 [data-s=\"0\"]",{opacity:0,scale:0,rotation:-18},{opacity:1,scale:1.00,rotation:-6,duration:.22,ease:"back.out(2.6)",immediateRender:false},19.350);
+      tl.fromTo("#c16 .inner",{y:0},{y:"-1cqh",duration:1.800,ease:"sine.inOut",immediateRender:false},19.350);
+      tl.to("#c16 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},21.170);
+      tl.fromTo("#c17 .kw",{scale:.45,opacity:0,y:"-4cqh"},{scale:1,opacity:1,y:0,duration:.24,ease:"back.out(2.4)",immediateRender:false},20.580);
+      tl.to("#c17 .inner",{opacity:0,y:"-4cqh",duration:.12,ease:"power2.in"},21.170);
+      tl.fromTo("#c18 [data-i=\"n0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},21.370);
+      tl.fromTo("#c18 [data-i=\"n1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},21.550);
+      tl.fromTo("#c18 [data-i=\"n2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},21.870);
+      tl.fromTo("#c18 [data-i=\"n3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},22.270);
+      tl.fromTo("#c18 [data-i=\"n4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},22.590);
+      tl.fromTo("#c18 [data-i=\"n5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},22.830);
+      tl.fromTo("#c18 [data-i=\"s0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},23.470);
+      tl.fromTo("#c18 [data-i=\"s1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},23.630);
+      tl.fromTo("#c18 [data-i=\"s2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},24.110);
+      tl.fromTo("#c18 [data-i=\"s3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},24.510);
+      tl.fromTo("#c18 [data-i=\"emo\"]",{opacity:0,scale:0,rotation:-30},{opacity:1,scale:1,rotation:0,duration:.22,ease:"back.out(2.6)",immediateRender:false},24.510);
+      tl.to("#c18 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},24.660);
+      tl.fromTo("#c19 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},24.840);
+      tl.fromTo("#c19 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},24.960);
+      tl.fromTo("#c19 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},25.120);
+      tl.fromTo("#c19 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},25.680);
+      tl.to("#c19 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},25.860);
+      tl.fromTo("#c20 .kw",{scale:.45,opacity:0,y:"-4cqh"},{scale:1,opacity:1,y:0,duration:.24,ease:"back.out(2.4)",immediateRender:false},26.020);
+      tl.fromTo("#c20 [data-ml=\"0\"]",{opacity:0,scale:.6},{opacity:1,scale:1,duration:.18,ease:"back.out(2.4)",immediateRender:false},26.310);
+      tl.fromTo("#c20 [data-ml=\"1\"]",{opacity:0,scale:.6},{opacity:1,scale:1,duration:.18,ease:"back.out(2.4)",immediateRender:false},26.580);
+      tl.to("#c20 .inner",{opacity:0,y:"-4cqh",duration:.12,ease:"power2.in"},27.500);
+      tl.fromTo("#c21 [data-s=\"0\"]",{opacity:0,scale:0,rotation:-18},{opacity:1,scale:1.00,rotation:-6,duration:.22,ease:"back.out(2.6)",immediateRender:false},26.160);
+      tl.fromTo("#c21 [data-s=\"1\"]",{opacity:0,scale:0,rotation:-18},{opacity:1,scale:1.12,rotation:-6,duration:.22,ease:"back.out(2.6)",immediateRender:false},26.580);
+      tl.set("#c21 [data-s=\"0\"]",{opacity:0},26.620);
+      tl.fromTo("#c21 [data-s=\"2\"]",{opacity:0,scale:0,rotation:-18},{opacity:1,scale:1.24,rotation:-6,duration:.22,ease:"back.out(2.6)",immediateRender:false},26.860);
+      tl.set("#c21 [data-s=\"1\"]",{opacity:0},26.900);
+      tl.fromTo("#c21 .inner",{y:0},{y:"-1cqh",duration:1.320,ease:"sine.inOut",immediateRender:false},26.160);
+      tl.to("#c21 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},27.500);
+      tl.fromTo("#c22 [data-i=\"n0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},27.680);
+      tl.fromTo("#c22 [data-i=\"n1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},28.120);
+      tl.fromTo("#c22 [data-i=\"n2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},28.600);
+      tl.fromTo("#c22 [data-i=\"n3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},28.760);
+      tl.fromTo("#c22 [data-i=\"n4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},29.320);
+      tl.fromTo("#c22 [data-i=\"n5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},29.480);
+      tl.fromTo("#c22 [data-i=\"n7\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},30.120);
+      tl.fromTo("#c22 [data-i=\"n8\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},30.280);
+      tl.fromTo("#c22 [data-i=\"n9\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},30.600);
+      tl.fromTo("#c22 [data-i=\"n10\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},30.840);
+      tl.fromTo("#c22 [data-i=\"n11\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},31.000);
+      tl.fromTo("#c22 [data-i=\"s0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},31.500);
+      tl.fromTo("#c22 [data-i=\"s1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},31.700);
+      tl.fromTo("#c22 [data-i=\"s2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},32.020);
+      tl.fromTo("#c22 [data-i=\"s3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},32.180);
+      tl.fromTo("#c22 [data-i=\"s4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},32.340);
+      tl.fromTo("#c22 [data-i=\"s5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},32.820);
+      tl.fromTo("#c22 [data-i=\"s7\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},33.300);
+      tl.fromTo("#c22 [data-i=\"s8\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},33.460);
+      tl.fromTo("#c22 [data-i=\"s9\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},33.540);
+      tl.fromTo("#c22 [data-i=\"s10\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},34.020);
+      tl.to("#c22 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},33.990);
+      tl.fromTo("#c23 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},34.170);
+      tl.fromTo("#c23 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},34.450);
+      tl.fromTo("#c23 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},34.610);
+      tl.fromTo("#c23 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},34.770);
+      tl.fromTo("#c23 [data-i=\"4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},35.250);
+      tl.fromTo("#c23 [data-i=\"5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},35.490);
+      tl.fromTo("#c23 [data-i=\"6\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},35.730);
+      tl.to("#c23 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},36.050);
+      tl.fromTo("#c24 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},36.210);
+      tl.fromTo("#c24 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},36.690);
+      tl.fromTo("#c24 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},36.850);
+      tl.to("#c24 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},37.030);
+      tl.fromTo("#c25 [data-s=\"0\"]",{opacity:0,scale:0,rotation:-18},{opacity:1,scale:1.00,rotation:-6,duration:.22,ease:"back.out(2.6)",immediateRender:false},36.210);
+      tl.fromTo("#c25 .inner",{y:0},{y:"-1cqh",duration:0.800,ease:"sine.inOut",immediateRender:false},36.210);
+      tl.to("#c25 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},37.030);
+      tl.fromTo("#c26 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},37.170);
+      tl.fromTo("#c26 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},37.330);
+      tl.fromTo("#c26 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},37.490);
+      tl.fromTo("#c26 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},37.810);
+      tl.fromTo("#c26 [data-i=\"4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},38.050);
+      tl.to("#c26 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},38.150);
+      tl.fromTo("#c27 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},38.290);
+      tl.fromTo("#c27 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},38.530);
+      tl.fromTo("#c27 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},38.770);
+      tl.fromTo("#c27 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},38.930);
+      tl.fromTo("#c27 [data-i=\"4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},39.090);
+      tl.to("#c27 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},39.350);
+      tl.fromTo("#c28 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},39.490);
+      tl.fromTo("#c28 [data-i=\"1\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},39.650);
+      tl.fromTo("#c28 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},40.130);
+      tl.fromTo("#c28 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},40.290);
+      tl.fromTo("#c28 [data-i=\"4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},40.690);
+      tl.to("#c28 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},40.950);
+      tl.fromTo("#c29 [data-i=\"0\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},41.130);
+      tl.fromTo("#c29 [data-i=\"2\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},41.730);
+      tl.fromTo("#c29 [data-i=\"3\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},41.890);
+      tl.fromTo("#c29 [data-i=\"4\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},41.970);
+      tl.fromTo("#c29 [data-i=\"5\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},42.210);
+      tl.fromTo("#c29 [data-i=\"6\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},42.450);
+      tl.fromTo("#c29 [data-i=\"7\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},42.610);
+      tl.fromTo("#c29 [data-i=\"8\"]",{opacity:0,scale:.7},{opacity:1,scale:1,duration:.15,ease:"back.out(1.7)",immediateRender:false},42.770);
+      tl.to("#c29 .inner",{opacity:0,y:"-3cqh",duration:.12,ease:"power2.in"},42.850);
+      tl.fromTo("#c30 [data-s=\"0\"]",{opacity:0,scale:0,rotation:-18},{opacity:1,scale:1.00,rotation:-6,duration:.22,ease:"back.out(2.6)",immediateRender:false},41.130);
+      tl.fromTo("#c30 .inner",{y:0},{y:"-1cqh",duration:1.700,ease:"sine.inOut",immediateRender:false},41.130);
+      tl.to("#c30 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},42.850);
+      tl.fromTo("#c31 [data-k=\"0\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},43.070);
+      tl.fromTo("#c31 [data-k=\"1\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},43.137);
+      tl.fromTo("#c31 [data-k=\"2\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},43.203);
+      tl.fromTo("#c31 [data-k=\"3\"]",{opacity:0,scale:.4,y:"2cqw"},{opacity:1,scale:1,y:0,duration:.14,ease:"back.out(3)",immediateRender:false},43.270);
+      tl.to("#c31 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},44.560);
+      tl.fromTo("#c32 [data-s=\"0\"]",{opacity:0,scale:0,rotation:-18},{opacity:1,scale:1.00,rotation:-6,duration:.22,ease:"back.out(2.6)",immediateRender:false},43.130);
+      tl.fromTo("#c32 .inner",{y:0},{y:"-1cqh",duration:1.410,ease:"sine.inOut",immediateRender:false},43.130);
+      tl.to("#c32 .inner",{opacity:0,y:"0cqh",duration:.12,ease:"power2.in"},44.560);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
