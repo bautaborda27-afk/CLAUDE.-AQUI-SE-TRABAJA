@@ -1,7 +1,7 @@
 # Informe de edición — Meli: "Inglés desde CERO"
 
 **Estado:** listo para revisar
-**Salida:** `output/Meli_InglesDesdeCero.mp4`: 1080×1920, ~36,0 s, h264/yuv420p, 30 fps, AAC 48 kHz, -14 LUFS
+**Salida:** `output/Meli_InglesDesdeCero.mp4`: 1080×1920, 36,1 s, h264/yuv420p, 30 fps, AAC 48 kHz, -14,1 LUFS integrado
 **Estilo:** el del video de referencia de @ingleswithjuli (reel educativo hablado a cámara)
 
 ## Estilo tomado de la referencia
@@ -56,3 +56,10 @@ python3 build.py                # base.mp4 + master.m4a + index.html
 (cd edit && hyperframes render -o renders/meli.mp4 -f 30)
 ./finalize.sh                   # -14 LUFS + verificación + hoja de capturas
 ```
+
+## Verificación
+- Lint de HyperFrames: 0 errores. Hay 51 avisos de estructura y densidad (sugiere separar en subcomposiciones); no hacen falta para un reel corto.
+- Capturas de vista previa en 16 momentos clave. Detecté y corregí un subtítulo rojo que se pisaba con "¡Bueno, NO!".
+- Verificación final (`verify-render.mjs`): PASA. 1080×1920, h264, yuv420p, AAC, 36,10 s.
+- Volumen: -14,1 LUFS integrado, LRA 2,5 LU.
+- Cuadros revisados del video final: portada, blanco y negro, títulos grandes, tarjetas, ejemplos, destellos y "Escribí CERO". La cara queda entera en todos los cuadros.
