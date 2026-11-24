@@ -1,0 +1,9 @@
+# regenerable: python3 build.py && (cd edit && hyperframes render -o renders/meli.mp4) && ./finalize.sh
+work/
+edit/base.mp4
+edit/master.m4a
+edit/renders/
+edit/snapshots/
+edit/.hyperframes/
+edit/node_modules/
+__pycache__/
