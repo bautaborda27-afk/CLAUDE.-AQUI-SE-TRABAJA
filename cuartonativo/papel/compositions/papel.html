@@ -1,0 +1,337 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #e6d3b6;
+    }
+    #pp-paper {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #pp-light {
+      position: absolute;
+      left: -400px;
+      top: -300px;
+      width: 1880px;
+      height: 2520px;
+      mix-blend-mode: soft-light;
+      background: radial-gradient(ellipse 34% 30% at 50% 45%, rgba(255, 238, 200, 0.55) 0%, rgba(255, 238, 200, 0) 100%);
+    }
+    #pp-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 64% at 50% 46%, rgba(70, 40, 20, 0) 58%, rgba(70, 40, 20, 0.22) 100%);
+    }
+    #pp-dust {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+
+    /* every drawn element sits at its place on the sheet */
+    .el {
+      position: absolute;
+    }
+    .el img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    /* writing wipe: --p 0 -> 118 */
+    .wipe {
+      position: absolute;
+      inset: 0;
+      --p: 0;
+      --ang: 90deg;
+      -webkit-mask-image: linear-gradient(var(--ang), #000 calc(var(--p) * 1% - 12%), transparent calc(var(--p) * 1%));
+      mask-image: linear-gradient(var(--ang), #000 calc(var(--p) * 1% - 12%), transparent calc(var(--p) * 1%));
+    }
+    .italic .wipe {
+      --ang: 100deg;
+    }
+    /* top-to-bottom wipe */
+    .wipe-down {
+      position: absolute;
+      inset: 0;
+      --p: 0;
+      -webkit-mask-image: linear-gradient(180deg, #000 calc(var(--p) * 1% - 14%), transparent calc(var(--p) * 1%));
+      mask-image: linear-gradient(180deg, #000 calc(var(--p) * 1% - 14%), transparent calc(var(--p) * 1%));
+    }
+    /* drawn around a centre: --a 0 -> 360 */
+    .sweep {
+      position: absolute;
+      inset: 0;
+      --a: 0;
+      -webkit-mask-image: conic-gradient(
+        from var(--from, 0deg) at var(--cx, 50%) var(--cy, 50%),
+        #000 0deg,
+        #000 calc(var(--a) * 1deg),
+        transparent calc(var(--a) * 1deg + 16deg)
+      );
+      mask-image: conic-gradient(
+        from var(--from, 0deg) at var(--cx, 50%) var(--cy, 50%),
+        #000 0deg,
+        #000 calc(var(--a) * 1deg),
+        transparent calc(var(--a) * 1deg + 16deg)
+      );
+    }
+    /* grows outward from the ball: --r in px */
+    .burst {
+      position: absolute;
+      inset: 0;
+      --r: 0;
+      -webkit-mask-image: radial-gradient(
+        circle at 264px 294px,
+        #000 calc(var(--r) * 1px - 50px),
+        transparent calc(var(--r) * 1px)
+      );
+      mask-image: radial-gradient(circle at 264px 294px, #000 calc(var(--r) * 1px - 50px), transparent calc(var(--r) * 1px));
+    }
+    /* opens from the centre: --p 0 -> 100 */
+    .centre-out {
+      position: absolute;
+      inset: 0;
+      --p: 0;
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent calc(50% - var(--p) * 0.5% - 7%),
+        #000 calc(50% - var(--p) * 0.5%),
+        #000 calc(50% + var(--p) * 0.5%),
+        transparent calc(50% + var(--p) * 0.5% + 7%)
+      );
+      mask-image: linear-gradient(
+        90deg,
+        transparent calc(50% - var(--p) * 0.5% - 7%),
+        #000 calc(50% - var(--p) * 0.5%),
+        #000 calc(50% + var(--p) * 0.5%),
+        transparent calc(50% + var(--p) * 0.5% + 7%)
+      );
+    }
+    .ribbons {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+    }
+  </style>
+
+  <div id="root" data-composition-id="papel" data-width="1080" data-height="1920" data-layout-allow-overlap>
+    <img id="pp-paper" src="assets/paper.jpg" alt="" data-layout-ignore />
+    <div id="pp-light" data-layout-ignore></div>
+
+    <!-- ribbons: an image revealed by a brush that follows the ribbon -->
+    <svg class="ribbons" viewBox="0 0 1080 1920" width="1080" height="1920" aria-hidden="true" data-layout-ignore>
+      <defs>
+        <filter id="pp-soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="10" /></filter>
+        <mask id="pp-m-tl" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+          <path id="pp-b-tl" d="M440,-14 C330,5 230,10 160,45 C100,80 60,140 45,220 C35,290 25,360 -5,452"
+            fill="none" stroke="#fff" stroke-width="120" stroke-linecap="butt" stroke-linejoin="round" filter="url(#pp-soft)" />
+        </mask>
+        <mask id="pp-m-r" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+          <path id="pp-b-r" d="M1110,742 C1040,768 960,812 866,912"
+            fill="none" stroke="#fff" stroke-width="110" stroke-linecap="butt" filter="url(#pp-soft)" />
+        </mask>
+        <mask id="pp-m-b" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+          <path id="pp-b-b1"
+            d="M-20,1770 C60,1760 150,1735 205,1690 C240,1660 255,1625 230,1595 C200,1560 120,1550 70,1575 C35,1595 40,1645 80,1660 C130,1675 220,1640 270,1625 C320,1615 350,1660 355,1695 C360,1740 400,1775 440,1772 C500,1765 560,1690 620,1655 C680,1620 720,1610 770,1635 C820,1665 860,1700 910,1680 C960,1660 990,1620 1015,1605 C1045,1550 1065,1460 1095,1350"
+            fill="none" stroke="#fff" stroke-width="130" stroke-linecap="butt" stroke-linejoin="round" filter="url(#pp-soft)" />
+          <path id="pp-b-b2" d="M1022,1600 C1005,1700 975,1770 920,1820 C870,1865 820,1900 750,1950"
+            fill="none" stroke="#fff" stroke-width="120" stroke-linecap="butt" filter="url(#pp-soft)" />
+        </mask>
+      </defs>
+      <image href="assets/el/ribbon_tl.png" x="0" y="0" width="433" height="463" mask="url(#pp-m-tl)" />
+      <image href="assets/el/ribbon_r.png" x="848" y="738" width="232" height="175" mask="url(#pp-m-r)" />
+      <image href="assets/el/ribbon_b.png" x="0" y="1368" width="1080" height="552" mask="url(#pp-m-b)" />
+    </svg>
+
+    <!-- disco ball -->
+    <div id="pp-chain" class="el" style="left: 916px; top: 0px; width: 59px; height: 168px">
+      <div class="wipe-down"><img src="assets/el/disco_chain.png" alt="" /></div>
+    </div>
+    <div id="pp-ball" class="el" style="left: 772px; top: 152px; width: 281px; height: 286px">
+      <div class="sweep" style="--cx: 49.8%; --cy: 49.7%"><img src="assets/el/disco_ball.png" alt="" /></div>
+    </div>
+    <div id="pp-rays" class="el" style="left: 648px; top: 0px; width: 432px; height: 563px">
+      <div class="burst"><img src="assets/el/disco_rays.png" alt="" /></div>
+    </div>
+
+    <!-- lettering: a pencil outline first, then the ink -->
+    <div id="pp-logo" class="el" style="left: 433px; top: 86px; width: 186px; height: 77px">
+      <div class="wipe sk"><img src="assets/el/logo_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/logo.png" alt="CN Prod." /></div>
+    </div>
+    <div id="pp-con" class="el italic" style="left: 267px; top: 312px; width: 228px; height: 113px">
+      <div class="wipe sk"><img src="assets/el/con_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/con.png" alt="Con" /></div>
+    </div>
+    <div id="pp-cuarto" class="el" style="left: 110px; top: 415px; width: 783px; height: 138px">
+      <div class="wipe sk"><img src="assets/el/cuarto_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/cuarto.png" alt="Cuarto Nativo," /></div>
+    </div>
+    <div id="pp-desp" class="el italic" style="left: 110px; top: 542px; width: 838px; height: 153px">
+      <div class="wipe sk"><img src="assets/el/despedimos_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/despedimos.png" alt="despedimos" /></div>
+    </div>
+    <div id="pp-elano" class="el italic" style="left: 291px; top: 689px; width: 505px; height: 144px">
+      <div class="wipe sk"><img src="assets/el/elano_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/elano.png" alt="el año." /></div>
+    </div>
+    <div id="pp-swash" class="el" style="left: 414px; top: 834px; width: 353px; height: 64px">
+      <div class="wipe fl"><img src="assets/el/swash.png" alt="" /></div>
+    </div>
+
+    <div id="pp-oval" class="el" style="left: 159px; top: 918px; width: 774px; height: 225px">
+      <div class="sweep" style="--from: 270deg"><img src="assets/el/oval.png" alt="" /></div>
+    </div>
+    <div id="pp-date" class="el" style="left: 248px; top: 972px; width: 620px; height: 106px">
+      <div class="wipe sk"><img src="assets/el/date_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/date.png" alt="19 de diciembre." /></div>
+    </div>
+    <div id="pp-tag" class="el italic" style="left: 140px; top: 1158px; width: 813px; height: 100px">
+      <div class="wipe sk"><img src="assets/el/tagline_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/tagline.png" alt="Te invitamos a ser parte." /></div>
+    </div>
+    <div id="pp-divider" class="el" style="left: 200px; top: 1271px; width: 673px; height: 77px">
+      <div class="centre-out"><img src="assets/el/divider.png" alt="" /></div>
+    </div>
+
+    <!-- gold stars -->
+    <div id="pp-star1" class="el" style="left: 177px; top: 217px; width: 61px; height: 76px"><img src="assets/el/star1.png" alt="" /></div>
+    <div id="pp-star2" class="el" style="left: 113px; top: 787px; width: 64px; height: 71px"><img src="assets/el/star2.png" alt="" /></div>
+    <div id="pp-starL" class="el" style="left: 95px; top: 998px; width: 54px; height: 62px"><img src="assets/el/starL.png" alt="" /></div>
+    <div id="pp-starR" class="el" style="left: 934px; top: 998px; width: 53px; height: 57px"><img src="assets/el/starR.png" alt="" /></div>
+
+    <div id="pp-vignette" data-layout-ignore></div>
+    <canvas id="pp-dust" width="1080" height="1920" data-layout-ignore></canvas>
+
+    <!-- glints on the disco ball -->
+    <svg class="ribbons" viewBox="0 0 1080 1920" width="1080" height="1920" aria-hidden="true" data-layout-ignore>
+      <defs>
+        <radialGradient id="pp-glow">
+          <stop offset="0" stop-color="#fff8e6" stop-opacity=".95" />
+          <stop offset="1" stop-color="#fff8e6" stop-opacity="0" />
+        </radialGradient>
+        <symbol id="pp-glint" viewBox="-10 -10 20 20">
+          <circle r="9" fill="url(#pp-glow)" />
+          <path d="M0,-10 C.6,-1.4 1.4,-.6 10,0 C1.4,.6 .6,1.4 0,10 C-.6,1.4 -1.4,.6 -10,0 C-1.4,-.6 -.6,-1.4 0,-10Z" fill="#fffaf0" />
+        </symbol>
+      </defs>
+      <g transform="translate(848,226)"><g id="pp-g1"><use href="#pp-glint" x="-20" y="-20" width="40" height="40" /></g></g>
+      <g transform="translate(990,292)"><g id="pp-g2"><use href="#pp-glint" x="-14" y="-14" width="28" height="28" /></g></g>
+      <g transform="translate(905,385)"><g id="pp-g3"><use href="#pp-glint" x="-16" y="-16" width="32" height="32" /></g></g>
+      <g transform="translate(1008,206)"><g id="pp-g4"><use href="#pp-glint" x="-11" y="-11" width="22" height="22" /></g></g>
+    </svg>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const q = (s) => document.querySelector(s);
+
+      /* ---------- the room: warm light drifting over the sheet, dust in the air ---------- */
+      tl.fromTo("#pp-light", { x: -160, y: 60 }, { x: 160, y: -60, duration: 15, ease: "sine.inOut" }, 0);
+
+      const cv = q("#pp-dust");
+      const cx = cv.getContext("2d");
+      let seed = 23;
+      const rnd = () => {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+      };
+      const motes = [];
+      for (let i = 0; i < 55; i++) {
+        motes.push({ x: rnd() * 1080, y: rnd() * 1920, r: 0.6 + rnd() * rnd() * 2.2, a: 0.18 + rnd() * 0.35,
+          vy: 5 + rnd() * 12, vx: (rnd() - 0.5) * 10, ph: rnd() * 6.283, f: 0.4 + rnd() * 1.2 });
+      }
+      function draw(t) {
+        cx.clearRect(0, 0, 1080, 1920);
+        const fade = Math.min(1, t / 1.5);
+        for (const p of motes) {
+          const y = (((p.y - p.vy * t) % 1920) + 1920) % 1920;
+          const x = (((p.x + p.vx * t + Math.sin(t * 0.4 + p.ph) * 10) % 1080) + 1080) % 1080;
+          const al = p.a * fade * (0.55 + 0.45 * Math.sin(t * p.f * 2 + p.ph));
+          const g = cx.createRadialGradient(x, y, 0, x, y, p.r * 3);
+          g.addColorStop(0, "rgba(255,248,228," + al + ")");
+          g.addColorStop(0.35, "rgba(232,200,140," + al * 0.7 + ")");
+          g.addColorStop(1, "rgba(232,200,140,0)");
+          cx.fillStyle = g;
+          cx.beginPath();
+          cx.arc(x, y, p.r * 3, 0, Math.PI * 2);
+          cx.fill();
+        }
+      }
+      const clock = { t: 0 };
+      tl.to(clock, { t: 15, duration: 15, ease: "none", onUpdate: () => draw(clock.t) }, 0);
+      draw(0);
+
+      /* ---------- helpers ---------- */
+      // pencil outline, then ink chasing it, then the outline lifts away
+      function letter(id, at, sketchDur, inkDur) {
+        tl.fromTo(id + " .sk", { "--p": 0 }, { "--p": 118, duration: sketchDur, ease: "power1.inOut" }, at);
+        tl.fromTo(id + " .fl", { "--p": 0 }, { "--p": 118, duration: inkDur, ease: "power1.inOut" }, at + sketchDur * 0.3);
+        tl.fromTo(id + " .sk", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power1.out" }, at + sketchDur * 0.3 + inkDur);
+      }
+      function brush(id, at, dur, ease) {
+        const p = q(id);
+        const len = p.getTotalLength() + 140;
+        tl.fromTo(p, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: dur, ease: ease || "power1.inOut" }, at);
+      }
+      function star(id, at) {
+        tl.fromTo(
+          id,
+          { opacity: 0, scale: 0.2, rotation: -70, filter: "blur(4px)" },
+          { opacity: 1, scale: 1, rotation: 0, filter: "blur(0px)", duration: 0.75, ease: "expo.out" },
+          at,
+        );
+      }
+
+      /* ---------- drawing order ---------- */
+      letter("#pp-logo", 0.3, 0.5, 0.6);
+      brush("#pp-b-tl", 0.5, 1.6);
+      tl.fromTo("#pp-chain .wipe-down", { "--p": 0 }, { "--p": 118, duration: 0.5, ease: "power2.inOut" }, 0.8);
+      tl.fromTo("#pp-ball .sweep", { "--a": -17 }, { "--a": 360, duration: 1.3, ease: "power2.inOut" }, 1.2);
+      tl.fromTo("#pp-rays .burst", { "--r": 110 }, { "--r": 420, duration: 0.6, ease: "expo.out" }, 2.4);
+      star("#pp-star1", 1.8);
+
+      letter("#pp-con", 2.0, 0.5, 0.7);
+      letter("#pp-cuarto", 2.6, 1.1, 1.2);
+      letter("#pp-desp", 3.9, 1.1, 1.3);
+      letter("#pp-elano", 5.0, 0.8, 0.95);
+      tl.fromTo("#pp-swash .fl", { "--p": 0 }, { "--p": 118, duration: 0.7, ease: "power2.inOut" }, 6.1);
+      brush("#pp-b-r", 6.3, 0.8);
+      star("#pp-star2", 6.6);
+
+      tl.fromTo("#pp-oval .sweep", { "--a": -17 }, { "--a": 360, duration: 1.1, ease: "power2.inOut" }, 6.9);
+      letter("#pp-date", 7.6, 0.9, 1.0);
+      star("#pp-starL", 8.7);
+      star("#pp-starR", 8.85);
+
+      letter("#pp-tag", 9.0, 1.1, 1.2);
+      tl.fromTo("#pp-divider .centre-out", { "--p": 0, opacity: 0 }, { "--p": 100, opacity: 1, duration: 0.8, ease: "power3.out" }, 10.3);
+      brush("#pp-b-b1", 10.6, 2.1);
+      brush("#pp-b-b2", 12.0, 0.9);
+
+      /* ---------- finished: the ball catches the light ---------- */
+      [["#pp-g1", 12.7], ["#pp-g2", 13.0], ["#pp-g3", 13.35], ["#pp-g4", 13.7]].forEach(([id, at]) => {
+        tl.fromTo(id, { scale: 0, rotation: -45, opacity: 0, svgOrigin: "0 0" },
+          { scale: 1, rotation: 0, opacity: 1, duration: 0.45, ease: "expo.out" }, at);
+        tl.to(id, { scale: 0.35, opacity: 0.5, duration: 0.7, ease: "power2.inOut" }, at + 0.5);
+      });
+      tl.to("#pp-g1", { scale: 1, opacity: 1, duration: 0.45, ease: "expo.out" }, 14.2);
+      tl.to("#pp-star1", { scale: 1.18, duration: 0.3, ease: "power2.out" }, 13.2);
+      tl.to("#pp-star1", { scale: 1, duration: 0.6, ease: "power2.inOut" }, 13.5);
+      tl.to("#pp-starR", { scale: 1.18, duration: 0.3, ease: "power2.out" }, 13.9);
+      tl.to("#pp-starR", { scale: 1, duration: 0.6, ease: "power2.inOut" }, 14.2);
+
+      window.__timelines["papel"] = tl;
+    })();
+  </script>
+</template>
