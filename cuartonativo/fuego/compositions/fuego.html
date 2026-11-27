@@ -1,0 +1,281 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #2a140b;
+    }
+    #fg-paper {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #fg-heat {
+      position: absolute;
+      left: -420px;
+      top: -260px;
+      width: 1920px;
+      height: 2440px;
+      mix-blend-mode: soft-light;
+      background: radial-gradient(ellipse 30% 26% at 50% 48%, rgba(255, 150, 60, 0.6) 0%, rgba(255, 150, 60, 0) 100%);
+    }
+    #fg-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 78% 62% at 50% 45%, rgba(20, 8, 3, 0) 55%, rgba(20, 8, 3, 0.35) 100%);
+    }
+    #fg-embers {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #fg-flare {
+      position: absolute;
+      left: 392px;
+      top: 300px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 214, 140, 0.85) 0%, rgba(255, 150, 60, 0.35) 38%, rgba(255, 120, 40, 0) 70%);
+    }
+
+    .el {
+      position: absolute;
+    }
+    .el img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    /* writing wipe: --p 0 -> 118 */
+    .wipe {
+      position: absolute;
+      inset: 0;
+      --p: 0;
+      --ang: 90deg;
+      -webkit-mask-image: linear-gradient(var(--ang), #000 calc(var(--p) * 1% - 12%), transparent calc(var(--p) * 1%));
+      mask-image: linear-gradient(var(--ang), #000 calc(var(--p) * 1% - 12%), transparent calc(var(--p) * 1%));
+    }
+    /* the hot edge that leads the ink */
+    .ember {
+      position: absolute;
+      inset: 0;
+      --p: 0;
+      --ang: 90deg;
+      -webkit-mask-image: linear-gradient(
+        var(--ang),
+        transparent calc(var(--p) * 1% - 17%),
+        #000 calc(var(--p) * 1% - 7%),
+        transparent calc(var(--p) * 1% - 1%)
+      );
+      mask-image: linear-gradient(
+        var(--ang),
+        transparent calc(var(--p) * 1% - 17%),
+        #000 calc(var(--p) * 1% - 7%),
+        transparent calc(var(--p) * 1% - 1%)
+      );
+    }
+    .ember img {
+      filter: brightness(1.9) saturate(1.5) drop-shadow(0 0 5px rgba(255, 130, 40, 0.95)) drop-shadow(0 0 14px rgba(255, 90, 20, 0.7));
+    }
+    .italic .wipe,
+    .italic .ember {
+      --ang: 100deg;
+    }
+    .centre-out {
+      position: absolute;
+      inset: 0;
+      --p: 0;
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent calc(50% - var(--p) * 0.5% - 7%),
+        #000 calc(50% - var(--p) * 0.5%),
+        #000 calc(50% + var(--p) * 0.5%),
+        transparent calc(50% + var(--p) * 0.5% + 7%)
+      );
+      mask-image: linear-gradient(
+        90deg,
+        transparent calc(50% - var(--p) * 0.5% - 7%),
+        #000 calc(50% - var(--p) * 0.5%),
+        #000 calc(50% + var(--p) * 0.5%),
+        transparent calc(50% + var(--p) * 0.5% + 7%)
+      );
+    }
+    /* light sliding across the gold leaf: --x -30 -> 130 */
+    .shine {
+      position: absolute;
+      inset: 0;
+      --x: -30;
+      background: linear-gradient(
+        105deg,
+        rgba(255, 240, 200, 0) calc(var(--x) * 1% - 10%),
+        rgba(255, 240, 200, 0.6) calc(var(--x) * 1%),
+        rgba(255, 240, 200, 0) calc(var(--x) * 1% + 10%)
+      );
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+    }
+  </style>
+
+  <div id="root" data-composition-id="fuego" data-width="1080" data-height="1920" data-layout-allow-overlap>
+    <img id="fg-paper" src="assets/paper.jpg" alt="" data-layout-ignore />
+    <div id="fg-heat" data-layout-ignore></div>
+    <div id="fg-vignette" data-layout-ignore></div>
+    <div id="fg-flare" data-layout-ignore></div>
+
+    <div id="fg-logo" class="el" style="left: 435px; top: 95px; width: 215px; height: 95px">
+      <div class="wipe sk"><img src="assets/el/logo_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/logo.png" alt="CN Prod." /></div>
+    </div>
+
+    <div id="fg-star" class="el" style="left: 452px; top: 357px; width: 181px; height: 189px">
+      <img src="assets/el/star.png" alt="" />
+      <div class="shine" style="-webkit-mask-image: url(assets/el/star.png); mask-image: url(assets/el/star.png)"></div>
+    </div>
+
+    <div id="fg-con" class="el italic" style="left: 185px; top: 527px; width: 135px; height: 69px">
+      <div class="wipe sk"><img src="assets/el/con_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/con.png" alt="Con" /></div>
+      <div class="ember"><img src="assets/el/con.png" alt="" /></div>
+    </div>
+    <div id="fg-cuarto" class="el" style="left: 136px; top: 592px; width: 813px; height: 96px">
+      <div class="wipe sk"><img src="assets/el/cuarto_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/cuarto.png" alt="Cuarto Nativo," /></div>
+      <div class="ember"><img src="assets/el/cuarto.png" alt="" /></div>
+    </div>
+    <div id="fg-desp" class="el" style="left: 94px; top: 692px; width: 907px; height: 149px">
+      <div class="wipe sk"><img src="assets/el/desp_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/desp.png" alt="Despedimos" /></div>
+      <div class="ember"><img src="assets/el/desp.png" alt="" /></div>
+      <div class="shine" style="-webkit-mask-image: url(assets/el/desp.png); mask-image: url(assets/el/desp.png)"></div>
+    </div>
+    <div id="fg-elano" class="el" style="left: 273px; top: 826px; width: 589px; height: 138px">
+      <div class="wipe sk"><img src="assets/el/elano_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/elano.png" alt="el año." /></div>
+      <div class="ember"><img src="assets/el/elano.png" alt="" /></div>
+      <div class="shine" style="-webkit-mask-image: url(assets/el/elano.png); mask-image: url(assets/el/elano.png)"></div>
+    </div>
+
+    <div id="fg-div1" class="el" style="left: 274px; top: 1014px; width: 546px; height: 59px">
+      <div class="centre-out"><img src="assets/el/div1.png" alt="" /></div>
+    </div>
+    <div id="fg-date" class="el" style="left: 178px; top: 1089px; width: 730px; height: 51px">
+      <div class="wipe sk"><img src="assets/el/date_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/date.png" alt="19 de diciembre" /></div>
+      <div class="ember"><img src="assets/el/date.png" alt="" /></div>
+    </div>
+    <div id="fg-div2" class="el" style="left: 261px; top: 1167px; width: 606px; height: 14px">
+      <div class="centre-out"><img src="assets/el/div2.png" alt="" /></div>
+    </div>
+    <div id="fg-tag" class="el italic" style="left: 112px; top: 1218px; width: 867px; height: 123px">
+      <div class="wipe sk"><img src="assets/el/tag_sketch.png" alt="" /></div>
+      <div class="wipe fl"><img src="assets/el/tag.png" alt="Te invitamos a ser parte." /></div>
+      <div class="ember"><img src="assets/el/tag.png" alt="" /></div>
+    </div>
+
+    <canvas id="fg-embers" width="1080" height="1920" data-layout-ignore></canvas>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const q = (s) => document.querySelector(s);
+
+      /* ---------- firelight drifting over the sheet ---------- */
+      tl.fromTo("#fg-heat", { x: 140, y: 80 }, { x: -140, y: -80, duration: 13, ease: "sine.inOut" }, 0);
+
+      /* ---------- embers rising (a function of time) ---------- */
+      const cv = q("#fg-embers");
+      const cx = cv.getContext("2d");
+      let seed = 41;
+      const rnd = () => {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+      };
+      const embers = [];
+      for (let i = 0; i < 70; i++) {
+        embers.push({ x: rnd() * 1080, r: 0.8 + rnd() * rnd() * 2.6, a: 0.35 + rnd() * 0.55,
+          vy: 45 + rnd() * 90, sway: 10 + rnd() * 30, L: 5 + rnd() * 6, off: rnd() * 11, ph: rnd() * 6.283, f: 1.5 + rnd() * 3 });
+      }
+      function draw(t) {
+        cx.clearRect(0, 0, 1080, 1920);
+        const fade = Math.min(1, t / 1.2);
+        for (const p of embers) {
+          const u = ((t + p.off) % p.L) / p.L;
+          const k = u * p.L;
+          const y = 1980 - p.vy * k * 1.6;
+          const x = p.x + Math.sin(k * 0.9 + p.ph) * p.sway;
+          const life = Math.sin(Math.PI * u);
+          const fl = 0.6 + 0.4 * Math.sin(t * p.f * 3 + p.ph);
+          const al = p.a * life * fl * fade;
+          if (al <= 0.01) continue;
+          const g = cx.createRadialGradient(x, y, 0, x, y, p.r * 4);
+          g.addColorStop(0, "rgba(255,236,180," + al + ")");
+          g.addColorStop(0.3, "rgba(255,140,40," + al * 0.8 + ")");
+          g.addColorStop(1, "rgba(255,90,20,0)");
+          cx.fillStyle = g;
+          cx.beginPath();
+          cx.arc(x, y, p.r * 4, 0, Math.PI * 2);
+          cx.fill();
+        }
+      }
+      const clock = { t: 0 };
+      tl.to(clock, { t: 13, duration: 13, ease: "none", onUpdate: () => draw(clock.t) }, 0);
+      draw(0);
+
+      /* ---------- helpers ---------- */
+      function letter(id, at, sketchDur, inkDur, hot) {
+        tl.fromTo(id + " .sk", { "--p": 0 }, { "--p": 118, duration: sketchDur, ease: "power1.inOut" }, at);
+        const inkAt = at + sketchDur * 0.3;
+        tl.fromTo(id + " .fl", { "--p": 0 }, { "--p": 118, duration: inkDur, ease: "power1.inOut" }, inkAt);
+        if (hot) tl.fromTo(id + " .ember", { "--p": 0 }, { "--p": 125, duration: inkDur * (125 / 118), ease: "power1.inOut" }, inkAt);
+        tl.fromTo(id + " .sk", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power1.out" }, inkAt + inkDur);
+      }
+      function opens(id, at, dur) {
+        tl.fromTo(id + " .centre-out", { "--p": 0, opacity: 0 }, { "--p": 100, opacity: 1, duration: dur, ease: "power3.out" }, at);
+      }
+      function shine(id, at, dur) {
+        tl.fromTo(id + " .shine", { "--x": -30 }, { "--x": 130, duration: dur, ease: "power1.inOut" }, at);
+      }
+
+      /* ---------- drawing order ---------- */
+      letter("#fg-logo", 0.4, 0.5, 0.6, false);
+
+      // the star ignites
+      tl.fromTo("#fg-flare", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1.15, duration: 0.45, ease: "power2.out" }, 1.0);
+      tl.to("#fg-flare", { opacity: 0.3, scale: 1, duration: 1.4, ease: "power2.inOut" }, 1.45);
+      tl.fromTo(
+        "#fg-star",
+        { opacity: 0, scale: 0.3, rotation: -120, filter: "blur(6px) brightness(1.8)" },
+        { opacity: 1, scale: 1, rotation: 0, filter: "blur(0px) brightness(1)", duration: 1.1, ease: "expo.out" },
+        1.05,
+      );
+
+      letter("#fg-con", 2.0, 0.5, 0.7, true);
+      letter("#fg-cuarto", 2.4, 1.1, 1.2, true);
+      letter("#fg-desp", 3.6, 1.1, 1.4, true);
+      letter("#fg-elano", 4.9, 0.8, 1.0, true);
+
+      opens("#fg-div1", 6.0, 0.8);
+      letter("#fg-date", 6.4, 0.9, 1.0, true);
+      opens("#fg-div2", 7.3, 0.8);
+      letter("#fg-tag", 7.8, 1.3, 1.5, true);
+
+      /* ---------- finished: light passes over the gold ---------- */
+      shine("#fg-desp", 9.9, 1.4);
+      shine("#fg-elano", 10.15, 1.2);
+      shine("#fg-star", 10.6, 0.9);
+      tl.to("#fg-flare", { opacity: 0.6, scale: 1.08, duration: 0.5, ease: "power2.out" }, 10.6);
+      tl.to("#fg-flare", { opacity: 0.3, scale: 1, duration: 1.2, ease: "power2.inOut" }, 11.1);
+
+      window.__timelines["fuego"] = tl;
+    })();
+  </script>
+</template>
