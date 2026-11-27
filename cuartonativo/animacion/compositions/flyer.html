@@ -1,0 +1,701 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Cormorant Garamond";
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url("assets/fonts/CormorantGaramond-400.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Cormorant Garamond";
+      font-style: italic;
+      font-weight: 500;
+      font-display: block;
+      src: url("assets/fonts/CormorantGaramond-500i.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Cinzel";
+      font-style: normal;
+      font-weight: 400 900;
+      font-display: block;
+      src: url("assets/fonts/Cinzel.woff2") format("woff2");
+    }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      --burgundy: #622c34;
+      --espresso: #4a3329;
+      background:
+        radial-gradient(ellipse 62% 38% at 50% 30%, rgba(255, 252, 246, 0.95) 0%, rgba(255, 252, 246, 0) 72%),
+        radial-gradient(ellipse 80% 30% at 50% 82%, rgba(255, 248, 236, 0.55) 0%, rgba(255, 248, 236, 0) 70%),
+        linear-gradient(180deg, #f7eee2 0%, #f4e8d7 40%, #efdfc8 75%, #ead7bc 100%);
+    }
+    #root * {
+      box-sizing: border-box;
+    }
+
+    /* ---------- world ---------- */
+    #fl-satin {
+      position: absolute;
+      left: -260px;
+      top: -260px;
+      width: 1600px;
+      height: 2440px;
+      filter: blur(38px);
+      background: linear-gradient(
+        118deg,
+        transparent 0%,
+        transparent 14%,
+        rgba(255, 255, 255, 0.6) 18%,
+        transparent 24%,
+        transparent 33%,
+        rgba(214, 186, 146, 0.17) 38%,
+        transparent 44%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 56%,
+        transparent 64%,
+        rgba(214, 186, 146, 0.15) 70%,
+        transparent 76%,
+        rgba(255, 255, 255, 0.42) 82%,
+        transparent 88%
+      );
+    }
+    #fl-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 75% 62% at 50% 46%, transparent 55%, rgba(150, 108, 62, 0.2) 100%);
+    }
+    #fl-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.11;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .45  0 0 0 0 .32  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+    #fl-dust {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    .fl-svg {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+    }
+
+    /* ---------- type ---------- */
+    .fl-row {
+      position: absolute;
+      left: 0;
+      width: 1080px;
+      text-align: center;
+    }
+    #fl-logo {
+      top: 228px;
+    }
+    #fl-logo-img {
+      width: 300px;
+      display: block;
+      margin: 0 auto;
+    }
+    .fl-orn {
+      position: absolute;
+      left: 0;
+      width: 1080px;
+      height: 24px;
+    }
+    .fl-orn .line {
+      position: absolute;
+      top: 11.5px;
+      height: 1.2px;
+    }
+    .fl-orn .line.l {
+      background: linear-gradient(90deg, rgba(180, 134, 56, 0), #b48638);
+      transform-origin: 100% 50%;
+    }
+    .fl-orn .line.r {
+      background: linear-gradient(90deg, #b48638, rgba(180, 134, 56, 0));
+      transform-origin: 0% 50%;
+    }
+    .fl-orn svg {
+      position: absolute;
+      left: 528px;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      overflow: visible;
+    }
+
+    #fl-lead {
+      top: 446px;
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 400;
+      font-size: 86px;
+      line-height: 1;
+      color: var(--espresso);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+    }
+    #fl-lead span,
+    #fl-tag span {
+      display: inline-block;
+    }
+
+    .fl-big {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 176px;
+      line-height: 0.86;
+      letter-spacing: -0.012em;
+    }
+    #fl-l1 {
+      top: 554px;
+    }
+    #fl-l2 {
+      top: 706px;
+    }
+    .fl-reveal {
+      display: inline-block;
+      padding: 0 40px 24px;
+      --p: 0;
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--p) * 1% - 14%), transparent calc(var(--p) * 1%));
+      mask-image: linear-gradient(90deg, #000 calc(var(--p) * 1% - 14%), transparent calc(var(--p) * 1%));
+    }
+    .fl-foil {
+      display: inline-block;
+      padding: 0 12px 10px;
+      --sh: 100;
+      background-image:
+        linear-gradient(100deg, rgba(255, 240, 196, 0) 41%, rgba(255, 240, 196, 0.62) 50%, rgba(255, 240, 196, 0) 59%),
+        linear-gradient(
+          100deg,
+          #7c5524 0%,
+          #a27330 14%,
+          #cda75f 28%,
+          #e9cf8f 38%,
+          #c99d50 48%,
+          #9c6e2b 60%,
+          #87601f 68%,
+          #b58a40 80%,
+          #dcbd78 89%,
+          #946a2a 100%
+        );
+      background-size:
+        250% 100%,
+        100% 100%;
+      background-position:
+        calc(var(--sh) * 1%) 0,
+        0 0;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 1.5px 0 rgba(255, 251, 242, 0.85)) drop-shadow(0 8px 16px rgba(130, 88, 32, 0.16));
+    }
+
+    #fl-swash {
+      top: 890px;
+    }
+    #fl-swash .fl-reveal {
+      padding: 0;
+    }
+
+    #fl-date {
+      top: 988px;
+    }
+    #fl-date .wrap {
+      position: relative;
+      width: 660px;
+      height: 124px;
+      margin: 0 auto;
+    }
+    #fl-cart {
+      position: absolute;
+      inset: 0;
+    }
+    #fl-date .txt {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Cinzel", serif;
+      color: var(--burgundy);
+    }
+    #fl-day {
+      display: inline-block;
+      font-weight: 600;
+      font-size: 46px;
+      letter-spacing: 0.12em;
+      margin-right: 0.45em;
+      background: linear-gradient(180deg, #a87a33, #d9b66c 45%, #8a6428);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #fl-month {
+      display: inline-block;
+      font-weight: 500;
+      font-size: 38px;
+      word-spacing: -0.18em;
+      --ls: 0.34;
+      letter-spacing: calc(var(--ls) * 1em);
+      margin-right: calc(var(--ls) * -1em);
+    }
+
+    #fl-tag {
+      top: 1158px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 62px;
+      color: var(--burgundy);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    /* ---------- illustration ---------- */
+    #fl-glasses {
+      position: absolute;
+      left: 0;
+      top: 1286px;
+      width: 1080px;
+      height: 487px;
+    }
+    #fl-glasses-mask {
+      position: absolute;
+      inset: 0;
+      --r: 0;
+      -webkit-mask-image: radial-gradient(
+        ellipse 60% 75% at 50% 52%,
+        #000 calc(var(--r) * 1% - 22%),
+        transparent calc(var(--r) * 1%)
+      );
+      mask-image: radial-gradient(
+        ellipse 60% 75% at 50% 52%,
+        #000 calc(var(--r) * 1% - 22%),
+        transparent calc(var(--r) * 1%)
+      );
+    }
+    #fl-glasses-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 487px;
+    }
+    #fl-shimmer {
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: screen;
+      --x: -30;
+      background: linear-gradient(
+        100deg,
+        rgba(255, 244, 210, 0) calc(var(--x) * 1% - 12%),
+        rgba(255, 244, 210, 0.75) calc(var(--x) * 1%),
+        rgba(255, 244, 210, 0) calc(var(--x) * 1% + 12%)
+      );
+      -webkit-mask-image: url("assets/glasses_shimmer_mask.png");
+      mask-image: url("assets/glasses_shimmer_mask.png");
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+    }
+    #fl-clink-glow {
+      position: absolute;
+      left: 440px;
+      top: 1300px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 246, 214, 0.95) 0%, rgba(255, 238, 196, 0.45) 35%, rgba(255, 238, 196, 0) 70%);
+    }
+    #fl-sparks {
+      position: absolute;
+      left: 474.4px;
+      top: 1286px;
+      width: 130.1px;
+      height: 119.4px;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="flyer"
+    data-width="1080"
+    data-height="1920"
+    data-layout-allow-overlap
+  >
+    <!-- world -->
+    <div id="fl-satin" data-layout-ignore></div>
+    <div id="fl-vignette" data-layout-ignore></div>
+    <div id="fl-grain" data-layout-ignore></div>
+    <canvas id="fl-dust" width="1080" height="1920" data-layout-ignore></canvas>
+
+    <!-- frame -->
+    <svg class="fl-svg" viewBox="0 0 1080 1920" width="1080" height="1920" aria-hidden="true" data-layout-ignore>
+      <defs>
+        <linearGradient id="fl-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#9a7030" />
+          <stop offset=".3" stop-color="#e3c788" />
+          <stop offset=".5" stop-color="#b48638" />
+          <stop offset=".72" stop-color="#ead39a" />
+          <stop offset="1" stop-color="#8f6628" />
+        </linearGradient>
+        <radialGradient id="fl-glow">
+          <stop offset="0" stop-color="#fff6dc" stop-opacity=".9" />
+          <stop offset="1" stop-color="#fff6dc" stop-opacity="0" />
+        </radialGradient>
+        <symbol id="fl-star" viewBox="-10 -10 20 20">
+          <path
+            d="M0,-10 C.9,-2.2 2.2,-.9 10,0 C2.2,.9 .9,2.2 0,10 C-.9,2.2 -2.2,.9 -10,0 C-2.2,-.9 -.9,-2.2 0,-10Z"
+            fill="url(#fl-g)"
+          />
+        </symbol>
+        <symbol id="fl-spark" viewBox="-10 -10 20 20">
+          <circle r="9" fill="url(#fl-glow)" />
+          <path
+            d="M0,-10 C.7,-1.6 1.6,-.7 10,0 C1.6,.7 .7,1.6 0,10 C-.7,1.6 -1.6,.7 -10,0 C-1.6,-.7 -.7,-1.6 0,-10Z"
+            fill="url(#fl-g)"
+          />
+        </symbol>
+      </defs>
+      <g fill="none" stroke="url(#fl-g)" stroke-width="1.6">
+        <path id="fl-frame-l" d="M516,44 H70 A26,26 0 0 1 44,70 V1850 A26,26 0 0 1 70,1876 H516" />
+        <path id="fl-frame-r" d="M564,44 H1010 A26,26 0 0 0 1036,70 V1850 A26,26 0 0 0 1010,1876 H564" />
+      </g>
+      <path
+        id="fl-frame-in"
+        fill="none"
+        stroke="url(#fl-g)"
+        stroke-width=".8"
+        d="M84,58 H996 A28,28 0 0 0 1022,84 V1836 A28,28 0 0 0 996,1862 H84 A28,28 0 0 0 58,1836 V84 A28,28 0 0 0 84,58Z"
+      />
+      <g id="fl-jewels" fill="url(#fl-g)">
+        <circle cx="44" cy="44" r="3" />
+        <circle cx="1036" cy="44" r="3" />
+        <circle cx="44" cy="1876" r="3" />
+        <circle cx="1036" cy="1876" r="3" />
+      </g>
+      <g transform="translate(540,44)"><g id="fl-star-top"><use href="#fl-star" x="-13" y="-13" width="26" height="26" /></g></g>
+      <g transform="translate(540,1876)"><g id="fl-star-bot"><use href="#fl-star" x="-13" y="-13" width="26" height="26" /></g></g>
+    </svg>
+
+    <!-- logo -->
+    <div id="fl-logo" class="fl-row">
+      <img id="fl-logo-img" src="assets/logo.png" alt="Cuarto Nativo" />
+    </div>
+    <div id="fl-orn1" class="fl-orn" style="top: 396px">
+      <div class="line l" style="left: 390px; width: 134px"></div>
+      <div class="line r" style="left: 556px; width: 134px"></div>
+      <svg viewBox="0 0 24 24"><g transform="translate(12,12)"><g class="star"><use href="#fl-star" x="-7" y="-7" width="14" height="14" /></g></g></svg>
+    </div>
+
+    <!-- headline -->
+    <div id="fl-lead" class="fl-row">
+      <span>Con</span> <span>Cuarto</span> <span>Nativo,</span>
+    </div>
+    <div id="fl-l1" class="fl-row fl-big">
+      <span class="fl-reveal"><span class="fl-foil">despedimos</span></span>
+    </div>
+    <div id="fl-l2" class="fl-row fl-big">
+      <span class="fl-reveal"><span class="fl-foil">el año.</span></span>
+    </div>
+
+    <div id="fl-swash" class="fl-row">
+      <span class="fl-reveal">
+        <svg width="560" height="60" viewBox="0 0 560 60" aria-hidden="true" style="display: block">
+          <defs>
+            <linearGradient id="fl-sw" x1="0" x2="1">
+              <stop offset="0" stop-color="#b48638" stop-opacity="0" />
+              <stop offset=".18" stop-color="#a87a33" />
+              <stop offset=".45" stop-color="#ead39a" />
+              <stop offset=".7" stop-color="#b48638" />
+              <stop offset="1" stop-color="#b48638" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M6,40 C120,50 200,26 290,22 C380,18 450,28 548,12 C452,34 382,26 292,28 C204,32 122,54 6,40Z"
+            fill="url(#fl-sw)"
+          />
+          <path d="M150,44 C230,36 300,34 370,36" fill="none" stroke="url(#fl-sw)" stroke-width=".8" opacity=".6" />
+        </svg>
+      </span>
+    </div>
+
+    <!-- date -->
+    <div id="fl-date" class="fl-row">
+      <div class="wrap">
+        <svg id="fl-cart" viewBox="0 0 660 124" width="660" height="124" aria-hidden="true">
+          <defs>
+            <linearGradient id="fl-cg" x1="0" x2="1">
+              <stop offset="0" stop-color="#9a7030" />
+              <stop offset=".3" stop-color="#e3c788" />
+              <stop offset=".5" stop-color="#b48638" />
+              <stop offset=".75" stop-color="#ead39a" />
+              <stop offset="1" stop-color="#9a7030" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M34,2 H626 A32,32 0 0 0 658,34 V90 A32,32 0 0 0 626,122 H34 A32,32 0 0 0 2,90 V34 A32,32 0 0 0 34,2Z"
+            fill="rgba(255,250,242,.35)"
+            stroke="url(#fl-cg)"
+            stroke-width="1.6"
+          />
+          <path
+            d="M42,10 H618 A26,26 0 0 0 650,40 V84 A26,26 0 0 0 618,114 H42 A26,26 0 0 0 10,84 V40 A26,26 0 0 0 42,10Z"
+            fill="none"
+            stroke="url(#fl-cg)"
+            stroke-width=".8"
+            opacity=".6"
+          />
+          <path d="M34,62 l6,-6 l6,6 l-6,6z M614,62 l6,-6 l6,6 l-6,6z" fill="url(#fl-cg)" />
+        </svg>
+        <div class="txt"><span id="fl-day">19</span><span id="fl-month">DE DICIEMBRE</span></div>
+      </div>
+    </div>
+
+    <div id="fl-tag" class="fl-row">
+      <span>Te</span> <span>invitamos</span> <span>a</span> <span>ser</span> <span>parte.</span>
+    </div>
+
+    <div id="fl-orn2" class="fl-orn" style="top: 1250px">
+      <div class="line l" style="left: 290px; width: 228px"></div>
+      <div class="line r" style="left: 562px; width: 228px"></div>
+      <svg viewBox="0 0 24 24">
+        <g transform="translate(12,12)">
+          <g class="star"><use href="#fl-star" x="-11" y="-11" width="22" height="22" /></g>
+        </g>
+      </svg>
+    </div>
+
+    <!-- illustration -->
+    <div id="fl-clink-glow" data-layout-ignore></div>
+    <div id="fl-glasses" data-layout-allow-overflow>
+      <div id="fl-glasses-mask">
+        <img id="fl-glasses-img" src="assets/glasses.png" alt="" />
+        <div id="fl-shimmer"></div>
+      </div>
+    </div>
+    <img id="fl-sparks" src="assets/sparks.png" alt="" />
+
+    <!-- sparkles -->
+    <svg class="fl-svg" viewBox="0 0 1080 1920" width="1080" height="1920" aria-hidden="true" data-layout-ignore>
+      <g transform="translate(883,569)"><g id="fl-sp1"><use href="#fl-spark" x="-17" y="-17" width="34" height="34" /></g></g>
+      <g transform="translate(912,612)"><g id="fl-sp2"><use href="#fl-spark" x="-8" y="-8" width="16" height="16" /></g></g>
+      <g transform="translate(177,809)"><g id="fl-sp3"><use href="#fl-spark" x="-13" y="-13" width="26" height="26" /></g></g>
+      <g transform="translate(206,780)"><g id="fl-sp4"><use href="#fl-spark" x="-6" y="-6" width="12" height="12" /></g></g>
+      <g transform="translate(821,262)"><g id="fl-sp5"><use href="#fl-spark" x="-9" y="-9" width="18" height="18" /></g></g>
+      <g transform="translate(250,1420)"><g id="fl-sp6"><use href="#fl-spark" x="-10" y="-10" width="20" height="20" /></g></g>
+      <g transform="translate(842,1392)"><g id="fl-sp7"><use href="#fl-spark" x="-12" y="-12" width="24" height="24" /></g></g>
+      <g transform="translate(470,1300)"><g id="fl-sp8"><use href="#fl-spark" x="-7" y="-7" width="14" height="14" /></g></g>
+    </svg>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const q = (s) => document.querySelector(s);
+      const qa = (s) => document.querySelectorAll(s);
+
+      /* ---------- world: satin drift + glitter (functions of time) ---------- */
+      tl.fromTo("#fl-satin", { x: -70, y: -20 }, { x: 70, y: 20, duration: 12, ease: "sine.inOut" }, 0);
+
+      const cv = q("#fl-dust");
+      const cx = cv.getContext("2d");
+      let seed = 11;
+      const rnd = () => {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+      };
+      const ambient = [];
+      for (let i = 0; i < 70; i++) {
+        ambient.push({
+          x: 70 + rnd() * 940,
+          y: rnd() * 1920,
+          r: 0.5 + rnd() * rnd() * 1.8,
+          a: 0.25 + rnd() * 0.45,
+          vy: 6 + rnd() * 14,
+          ph: rnd() * 6.283,
+          f: 0.5 + rnd() * 1.4,
+          t0: rnd() * 2.4,
+        });
+      }
+      const fizz = [];
+      for (let i = 0; i < 46; i++) {
+        fizz.push({
+          x: 380 + rnd() * 320,
+          y: 1440 + rnd() * 120,
+          r: 0.6 + rnd() * rnd() * 2.0,
+          a: 0.45 + rnd() * 0.45,
+          vy: 40 + rnd() * 60,
+          drift: (rnd() - 0.5) * 120,
+          L: 3.2 + rnd() * 2.6,
+          off: rnd() * 6,
+          ph: rnd() * 6.283,
+        });
+      }
+      function dot(x, y, r, al) {
+        const g = cx.createRadialGradient(x, y, 0, x, y, r * 3);
+        g.addColorStop(0, "rgba(255,246,220," + al + ")");
+        g.addColorStop(0.3, "rgba(214,170,88," + al * 0.8 + ")");
+        g.addColorStop(1, "rgba(214,170,88,0)");
+        cx.fillStyle = g;
+        cx.beginPath();
+        cx.arc(x, y, r * 3, 0, Math.PI * 2);
+        cx.fill();
+      }
+      function draw(t) {
+        cx.clearRect(0, 0, 1080, 1920);
+        for (const p of ambient) {
+          const life = Math.min(1, Math.max(0, (t - p.t0) / 1.4));
+          if (life <= 0) continue;
+          const y = (((p.y - p.vy * t) % 1920) + 1920) % 1920;
+          const x = p.x + Math.sin(t * 0.45 + p.ph) * 8;
+          const tw = 0.55 + 0.45 * Math.sin(t * p.f * 2 + p.ph);
+          dot(x, y, p.r, p.a * life * tw);
+        }
+        const on = Math.min(1, Math.max(0, (t - 7.6) / 1.2));
+        if (on > 0) {
+          for (const p of fizz) {
+            const u = ((t + p.off) % p.L) / p.L;
+            const k = u * p.L;
+            const x = p.x + p.drift * u + Math.sin(k * 1.7 + p.ph) * 6;
+            const y = p.y - p.vy * k;
+            const al = p.a * Math.sin(Math.PI * u) * on;
+            dot(x, y, p.r, al);
+          }
+        }
+      }
+      const clock = { t: 0 };
+      tl.to(clock, { t: 12, duration: 12, ease: "none", onUpdate: () => draw(clock.t) }, 0);
+      draw(0);
+
+      /* ---------- frame draws from the top star ---------- */
+      ["#fl-frame-l", "#fl-frame-r"].forEach((id) => {
+        const el = q(id);
+        const len = el.getTotalLength();
+        tl.fromTo(
+          el,
+          { strokeDasharray: len, strokeDashoffset: len },
+          { strokeDashoffset: 0, duration: 2.0, ease: "power2.inOut" },
+          0,
+        );
+      });
+      tl.fromTo("#fl-frame-in", { opacity: 0 }, { opacity: 0.55, duration: 1.2, ease: "power1.out" }, 1.4);
+      tl.fromTo("#fl-jewels", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.out" }, 1.0);
+      tl.fromTo(
+        "#fl-star-top",
+        { scale: 0.2, rotation: -90, opacity: 0, svgOrigin: "0 0" },
+        { scale: 1, rotation: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
+        0,
+      );
+      tl.fromTo(
+        "#fl-star-bot",
+        { scale: 0.2, rotation: 90, opacity: 0, svgOrigin: "0 0" },
+        { scale: 1, rotation: 0, opacity: 1, duration: 0.9, ease: "expo.out" },
+        1.75,
+      );
+
+      /* ---------- logo ---------- */
+      tl.fromTo(
+        "#fl-logo-img",
+        { opacity: 0, scale: 1.05, filter: "blur(12px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.3, ease: "expo.out" },
+        0.3,
+      );
+      tl.fromTo("#fl-orn1 .line", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power3.out" }, 1.0);
+      tl.fromTo(
+        "#fl-orn1 .star",
+        { scale: 0, rotation: -90, svgOrigin: "0 0" },
+        { scale: 1, rotation: 0, duration: 0.8, ease: "expo.out" },
+        0.95,
+      );
+
+      /* ---------- headline ---------- */
+      tl.fromTo(
+        "#fl-lead span",
+        { opacity: 0, filter: "blur(8px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.14 },
+        1.4,
+      );
+      tl.fromTo("#fl-l1 .fl-reveal", { "--p": 0 }, { "--p": 118, duration: 1.3, ease: "power2.inOut" }, 2.1);
+      tl.fromTo("#fl-l2 .fl-reveal", { "--p": 0 }, { "--p": 118, duration: 1.0, ease: "power2.inOut" }, 2.8);
+      tl.fromTo(
+        "#fl-sp1, #fl-sp2, #fl-sp3, #fl-sp4",
+        { scale: 0, rotation: -45, opacity: 0, svgOrigin: "0 0" },
+        { scale: 1, rotation: 0, opacity: 1, duration: 0.7, ease: "expo.out", stagger: 0.18 },
+        3.2,
+      );
+      tl.fromTo("#fl-swash .fl-reveal", { "--p": 0 }, { "--p": 118, duration: 1.0, ease: "power2.inOut" }, 3.6);
+      // foil shimmer passes
+      tl.fromTo(".fl-foil", { "--sh": 100 }, { "--sh": 0, duration: 1.6, ease: "power1.inOut", stagger: 0.25 }, 3.8);
+      tl.fromTo(".fl-foil", { "--sh": 100 }, { "--sh": 0, duration: 1.6, ease: "power1.inOut", stagger: 0.25, immediateRender: false }, 9.3);
+      tl.fromTo("#fl-sp5", { scale: 0, rotation: -45, opacity: 0, svgOrigin: "0 0" }, { scale: 1, rotation: 0, opacity: 0.85, duration: 0.7, ease: "expo.out" }, 4.0);
+
+      /* ---------- date ---------- */
+      tl.fromTo(
+        "#fl-cart",
+        { clipPath: "inset(0% 50% 0% 50%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power3.inOut" },
+        4.3,
+      );
+      tl.fromTo(
+        "#fl-day",
+        { opacity: 0, filter: "blur(8px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "power3.out" },
+        4.85,
+      );
+      tl.fromTo(
+        "#fl-month",
+        { "--ls": 0.7, opacity: 0 },
+        { "--ls": 0.34, opacity: 1, duration: 1.3, ease: "expo.out" },
+        4.95,
+      );
+
+      /* ---------- invitation line ---------- */
+      tl.fromTo(
+        "#fl-tag span",
+        { opacity: 0, filter: "blur(8px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.1 },
+        5.7,
+      );
+      tl.fromTo("#fl-orn2 .line", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power3.out" }, 6.4);
+      tl.fromTo(
+        "#fl-orn2 .star",
+        { scale: 0, rotation: -90, svgOrigin: "0 0" },
+        { scale: 1, rotation: 0, duration: 0.8, ease: "expo.out" },
+        6.35,
+      );
+
+      /* ---------- glasses ---------- */
+      tl.fromTo("#fl-glasses-mask", { "--r": 0 }, { "--r": 150, duration: 1.7, ease: "power2.out" }, 6.7);
+      tl.fromTo("#fl-glasses", { y: 26 }, { y: 0, duration: 1.7, ease: "power3.out" }, 6.7);
+      tl.fromTo(
+        "#fl-sparks",
+        { opacity: 0, scale: 0.4, filter: "blur(4px)", transformOrigin: "50% 100%" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "expo.out" },
+        7.9,
+      );
+      tl.fromTo("#fl-clink-glow", { opacity: 0, scale: 0.5 }, { opacity: 0.9, scale: 1.15, duration: 0.35, ease: "power2.out" }, 7.85);
+      tl.to("#fl-clink-glow", { opacity: 0.25, scale: 1, duration: 1.4, ease: "power2.inOut" }, 8.2);
+      tl.fromTo(
+        "#fl-sp6, #fl-sp7, #fl-sp8",
+        { scale: 0, rotation: -45, opacity: 0, svgOrigin: "0 0" },
+        { scale: 1, rotation: 0, opacity: 0.9, duration: 0.7, ease: "expo.out", stagger: 0.15 },
+        8.05,
+      );
+      tl.fromTo("#fl-shimmer", { "--x": -30 }, { "--x": 130, duration: 2.0, ease: "power1.inOut" }, 8.4);
+
+      /* ---------- a late twinkle on the stars ---------- */
+      tl.to("#fl-sp1", { scale: 0.55, duration: 0.35, ease: "power2.in" }, 10.2);
+      tl.to("#fl-sp1", { scale: 1, duration: 0.6, ease: "expo.out" }, 10.55);
+      tl.to("#fl-sp7", { scale: 0.55, duration: 0.35, ease: "power2.in" }, 10.7);
+      tl.to("#fl-sp7", { scale: 1, duration: 0.6, ease: "expo.out" }, 11.05);
+
+      window.__timelines["flyer"] = tl;
+    })();
+  </script>
+</template>
